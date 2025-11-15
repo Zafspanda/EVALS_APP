@@ -1,23 +1,48 @@
-# Open Coding Evaluation Platform
+# Evals Open Coding Tool
 
-A web application for systematically evaluating chatbot conversation traces using open coding methodology.
+## About
 
-## Features
+The **Evals Open Coding Tool** is a modern, web-based platform designed to streamline the human evaluation and annotation of AI model outputs. Built specifically for ML/AI teams who need to conduct systematic quality assessments, this tool transforms the traditionally manual and error-prone process of LLM evaluation into an efficient, collaborative workflow.
 
-- CSV import for bulk trace loading (28-column format)
-- Trace viewing with multi-turn context
-- Binary pass/fail annotation
-- Open coding with custom labels
-- Comments and hypotheses tracking
-- User authentication via Clerk
-- Real-time annotation statistics
+### Why This Tool?
+
+Traditional LLM evaluation often relies on spreadsheets or ad-hoc scripts, leading to:
+- Inconsistent evaluation criteria across annotators
+- Lost context between prompt and response
+- Difficulty tracking annotator agreement
+- No standardized export format for CI/CD integration
+
+This tool solves these challenges by providing a purpose-built platform that scales from small research projects to enterprise-grade evaluation workflows.
+
+## Key Features
+
+### Core Functionality
+- **Streamlined Annotation Workflow**: Intuitive interface for evaluating LLM responses with customizable rubrics
+- **Living Rubrics**: Dynamic evaluation criteria that adapt to your specific use cases and failure modes
+- **Golden Set Management**: Curate high-quality reference examples for consistent evaluation standards
+- **Bulk Import/Export**: CSV and JSONL support for seamless integration with ML pipelines
+- **Multi-turn Context**: View complete conversation history for better evaluation context
+- **Confidence Scoring**: Track evaluator confidence levels for each annotation
+
+### Collaboration & Analytics
+- **Real-time Collaboration**: Multiple evaluators can work simultaneously
+- **Annotator Agreement Tracking**: Measure inter-rater reliability and identify disagreements
+- **Comprehensive Analytics**: Track annotation progress, identify patterns, and export insights
+- **User Authentication**: Secure, enterprise-grade authentication via Clerk
+
+### Integration & Export
+- **CI/CD Ready**: Export formats designed for integration with ML pipelines
+- **API-First Design**: RESTful API for programmatic access
+- **Flexible Schema**: MongoDB backend adapts to evolving evaluation requirements
 
 ## Tech Stack
 
-- **Frontend**: Vue 3.5 + TypeScript + Naive UI
-- **Backend**: FastAPI + Python 3.11
-- **Database**: MongoDB + Redis
-- **Authentication**: Clerk
+- **Frontend**: Vue 3.5 + TypeScript with Naive UI component library
+- **Backend**: FastAPI (Python 3.13) with async MongoDB driver (Motor)
+- **Database**: MongoDB for flexible schema + Redis for caching
+- **Authentication**: Clerk for secure, scalable user management
+- **Testing**: Playwright (E2E) + Pytest (API) with 65%+ test coverage
+- **Development**: Hot-reload, Docker Compose for local services
 
 ## Setup Instructions
 
@@ -31,8 +56,8 @@ A web application for systematically evaluating chatbot conversation traces usin
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
-cd Evals_app
+git clone https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool.git
+cd Evals_Open_Coding_Tool
 ```
 
 ### 2. Set Up Backend
@@ -191,6 +216,22 @@ Evals_app/
 - Backend CORS settings are in `app/main.py`
 - Ensure frontend URL is in the allowed origins list
 
+## Contributing
+
+We welcome contributions! Areas where you can help:
+- Adding new export formats
+- Improving annotation UI/UX
+- Enhancing analytics capabilities
+- Writing additional tests
+- Improving documentation
+
+Please open an issue first to discuss major changes.
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool/discussions)
+
 ## License
 
-[Your License Here]
+MIT License - see [LICENSE](./LICENSE) file for details.

@@ -192,5 +192,3 @@ Evals_app/
 - Ensure frontend URL is in the allowed origins list
 
 ## License
-
-[Your License Here]

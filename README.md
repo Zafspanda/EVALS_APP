@@ -145,6 +145,35 @@ The CSV must contain exactly 28 columns with these required fields:
 
 Additional columns are stored as metadata.
 
+### Preparing BotDojo Traces for Import
+
+If you're exporting conversation traces from **BotDojo**, we've included a Claude Code skill that enriches and formats the raw export into the CSV format this tool expects.
+
+**What it does:**
+- Enriches BotDojo traces with accurate tool success metrics
+- Adds turn numbers and session grouping
+- Calculates tool performance statistics
+- Handles contextual interpretation of tool responses (fixes false negatives)
+- Outputs a properly formatted CSV ready for import
+
+**How to use:**
+
+1. Download the skill package: [`claude-tools/botdojo-trace-enrichment.zip`](./claude-tools/botdojo-trace-enrichment.zip)
+
+2. Load it into Claude Code:
+   - Open Claude Code (desktop or web)
+   - Go to Skills settings
+   - Import the `.zip` file
+
+3. Use the skill with your BotDojo export:
+   ```
+   Use the BotDojo Trace Enrichment skill to process my_export.csv
+   ```
+
+4. The enriched CSV will be ready to import into this tool
+
+**Full documentation:** See [`claude-tools/README.md`](./claude-tools/README.md) for detailed information about the enrichment process, custom tool support, and troubleshooting.
+
 ## API Documentation
 
 Once the backend is running, view the interactive API documentation at:

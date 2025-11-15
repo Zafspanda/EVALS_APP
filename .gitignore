@@ -1,0 +1,89 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/venv/
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment variables
+.env
+.env.local
+.env.production.local
+.env.development.local
+.env.test.local
+backend/.env
+frontend/.env
+
+# IDE and AI Assistant folders
+.vscode/
+.idea/
+.bmad/
+.claude/
+.cursor/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+test-results/
+playwright-report/
+frontend/test-results/
+frontend/playwright-report/
+frontend/playwright/.cache/
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+backend/dist/
+*.egg-info/
+.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Vue/Vite
+frontend/.vite/
+frontend/dist-ssr/
+*.local
+
+# Clerk keys (ensure these are never committed)
+**/clerk_secret*
+CLERK_*

@@ -1,5 +1,24 @@
 <template>
   <n-card :title="`Trace: ${traceId}`" :bordered="false">
+    <template #header-extra>
+      <n-space>
+        <n-button
+          size="small"
+          @click="navigateToPrevious"
+          :disabled="!hasPrevious"
+        >
+          ← Previous
+        </n-button>
+        <n-button
+          size="small"
+          @click="navigateToNext"
+          :disabled="!hasNext"
+        >
+          Next →
+        </n-button>
+      </n-space>
+    </template>
+
     <template v-if="loading">
       <n-spin />
     </template>
@@ -7,7 +26,12 @@
     <template v-else-if="trace">
       <n-space vertical>
         <!-- Metadata -->
-        <n-descriptions label-placement="left" bordered :column="2">
+        <n-descriptions
+          label-placement="left"
+          bordered
+          :column="1"
+          :label-style="{ whiteSpace: 'nowrap', minWidth: '100px' }"
+        >
           <n-descriptions-item label="Session">
             {{ trace.flow_session }}
           </n-descriptions-item>
@@ -61,16 +85,6 @@
           </n-space>
         </n-card>
 
-        <!-- Navigation -->
-        <n-space justify="space-between">
-          <n-button @click="navigateToPrevious" :disabled="!hasPrevious">
-            Previous Trace
-          </n-button>
-          <n-button @click="navigateToNext" :disabled="!hasNext">
-            Next Trace
-          </n-button>
-        </n-space>
-
         <!-- Annotation Section -->
         <annotation-form
           :trace-id="traceId"
@@ -94,6 +108,7 @@ import {
   NTimeline, NTimelineItem, NEllipsis, NButton, NDivider, NH4, NP,
   useMessage
 } from 'naive-ui'
+import { useBreakpoints } from '@vueuse/core'
 import { apiService } from '@/services/api'
 import AnnotationForm from './AnnotationForm.vue'
 
@@ -101,25 +116,33 @@ const route = useRoute()
 const router = useRouter()
 const message = useMessage()
 
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768
+})
+
+const isMobile = computed(() => breakpoints.smaller('tablet').value)
+
 const traceId = computed(() => route.params.id as string)
 const loading = ref(false)
 const trace = ref<any>(null)
 const existingAnnotation = ref<any>(null)
-const traceList = ref<string[]>([])  // For navigation
-const currentTraceIndex = ref(0)
+const adjacentTraces = ref<{ previous: string | null; next: string | null }>({ previous: null, next: null })
 
-const hasPrevious = computed(() => currentTraceIndex.value > 0)
-const hasNext = computed(() => currentTraceIndex.value < traceList.value.length - 1)
+const hasPrevious = computed(() => adjacentTraces.value.previous !== null)
+const hasNext = computed(() => adjacentTraces.value.next !== null)
 
 const fetchTrace = async () => {
   loading.value = true
   try {
-    const [traceData, annotationData] = await Promise.all([
+    const [traceData, annotationData, adjacentData] = await Promise.all([
       apiService.getTrace(traceId.value),
-      apiService.getAnnotationForTrace(traceId.value)
+      apiService.getAnnotationForTrace(traceId.value),
+      apiService.getAdjacentTraces(traceId.value)
     ])
     trace.value = traceData
     existingAnnotation.value = annotationData
+    adjacentTraces.value = adjacentData
   } catch (error: any) {
     message.error('Failed to load trace')
     console.error('Error fetching trace:', error)
@@ -128,39 +151,15 @@ const fetchTrace = async () => {
   }
 }
 
-const fetchTraceList = async () => {
-  try {
-    // Fetch all traces for navigation
-    const allTraces: any[] = []
-    let page = 1
-    let hasMore = true
-
-    while (hasMore) {
-      const response = await apiService.getTraces(page, 100)
-      allTraces.push(...response.traces)
-      hasMore = allTraces.length < response.total
-      page++
-    }
-
-    traceList.value = allTraces.map((t: any) => t.trace_id)
-    currentTraceIndex.value = traceList.value.indexOf(traceId.value)
-    console.log(`Loaded ${traceList.value.length} traces for navigation. Current index: ${currentTraceIndex.value}`)
-  } catch (error) {
-    console.error('Error fetching trace list:', error)
-  }
-}
-
 const navigateToPrevious = () => {
-  if (hasPrevious.value) {
-    const previousId = traceList.value[currentTraceIndex.value - 1]
-    router.push(`/trace/${previousId}`)
+  if (hasPrevious.value && adjacentTraces.value.previous) {
+    router.push(`/trace/${adjacentTraces.value.previous}`)
   }
 }
 
 const navigateToNext = () => {
-  if (hasNext.value) {
-    const nextId = traceList.value[currentTraceIndex.value + 1]
-    router.push(`/trace/${nextId}`)
+  if (hasNext.value && adjacentTraces.value.next) {
+    router.push(`/trace/${adjacentTraces.value.next}`)
   }
 }
 
@@ -176,14 +175,11 @@ const handleAnnotationSaved = () => {
 watch(() => route.params.id, (newId) => {
   if (newId) {
     fetchTrace()
-    // Update current trace index when route changes
-    currentTraceIndex.value = traceList.value.indexOf(newId as string)
   }
 })
 
 onMounted(() => {
   fetchTrace()
-  fetchTraceList()
 })
 </script>
 

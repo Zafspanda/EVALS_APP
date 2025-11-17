@@ -1,15 +1,20 @@
 <template>
-  <n-layout-header bordered style="padding: 16px">
-    <n-space justify="space-between" align="center">
-      <n-space align="center">
+  <n-layout-header bordered :style="headerStyle">
+    <n-space :vertical="isMobile" justify="space-between" align="center" :wrap="false">
+      <n-space :vertical="isMobile" align="center">
         <router-link to="/" style="text-decoration: none; color: inherit">
-          <n-h2 style="margin: 0">Open Coding Evaluation Platform</n-h2>
+          <n-h2 :style="titleStyle">{{ isMobile ? 'Open Coding' : 'Open Coding Evaluation Platform' }}</n-h2>
         </router-link>
-        <n-menu mode="horizontal" :value="activeMenu" :options="menuOptions" @update:value="handleMenuSelect" />
+        <n-menu
+          :mode="isMobile ? 'vertical' : 'horizontal'"
+          :value="activeMenu"
+          :options="menuOptions"
+          @update:value="handleMenuSelect"
+        />
       </n-space>
 
       <n-space align="center">
-        <n-tag v-if="userStats" type="info">
+        <n-tag v-if="userStats && !isMobile" type="info">
           Annotations: {{ userStats.total_annotations }}
         </n-tag>
         <SignedIn>
@@ -28,11 +33,28 @@ import { ref, computed, onMounted, h } from 'vue'
 import { useRouter, useRoute, RouterLink } from 'vue-router'
 import { NLayoutHeader, NSpace, NH2, NMenu, NTag, NButton, type MenuOption } from 'naive-ui'
 import { SignedIn, SignedOut, UserButton, useClerk } from '@clerk/vue'
+import { useBreakpoints } from '@vueuse/core'
 import { apiService } from '@/services/api'
 
 const router = useRouter()
 const route = useRoute()
 const { redirectToSignIn } = useClerk()
+
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768
+})
+
+const isMobile = computed(() => breakpoints.smaller('tablet').value)
+
+const headerStyle = computed(() => ({
+  padding: isMobile.value ? '12px' : '16px'
+}))
+
+const titleStyle = computed(() => ({
+  margin: 0,
+  fontSize: isMobile.value ? '18px' : '24px'
+}))
 
 const userStats = ref<any>(null)
 

@@ -10,14 +10,14 @@
       >
         <n-upload-dragger>
           <div style="margin-bottom: 12px">
-            <n-icon size="48" :depth="3">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <n-icon size="48" :depth="3" aria-label="Upload CSV file icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" role="img">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
                 <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>
               </svg>
             </n-icon>
           </div>
-          <n-text style="font-size: 16px">
+          <n-text style="font-size: 16px" aria-label="Upload instruction">
             Click or drag CSV file here to upload
           </n-text>
           <n-p depth="3" style="margin: 8px 0 0 0">

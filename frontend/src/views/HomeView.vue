@@ -7,7 +7,7 @@
       </n-p>
     </n-card>
 
-    <n-grid :cols="3" :x-gap="12" :y-gap="12">
+    <n-grid :cols="gridCols" :x-gap="12" :y-gap="12">
       <n-grid-item>
         <n-card>
           <n-statistic label="Total Traces">
@@ -49,11 +49,19 @@
 
     <n-card title="Quick Actions" :bordered="false">
       <n-space>
-        <n-button type="primary" @click="router.push('/import')">
+        <n-button
+          type="primary"
+          @click="startCoding"
+          :loading="loadingNextTrace"
+          size="large"
+        >
+          Start Coding
+        </n-button>
+        <n-button @click="router.push('/import')">
           Import CSV
         </n-button>
         <n-button @click="router.push('/traces')">
-          View Traces
+          View All Traces
         </n-button>
       </n-space>
     </n-card>
@@ -83,15 +91,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   NSpace, NCard, NP, NGrid, NGridItem, NStatistic, NNumberAnimation,
-  NButton, NList, NListItem, NThing, NTag, NText
+  NButton, NList, NListItem, NThing, NTag, NText, useMessage
 } from 'naive-ui'
+import { useBreakpoints } from '@vueuse/core'
 import { apiService } from '@/services/api'
 
 const router = useRouter()
+const message = useMessage()
+
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768,
+  desktop: 1024
+})
+
+const gridCols = computed(() => {
+  if (breakpoints.smaller('tablet').value) return 1
+  if (breakpoints.between('tablet', 'desktop').value) return 2
+  return 3
+})
 
 const stats = ref({
   totalTraces: 0,
@@ -100,6 +122,7 @@ const stats = ref({
 })
 
 const recentAnnotations = ref<any[]>([])
+const loadingNextTrace = ref(false)
 
 const fetchStats = async () => {
   try {
@@ -114,6 +137,23 @@ const fetchStats = async () => {
     recentAnnotations.value = userStats.recent_annotations || []
   } catch (error) {
     console.error('Error fetching stats:', error)
+  }
+}
+
+const startCoding = async () => {
+  loadingNextTrace.value = true
+  try {
+    const response = await apiService.getNextUnannotatedTrace()
+    if (response.trace_id) {
+      router.push(`/trace/${response.trace_id}`)
+    } else {
+      message.success('All traces have been annotated!')
+    }
+  } catch (error) {
+    message.error('Failed to find next trace')
+    console.error('Error getting next unannotated trace:', error)
+  } finally {
+    loadingNextTrace.value = false
   }
 }
 

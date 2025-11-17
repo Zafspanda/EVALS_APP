@@ -37,9 +37,44 @@ const tableKey = ref(0)
 
 const columns: DataTableColumns<any> = [
   {
+    title: 'Status',
+    key: 'status',
+    width: 80,
+    render(row) {
+      const annotation = annotations.value.get(row.trace_id)
+      if (!annotation) {
+        return h('span', { 'aria-label': 'Not annotated', style: { fontSize: '18px' } }, '○')
+      }
+      const passFailStatus = annotation.holistic_pass_fail
+      if (passFailStatus === 'Pass') {
+        return h('span', {
+          'aria-label': 'Pass',
+          style: { fontSize: '18px', color: 'rgb(34, 197, 94)' }
+        }, '✓')
+      } else if (passFailStatus === 'Fail') {
+        return h('span', {
+          'aria-label': 'Fail',
+          style: { fontSize: '18px', color: 'rgb(239, 68, 68)' }
+        }, '✗')
+      }
+      return h('span', { 'aria-label': 'Unknown' }, '?')
+    },
+    cellProps: (row: any) => {
+      const annotation = annotations.value.get(row.trace_id)
+      if (!annotation) return {}
+      const passFailStatus = annotation.holistic_pass_fail
+      if (passFailStatus === 'Pass') {
+        return { style: { backgroundColor: 'rgba(34, 197, 94, 0.15)' } }
+      } else if (passFailStatus === 'Fail') {
+        return { style: { backgroundColor: 'rgba(239, 68, 68, 0.15)' } }
+      }
+      return {}
+    }
+  },
+  {
     title: 'Trace ID',
     key: 'trace_id',
-    width: 200,
+    width: 180,
     ellipsis: {
       tooltip: true
     },

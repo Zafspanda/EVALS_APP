@@ -61,6 +61,16 @@ export const apiService = {
     return response.data
   },
 
+  async getAdjacentTraces(traceId: string) {
+    const response = await api.get(`/api/traces/${traceId}/adjacent`)
+    return response.data
+  },
+
+  async getNextUnannotatedTrace() {
+    const response = await api.get('/api/traces/next/unannotated')
+    return response.data
+  },
+
   // Annotations
   async saveAnnotation(annotation: {
     trace_id: string

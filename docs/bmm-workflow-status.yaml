@@ -26,4 +26,4 @@ workflow_status:
   tech-spec: "docs/tech-spec.md"  # agent: pm - COMPLETED
 
   # Phase 2: Implementation
-  sprint-planning: required  # agent: sm
+  sprint-planning: "docs/sprint-artifacts"  # agent: sm - COMPLETED (stories created)

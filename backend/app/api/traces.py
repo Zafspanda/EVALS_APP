@@ -225,3 +225,95 @@ async def get_trace(
     except Exception as e:
         logger.error(f"Error getting trace: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/{trace_id}/adjacent")
+async def get_adjacent_traces(
+    trace_id: str,
+    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})
+):
+    """
+    Get IDs of previous and next traces for efficient navigation
+    Returns: {"previous": "trace_id" | null, "next": "trace_id" | null}
+    """
+    try:
+        db = get_database()
+        traces_collection = db.traces
+
+        # Get current trace to determine sort position
+        current_trace = await traces_collection.find_one({"trace_id": trace_id})
+        if not current_trace:
+            raise HTTPException(status_code=404, detail="Trace not found")
+
+        # Get previous trace (same sort order as list view)
+        previous_cursor = traces_collection.find({
+            "$or": [
+                {"flow_session": {"$gt": current_trace["flow_session"]}},
+                {
+                    "flow_session": current_trace["flow_session"],
+                    "turn_number": {"$lt": current_trace["turn_number"]}
+                }
+            ]
+        }).sort([("flow_session", -1), ("turn_number", 1)]).limit(1)
+
+        previous_trace = await previous_cursor.to_list(length=1)
+        previous_id = previous_trace[0]["trace_id"] if previous_trace else None
+
+        # Get next trace
+        next_cursor = traces_collection.find({
+            "$or": [
+                {"flow_session": {"$lt": current_trace["flow_session"]}},
+                {
+                    "flow_session": current_trace["flow_session"],
+                    "turn_number": {"$gt": current_trace["turn_number"]}
+                }
+            ]
+        }).sort([("flow_session", -1), ("turn_number", 1)]).limit(1)
+
+        next_trace = await next_cursor.to_list(length=1)
+        next_id = next_trace[0]["trace_id"] if next_trace else None
+
+        return {
+            "previous": previous_id,
+            "next": next_id
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting adjacent traces: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/next/unannotated")
+async def get_next_unannotated_trace(
+    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})
+):
+    """
+    Get the first trace without an annotation for the current user
+    Returns: trace_id or null if all traces are annotated
+    """
+    try:
+        db = get_database()
+        traces_collection = db.traces
+        annotations_collection = db.annotations
+
+        # Get all annotated trace IDs for this user
+        annotated_cursor = annotations_collection.find(
+            {"user_id": current_user.get("user_id")},
+            {"trace_id": 1}
+        )
+        annotated_ids = [doc["trace_id"] async for doc in annotated_cursor]
+
+        # Find first trace not in annotated list
+        unannotated_trace = await traces_collection.find_one(
+            {"trace_id": {"$nin": annotated_ids}},
+            sort=[("flow_session", -1), ("turn_number", 1)]
+        )
+
+        if unannotated_trace:
+            return {"trace_id": unannotated_trace["trace_id"]}
+        else:
+            return {"trace_id": None}
+
+    except Exception as e:
+        logger.error(f"Error finding unannotated trace: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

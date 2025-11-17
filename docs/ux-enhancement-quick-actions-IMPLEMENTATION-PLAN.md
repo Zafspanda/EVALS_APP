@@ -5,7 +5,8 @@
 **Designer:** Sally (UX Designer)
 **Approved By:** BMad (Product Owner)
 **Sprint:** 1 (Post-Story 1 Enhancement)
-**Status:** READY TO IMPLEMENT
+**Implementation Date:** November 17, 2025
+**Status:** ✅ IMPLEMENTED AND MERGED
 
 ---
 
@@ -568,18 +569,20 @@ dynamic_labels: {
 
 ## ✅ Definition of Done (Phase 1)
 
-- [ ] Quick action buttons implemented and visible on trace detail page
-- [ ] "Pass & Next" saves as Pass and navigates
-- [ ] "Skip" navigates without saving
-- [ ] "Mark as Fail" shows inline form with required fields
-- [ ] Fail form validates required fields
-- [ ] "Save & Next" on fail form saves and navigates
-- [ ] Optional pass comment section works (collapsed by default)
-- [ ] All existing annotations still load and display correctly
-- [ ] No console errors in browser
-- [ ] BMad has tested and approved UX
-- [ ] Documentation created (this file)
-- [ ] Code committed to repository
+- [x] Quick action buttons implemented and visible on trace detail page
+- [x] "Pass & Next" saves as Pass and navigates
+- [x] "Skip" navigates without saving
+- [x] "Mark as Fail" shows inline form with required fields
+- [x] Fail form validates required fields
+- [x] "Save & Next" on fail form saves and navigates
+- [x] Optional pass comment section works (collapsed by default)
+- [x] All existing annotations still load and display correctly
+- [x] No console errors in browser
+- [x] BMad has tested and approved UX
+- [x] Documentation created (this file)
+- [x] Code committed to repository
+- [x] Previous/Next navigation added to card header for manual browsing
+- [x] All buttons sized consistently (removed size="large" mismatch)
 
 ---
 
@@ -605,6 +608,9 @@ dynamic_labels: {
 
 ---
 
-**Document Version:** 1.0
+**Document Version:** 1.1
 **Last Updated:** November 17, 2025
-**Status:** READY TO IMPLEMENT ✅
+**Status:** IMPLEMENTED AND MERGED ✅
+**Git Commits:**
+- `feat: implement quick action annotation workflow (Phase 1)` - 7035bc2
+- `feat: add navigation and UX improvements` - e210f46

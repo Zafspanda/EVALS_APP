@@ -226,21 +226,26 @@ Architecture:
 
 #### AnnotationForm.vue
 **Path**: `/frontend/src/components/AnnotationForm.vue` (150+ lines)
-**Purpose**: Form for creating/updating annotations
+**Purpose**: Quick action annotation workflow (enhanced Nov 17, 2025)
 **Key Features**:
-- Pass/Fail radio selection
-- Conditional failure note field
-- Open codes input
-- Comments/hypotheses textarea
-- Form validation
+- Quick action buttons: "Pass & Next" (green), "Skip" (neutral), "Mark as Fail" (red)
+- One-click "Pass & Next": saves as Pass + auto-navigates to next unannotated trace
+- "Skip" button: navigates to next unannotated trace without saving
+- "Mark as Fail": shows conditional inline fail form with required fields
+- Optional pass comment (collapsed section)
+- Conditional failure note field (required for fail)
+- Auto-navigation after all save actions
 - Existing annotation versioning
 
 **Testable Aspects**:
-- Form validation rules
-- Conditional field visibility
+- Quick action button handlers
+- Conditional fail form visibility
+- Form validation rules (fail path)
+- Auto-navigation to next unannotated trace
 - Save/reset actions
 - Existing annotation detection
 - Version tracking
+- Pass comment optional field handling
 
 #### TraceViewer.vue
 **Path**: `/frontend/src/components/TraceViewer.vue` (200+ lines)
@@ -249,6 +254,8 @@ Architecture:
 - Trace detail display
 - Conversation context
 - Integration with AnnotationForm
+- Manual navigation: Previous/Next buttons in card header for browsing
+- Auto-reload annotation after save
 
 #### Other Components
 - **AppHeader.vue**: Navigation header
@@ -294,6 +301,8 @@ Architecture:
 - `importCSV(file)`: Upload CSV file
 - `getTraces(page, pageSize)`: List traces
 - `getTrace(traceId)`: Get single trace
+- `getAdjacentTraces(traceId)`: Get previous/next trace IDs for navigation
+- `getNextUnannotatedTrace()`: Get next unannotated trace for quick action workflow
 - `saveAnnotation(annotation)`: Create/update annotation
 - `getAnnotationForTrace(traceId)`: Get trace annotation
 - `getUserStats()`: Get user statistics
@@ -306,6 +315,7 @@ Architecture:
 **Testable Aspects**:
 - Token injection logic
 - API endpoint construction
+- Navigation methods (adjacent, next unannotated)
 - Error handling
 - Request/response mapping
 
@@ -348,6 +358,13 @@ Endpoints:
 - `GET /api/traces/{trace_id}`: Get single trace
   - Includes conversation context (previous turns)
   - NaN value cleaning for JSON serialization
+- `GET /api/traces/{trace_id}/adjacent`: Get adjacent trace IDs
+  - Returns: previous and next trace IDs for navigation
+  - Used for manual Previous/Next browsing
+- `GET /api/traces/next/unannotated`: Get next unannotated trace
+  - Finds next trace without annotation by current user
+  - Used for quick action workflow auto-navigation
+  - Returns None if all traces annotated
 
 **Key Features**:
 - CSV parsing with Pandas
@@ -362,6 +379,8 @@ Endpoints:
 - Duplicate trace handling
 - Pagination logic
 - Context retrieval
+- Adjacent trace navigation logic
+- Next unannotated trace finding
 - Error handling
 - NaN cleaning
 
@@ -562,15 +581,21 @@ backend/app/
 6. Traces inserted to MongoDB (with duplicate detection)
 7. Response returned with import statistics
 
-### Annotation Flow
+### Annotation Flow (Quick Action Workflow - Enhanced Nov 17, 2025)
 1. User views trace in TraceViewer
-2. User fills AnnotationForm with pass/fail and comments
-3. Form validates input
-4. `POST /api/annotations` called
-5. Backend checks trace exists
-6. Checks for existing annotation
-7. Upserts to MongoDB (create or update with version increment)
-8. Response includes annotation data
+2. User clicks quick action button:
+   - **"Pass & Next"**: Saves as Pass with optional comment, auto-navigates to next unannotated trace
+   - **"Skip"**: Navigates to next unannotated trace without saving (for deferred evaluation)
+   - **"Mark as Fail"**: Shows conditional fail form with required fields
+3. For Pass & Next or Fail submission:
+   - Form validates input (fail requires first_failure_note)
+   - `POST /api/annotations` called
+   - Backend checks trace exists
+   - Checks for existing annotation
+   - Upserts to MongoDB (create or update with version increment)
+   - Response includes annotation data
+4. After save: auto-navigation to next unannotated trace via `GET /api/traces/next/unannotated`
+5. Manual navigation: Previous/Next buttons in card header use `GET /api/traces/{trace_id}/adjacent`
 
 ### Authentication Flow
 1. Clerk handles frontend authentication

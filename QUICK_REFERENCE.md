@@ -48,6 +48,8 @@ backend/app/                      frontend/src/
 - `POST /api/traces/import-csv` - Import CSV file
 - `GET /api/traces` - List traces (paginated)
 - `GET /api/traces/{trace_id}` - Get single trace with context
+- `GET /api/traces/{trace_id}/adjacent` - Get previous/next trace IDs for navigation
+- `GET /api/traces/next/unannotated` - Get next unannotated trace (for quick action workflow)
 
 ### Annotations
 - `POST /api/annotations` - Create/update annotation
@@ -174,15 +176,23 @@ pytest test_api.py::TestCSVImport::test_csv_validation_invalid_extension -v
   _id: ObjectId,
   trace_id: str,
   user_id: str,
-  holistic_pass_fail: "Pass" | "Fail",
-  first_failure_note: str,  # Optional, max 256 chars
-  open_codes: str,          # Comma-separated, max 500
-  comments_hypotheses: str, # Max 1000 chars
+  holistic_pass_fail: "Pass" | "Fail",  # Set via quick actions
+  first_failure_note: str,  # Required for Fail, max 256 chars
+  open_codes: str,          # Comma-separated text (Story 1), max 500
+  comments_hypotheses: str, # Optional for Pass, required for Fail, max 1000
   version: int,             # Increments on update
   created_at: datetime,
   updated_at: datetime
 }
 ```
+
+### Quick Action Annotation Workflow
+**Enhanced UX (Nov 17, 2025):**
+- **"Pass & Next"** - One-click save as Pass + auto-navigate (3s vs 15s)
+- **"Skip"** - Navigate without saving (for uncertain/deferred traces)
+- **"Mark as Fail"** - Shows conditional inline form with required fields
+- **Auto-navigation** - All save actions navigate to next unannotated trace
+- **Manual navigation** - Previous/Next buttons in card header for browsing
 
 ---
 

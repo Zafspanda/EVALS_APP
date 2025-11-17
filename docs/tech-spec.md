@@ -83,11 +83,18 @@ Build a web application that:
 - CSV import with schema validation
 - Turn-level trace evaluation interface
 - Multi-user support (basic - no real-time sync)
+- **Quick Action Annotation Workflow** (enhanced mid-sprint):
+  - One-click "Pass & Next" for efficient pass annotations
+  - "Skip" button for deferred evaluation
+  - "Mark as Fail" with conditional inline form
+  - Auto-navigation to next unannotated trace
+  - Previous/Next manual navigation in card header
 - Annotation fields:
-  - Binary pass/fail judgement
-  - Free-form open codes
-  - Dynamic label columns from rubric
-  - Comments and flags
+  - Binary pass/fail via quick actions (not radio buttons)
+  - First failure note (required for failures only)
+  - Free-form open codes (comma-separated text in Phase 1, multi-select in Phase 2)
+  - Dynamic label columns from rubric (Phase 2)
+  - Comments and flags (optional for pass, required for fail)
 - CSV/JSONL export
 - Basic audit trail
 - User authentication via Clerk
@@ -490,9 +497,10 @@ npm run dev
 **Phase 2: Core Features (Week 2)**
 
 1. **Trace Evaluation Interface**
-   - Build TraceViewer component
-   - Create AnnotationForm with dynamic fields
-   - Implement save/navigation logic
+   - Build TraceViewer component with Previous/Next navigation in header
+   - Create AnnotationForm with quick action buttons (Pass & Next, Skip, Mark as Fail)
+   - Implement conditional form display (fail form only shows when needed)
+   - Add auto-navigation to next unannotated trace
    - Add progress tracking
 
 2. **Multi-User Support**
@@ -538,12 +546,14 @@ npm run dev
 
 **MVP Success Criteria:**
 1. ✅ Can import Sendle CSV (100 traces) without errors
-2. ✅ Can view and navigate between traces
-3. ✅ Can add all required annotations:
-   - Binary pass/fail
-   - Open codes (comma-separated)
-   - Comments
-   - Dynamic label checkboxes
+2. ✅ Can view and navigate between traces (with auto-navigation to next unannotated)
+3. ✅ Can add all required annotations via quick actions:
+   - One-click "Pass & Next" (30-50% faster than traditional form)
+   - "Skip" for deferred evaluation
+   - "Mark as Fail" with conditional inline form
+   - First failure note (required for failures)
+   - Open codes (comma-separated text input)
+   - Comments (optional for pass, required for fail)
 4. ✅ Can export enriched CSV with 35+ columns
 5. ✅ Multiple users can work on same dataset
 6. ✅ Audit trail tracks all changes

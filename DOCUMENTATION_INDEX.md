@@ -126,6 +126,26 @@ This index guides you through all project documentation for understanding the Ev
 
 ---
 
+### 5. UX Enhancement Implementation Plan
+**File**: `docs/ux-enhancement-quick-actions-IMPLEMENTATION-PLAN.md`
+**Status**: ✅ IMPLEMENTED AND MERGED (Nov 17, 2025)
+**Purpose**: Technical implementation plan for Quick Action Annotation Workflow
+
+**Contains**:
+- Enhancement rationale (30-50% velocity improvement)
+- Phase 1 implementation requirements
+- API changes (adjacent traces, next unannotated)
+- Component specifications (AnnotationForm, TraceViewer)
+- Definition of Done checklist
+- Git commit references
+
+**Best for**:
+- Understanding the UX enhancement decision
+- Reviewing implementation details
+- Reference for similar workflow patterns
+
+---
+
 ## How to Use These Documents
 
 ### For Initial Project Understanding

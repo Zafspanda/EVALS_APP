@@ -17,12 +17,15 @@ This tool solves these challenges by providing a purpose-built platform that sca
 ## Key Features
 
 ### Core Functionality
-- **Streamlined Annotation Workflow**: Intuitive interface for evaluating LLM responses with customizable rubrics
+- **Quick Action Annotation Workflow** *(Enhanced Nov 2025)*: One-click "Pass & Next" for 30-50% faster evaluation
+  - Skip button for deferred traces
+  - Conditional fail form (only shown when needed)
+  - Auto-navigation to next unannotated trace
+  - Manual Previous/Next for review
 - **Living Rubrics**: Dynamic evaluation criteria that adapt to your specific use cases and failure modes
 - **Golden Set Management**: Curate high-quality reference examples for consistent evaluation standards
 - **Bulk Import/Export**: CSV and JSONL support for seamless integration with ML pipelines
 - **Multi-turn Context**: View complete conversation history for better evaluation context
-- **Confidence Scoring**: Track evaluator confidence levels for each annotation
 
 ### Collaboration & Analytics
 - **Real-time Collaboration**: Multiple evaluators can work simultaneously

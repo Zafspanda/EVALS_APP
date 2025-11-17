@@ -87,3 +87,4 @@ frontend/dist-ssr/
 # Clerk keys (ensure these are never committed)
 **/clerk_secret*
 CLERK_*
+*.backup

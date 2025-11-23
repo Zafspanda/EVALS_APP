@@ -1,0 +1,34 @@
+// QuickActions Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.quick-actions {
+  background: var(--sds-color-background-surface);
+  border: 1px solid var(--sds-color-border-default);
+  border-radius: var(--sds-border-radius-lg); // Larger radius
+  padding: var(--sds-spacing-6); // More padding
+  margin-bottom: var(--sds-spacing-6); // More bottom margin
+
+  &__alert {
+    margin-bottom: var(--sds-spacing-4); // Increased spacing
+  }
+
+  &__existing {
+    margin-bottom: var(--sds-spacing-4); // Increased spacing
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--sds-spacing-4); // Increased gap between buttons
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--sds-spacing-3);
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -4,9 +4,11 @@
 
 migration_info:
   start_date: "2025-11-23"
-  target_completion: "TBD"
-  current_phase: "Phase 1: Core Infrastructure"
-  overall_status: "in-progress"
+  target_completion: "2025-11-23"
+  current_phase: "Phase 3: Testing & Validation"
+  overall_status: "phase-2-complete"
+  phase_1_completion: "2025-11-23"
+  phase_2_completion: "2025-11-23"
 
 phases:
   - phase: "Phase 0: React Scaffold Setup"
@@ -31,103 +33,134 @@ phases:
         notes: "Set up @ alias pointing to ./src directory"
 
   - phase: "Phase 1: Core Infrastructure"
-    status: "not-started"
-    start_date: null
-    completion_date: null
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
     tasks:
       - name: "Migrate Clerk authentication (@clerk/clerk-react)"
-        status: "not-started"
+        status: "completed"
+        notes: "ClerkProvider configured in main.tsx with VITE_CLERK_PUBLISHABLE_KEY"
       - name: "Set up React Context for auth state"
-        status: "not-started"
-      - name: "Migrate API client layer (Axios)"
-        status: "not-started"
-      - name: "Set up React Context for trace state"
-        status: "not-started"
-      - name: "Set up React Context for annotation state"
-        status: "not-started"
+        status: "completed"
+        notes: "Using @clerk/clerk-react hooks (useAuth, useUser) - no custom context needed"
+      - name: "Migrate API client layer (Axios → Fetch)"
+        status: "completed"
+        notes: "Created services/api.ts with fetch-based apiService. Clerk token injection via window.Clerk"
+      - name: "Create custom hooks for trace state"
+        status: "completed"
+        notes: "Created hooks/useTraces.ts with useTraces, useTrace, useAdjacentTraces, useNextUnannotated"
+      - name: "Create custom hooks for annotation state"
+        status: "completed"
+        notes: "Created hooks/useAnnotations.ts with useAnnotation, useSaveAnnotation, useUserStats"
+    files_created:
+      - "src/types/api.ts - TypeScript type definitions"
+      - "src/services/api.ts - Fetch-based API service"
+      - "src/hooks/useTraces.ts - Trace data fetching hooks"
+      - "src/hooks/useAnnotations.ts - Annotation data fetching hooks"
 
   - phase: "Phase 2: Component Migration"
-    status: "not-started"
-    start_date: null
-    completion_date: null
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
     components:
       # Views
       - name: "App.tsx (Root component)"
         vue_file: "frontend/src/App.vue"
         react_file: "frontend/src/App.tsx"
-        status: "not-started"
-        notes: ""
+        status: "completed"
+        notes: "Integrated AppHeader, set up React Router with all routes"
 
       - name: "Dashboard View"
         vue_file: "frontend/src/views/Dashboard.vue"
         react_file: "frontend/src/views/Dashboard.tsx"
-        status: "not-started"
-        sds_components: ["Button", "Card", "Table"]
-        notes: ""
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "User stats display with navigation to Traces and Import"
 
-      - name: "Evaluation View"
+      - name: "TracesView (List View)"
+        vue_file: "frontend/src/views/TracesView.vue"
+        react_file: "frontend/src/views/TracesView.tsx"
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for TraceList component"
+
+      - name: "TraceDetailView (Evaluation View)"
         vue_file: "frontend/src/views/EvaluationView.vue"
-        react_file: "frontend/src/views/EvaluationView.tsx"
-        status: "not-started"
-        sds_components: ["Button", "Card", "Form"]
-        notes: "Core evaluation interface with quick actions"
+        react_file: "frontend/src/views/TraceDetailView.tsx"
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for TraceViewer component"
 
       - name: "Import View"
         vue_file: "frontend/src/views/ImportView.vue"
         react_file: "frontend/src/views/ImportView.tsx"
-        status: "not-started"
-        sds_components: ["Button", "FileUpload", "Modal"]
-        notes: ""
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for CsvImporter component"
 
       - name: "Export View"
         vue_file: "frontend/src/views/ExportView.vue"
         react_file: "frontend/src/views/ExportView.tsx"
-        status: "not-started"
-        sds_components: ["Button", "Select", "Modal"]
-        notes: ""
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
 
       # Components
       - name: "AppHeader Component"
         vue_file: "frontend/src/components/AppHeader.vue"
-        react_file: "frontend/src/components/AppHeader.tsx"
-        status: "not-started"
-        sds_components: ["Button", "Avatar", "Dropdown"]
-        notes: "Navigation and user menu"
+        react_file: "frontend/src/components/AppHeader/AppHeader.tsx"
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "Navigation with Clerk UserButton integration, responsive design"
 
       - name: "TraceViewer Component"
         vue_file: "frontend/src/components/TraceViewer.vue"
-        react_file: "frontend/src/components/TraceViewer.tsx"
-        status: "not-started"
-        sds_components: ["Card", "Button", "Badge"]
-        notes: "Display trace content with turn metadata"
+        react_file: "frontend/src/components/TraceViewer/TraceViewer.tsx"
+        status: "completed"
+        sds_components: ["Button", "Divider"]
+        notes: "Includes ToolCallCard and SessionContext subcomponents, custom loading/error states"
 
-      - name: "AnnotationForm Component"
+      - name: "TraceList Component"
+        vue_file: "frontend/src/components/TraceList.vue"
+        react_file: "frontend/src/components/TraceList/TraceList.tsx"
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "Custom table with SDS tokens, row highlighting, pagination"
+
+      - name: "QuickActions Component (was AnnotationForm)"
         vue_file: "frontend/src/components/AnnotationForm.vue"
-        react_file: "frontend/src/components/AnnotationForm.tsx"
-        status: "not-started"
-        sds_components: ["Button", "TextArea", "Input", "Form"]
-        notes: "Quick actions + conditional fail form"
+        react_file: "frontend/src/components/QuickActions/QuickActions.tsx"
+        status: "completed"
+        sds_components: ["Button", "Alert"]
+        notes: "Split into QuickActions + FailureForm for separation of concerns"
+
+      - name: "FailureForm Component (was part of AnnotationForm)"
+        vue_file: "frontend/src/components/AnnotationForm.vue"
+        react_file: "frontend/src/components/QuickActions/FailureForm.tsx"
+        status: "completed"
+        sds_components: ["Input", "TextArea", "Button", "Alert"]
+        notes: "Conditional fail form with validation"
 
       - name: "CsvImporter Component"
         vue_file: "frontend/src/components/CsvImporter.vue"
-        react_file: "frontend/src/components/CsvImporter.tsx"
-        status: "not-started"
-        sds_components: ["Button", "FileUpload", "ProgressBar"]
-        notes: "CSV upload with validation feedback"
+        react_file: "frontend/src/components/CsvImporter/CsvImporter.tsx"
+        status: "completed"
+        sds_components: ["Button", "Alert"]
+        notes: "Custom drag-and-drop upload, file validation (extension, size)"
 
       - name: "ExportDialog Component"
         vue_file: "frontend/src/components/ExportDialog.vue"
         react_file: "frontend/src/components/ExportDialog.tsx"
-        status: "not-started"
-        sds_components: ["Modal", "Button", "Select", "Checkbox"]
-        notes: "Export options and format selection"
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
 
       - name: "ProgressTracker Component"
         vue_file: "frontend/src/components/ProgressTracker.vue"
         react_file: "frontend/src/components/ProgressTracker.tsx"
-        status: "not-started"
-        sds_components: ["ProgressBar", "Badge"]
-        notes: "Show annotation completion percentage"
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
 
   - phase: "Phase 3: Testing & Validation"
     status: "not-started"

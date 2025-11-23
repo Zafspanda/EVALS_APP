@@ -11,9 +11,15 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+    preserveSymlinks: true,
+    dedupe: ['react', 'react-dom'],
   },
   server: {
     port: 5175, // Different port from Vue app
+    fs: {
+      // Allow serving files from the linked SDS package
+      allow: ['..', '../../Sendle/SDS/sendle-design-system-main/packages/sds-ui'],
+    },
   },
   build: {
     outDir: 'dist-react',

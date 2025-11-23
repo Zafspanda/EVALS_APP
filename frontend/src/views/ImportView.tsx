@@ -1,12 +1,21 @@
+// ImportView - CSV import page
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import CsvImporter from '../components/CsvImporter';
 
-const ImportView: React.FC = () => {
+export const ImportView: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleImportComplete = () => {
+    // Navigate to traces list after successful import
+    setTimeout(() => {
+      navigate('/traces');
+    }, 2000);
+  };
+
   return (
-    <div className="import-view">
-      <h2>Import CSV</h2>
-      <div style={{ padding: '12px', background: '#e3f2fd', borderLeft: '4px solid #2196f3' }}>
-        CSV import functionality will be implemented in Phase 2 of the migration.
-      </div>
+    <div className="import-view" style={{ padding: '2rem' }}>
+      <CsvImporter onImportComplete={handleImportComplete} />
     </div>
   );
 };

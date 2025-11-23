@@ -1,48 +1,22 @@
+// App Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
 .app {
   display: flex;
   flex-direction: column;
-  height: 100%;
-
-  &__header {
-    background-color: var(--color-white, #ffffff);
-    border-bottom: 1px solid var(--color-border-default, #e5e5e5);
-    padding: var(--spacing-md, 16px) var(--spacing-lg, 24px);
-  }
-
-  &__header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  &__title {
-    font-size: var(--font-size-h3, 24px);
-    font-weight: var(--font-weight-semibold, 600);
-    color: var(--color-text-default, #000000);
-    margin: 0;
-  }
-
-  &__nav {
-    display: flex;
-    gap: var(--spacing-sm, 8px);
-    align-items: center;
-    flex: 1;
-    margin-left: var(--spacing-xl, 32px);
-  }
-
-  &__user {
-    display: flex;
-    align-items: center;
-  }
+  min-height: 100vh;
+  background: var(--sds-color-background);
 
   &__main {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-lg, 24px);
-    max-width: 1400px;
+    padding: var(--sds-spacing-6); // Increased padding for breathing room
+    max-width: 1600px; // Slightly wider for modern displays
     margin: 0 auto;
     width: 100%;
+
+    @media (max-width: 768px) {
+      padding: var(--sds-spacing-4); // Less padding on mobile
+    }
   }
 }

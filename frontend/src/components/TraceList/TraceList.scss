@@ -1,0 +1,269 @@
+// TraceList Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.trace-list {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--sds-spacing-4);
+
+  // Loading state
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sds-spacing-8);
+    text-align: center;
+
+    p {
+      margin-top: var(--sds-spacing-3);
+      color: var(--sds-color-text-secondary);
+    }
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--sds-color-border-default);
+    border-top-color: var(--sds-color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  // Error state
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sds-spacing-8);
+    text-align: center;
+
+    p {
+      margin: 0 0 var(--sds-spacing-2) 0;
+      color: var(--sds-color-text-primary);
+      font-weight: var(--sds-font-weight-semibold);
+    }
+  }
+
+  &__error-message {
+    color: var(--sds-color-text-error) !important;
+    font-size: var(--sds-font-size-sm);
+    margin-bottom: var(--sds-spacing-4) !important;
+  }
+
+  // Header
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--sds-spacing-4);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--sds-spacing-2);
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--sds-font-size-xl);
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-primary);
+  }
+
+  &__controls {
+    label {
+      display: flex;
+      align-items: center;
+      gap: var(--sds-spacing-2);
+      font-size: var(--sds-font-size-sm);
+      color: var(--sds-color-text-secondary);
+    }
+  }
+
+  &__page-size-select {
+    padding: var(--sds-spacing-1) var(--sds-spacing-2);
+    border: 1px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-sm);
+    background: var(--sds-color-background);
+    color: var(--sds-color-text-primary);
+    font-size: var(--sds-font-size-sm);
+    cursor: pointer;
+
+    &:focus {
+      outline: 2px solid var(--sds-color-border-focus);
+      outline-offset: 1px;
+    }
+  }
+
+  // Table
+  &__table-container {
+    overflow-x: auto;
+    border: 1px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-md);
+    background: var(--sds-color-background-surface);
+    margin-bottom: var(--sds-spacing-2);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--sds-font-size-sm);
+    min-width: 1200px; // Ensure table doesn't get too narrow
+
+    thead {
+      background: var(--sds-color-background-subtle);
+      border-bottom: 2px solid var(--sds-color-border-default);
+
+      th {
+        padding: var(--sds-spacing-4); // Increased padding
+        text-align: left;
+        font-weight: var(--sds-font-weight-semibold);
+        color: var(--sds-color-text-secondary);
+        font-size: var(--sds-font-size-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid var(--sds-color-border-default);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // Column-specific widths
+  &__th--status {
+    width: 70px;
+    text-align: center !important;
+  }
+
+  &__th--trace-id {
+    width: 200px;
+  }
+
+  &__th--session {
+    width: 130px;
+  }
+
+  &__th--turn {
+    width: 70px;
+    text-align: center !important;
+  }
+
+  &__th--user-message {
+    width: 35%; // Flexible width for message content
+    min-width: 250px;
+  }
+
+  &__th--ai-response {
+    width: 35%; // Flexible width for response content
+    min-width: 250px;
+  }
+
+  &__th--actions {
+    width: 110px;
+    text-align: center !important;
+  }
+
+  &__row {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--sds-color-background-hover);
+    }
+
+    // Row highlighting based on annotation status
+    &--pass {
+      background-color: rgba(34, 197, 94, 0.1);
+
+      &:hover {
+        background-color: rgba(34, 197, 94, 0.15);
+      }
+    }
+
+    &--fail {
+      background-color: rgba(239, 68, 68, 0.1);
+
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.15);
+      }
+    }
+  }
+
+  &__cell {
+    padding: var(--sds-spacing-4); // Increased padding to match headers
+    color: var(--sds-color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0; // Required for text-overflow to work with table cells
+    white-space: nowrap;
+
+    &--center {
+      text-align: center;
+    }
+  }
+
+  &__empty {
+    padding: var(--sds-spacing-8) !important;
+    text-align: center !important;
+    color: var(--sds-color-text-secondary);
+  }
+
+  // Status icons
+  &__status-icon {
+    font-size: 18px;
+    font-weight: bold;
+
+    &--pass {
+      color: rgb(34, 197, 94);
+    }
+
+    &--fail {
+      color: rgb(239, 68, 68);
+    }
+
+    &--unannotated {
+      color: var(--sds-color-text-disabled);
+    }
+  }
+
+  // Pagination
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sds-spacing-4); // Increased gap
+    margin-top: var(--sds-spacing-6); // More space above pagination
+    padding: var(--sds-spacing-4); // Add padding
+    background: var(--sds-color-background-surface);
+    border-radius: var(--sds-border-radius-md);
+    border: 1px solid var(--sds-color-border-default);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--sds-spacing-3);
+    }
+  }
+
+  &__page-info {
+    font-size: var(--sds-font-size-md); // Slightly larger
+    font-weight: var(--sds-font-weight-medium);
+    color: var(--sds-color-text-primary);
+    min-width: 200px; // Prevent layout shift
+    text-align: center;
+  }
+}

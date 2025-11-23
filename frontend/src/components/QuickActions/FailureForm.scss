@@ -1,0 +1,70 @@
+// FailureForm Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.failure-form {
+  margin-top: var(--sds-spacing-6); // Increased top margin
+  padding: var(--sds-spacing-6); // More padding
+  background: var(--sds-color-background-surface);
+  border: 2px solid var(--sds-color-border-error); // Thicker border to make it stand out
+  border-radius: var(--sds-border-radius-lg); // Larger radius
+
+  &__header {
+    margin-bottom: var(--sds-spacing-5); // More space after header
+  }
+
+  &__error {
+    margin-bottom: var(--sds-spacing-4); // Increased spacing
+  }
+
+  &__field {
+    margin-bottom: var(--sds-spacing-5); // More space between fields
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: var(--sds-spacing-2);
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-primary);
+    font-size: var(--sds-font-size-sm);
+  }
+
+  &__required {
+    color: var(--sds-color-text-error);
+  }
+
+  &__hint {
+    display: block;
+    margin-top: var(--sds-spacing-1);
+    font-size: var(--sds-font-size-xs);
+    color: var(--sds-color-text-secondary);
+  }
+
+  &__error-text {
+    display: block;
+    margin-top: var(--sds-spacing-1);
+    font-size: var(--sds-font-size-xs);
+    color: var(--sds-color-text-error);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sds-spacing-3); // Increased gap between buttons
+    margin-top: var(--sds-spacing-6); // More space before actions
+    padding-top: var(--sds-spacing-4); // Add top padding
+    border-top: 1px solid var(--sds-color-border-default); // Visual separator
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+      gap: var(--sds-spacing-3);
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  form {
+    margin-top: var(--sds-spacing-3);
+  }
+}

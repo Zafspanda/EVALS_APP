@@ -1,0 +1,13 @@
+// Additional app-wide styles
+// Spacing utilities
+.mt-sm { margin-top: var(--spacing-sm, 8px); }
+.mt-md { margin-top: var(--spacing-md, 16px); }
+.mt-lg { margin-top: var(--spacing-lg, 24px); }
+
+.mb-sm { margin-bottom: var(--spacing-sm, 8px); }
+.mb-md { margin-bottom: var(--spacing-md, 16px); }
+.mb-lg { margin-bottom: var(--spacing-lg, 24px); }
+
+.p-sm { padding: var(--spacing-sm, 8px); }
+.p-md { padding: var(--spacing-md, 16px); }
+.p-lg { padding: var(--spacing-lg, 24px); }

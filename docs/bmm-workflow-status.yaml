@@ -16,7 +16,7 @@
 #   - skipped: Optional/conditional workflow that was skipped
 
 generated: "2025-11-13"
-updated: "2025-11-17"
+updated: "2025-11-23"
 project: "Evals_app"
 project_type: "software"
 selected_track: "quick-flow"
@@ -31,6 +31,15 @@ workflow_status:
 
   # Phase 3: Architecture Review (Post-Sprint 1)
   architecture-review: "docs/architecture"  # agent: architect - COMPLETED (2025-11-17)
+
+  # Phase 4: UX Design & Migration Planning (Post-Architecture Review)
+  ux-design: "docs/ux-design-specification.md"  # agent: ux-designer - COMPLETED (2025-11-23)
+  course-correction: "docs/Course-correction-SDS.md"  # CRITICAL: Vue → React + SDS migration required
+  migration-guide: "docs/migration-implementation-guide.md"  # agent: architect - COMPLETED (2025-11-23)
+
+  # Phase 5: Migration Execution (In Progress)
+  migration-phase-0: "COMPLETED"  # React scaffold setup - COMPLETED (2025-11-23)
+  migration-status: "docs/migration-status.yaml"  # agent: architect - IN PROGRESS
 
 # Latest Review: Architecture Review (2025-11-17)
 latest_review:
@@ -92,22 +101,39 @@ latest_review:
       - "docs/architecture/adr/005-unannotated-query-optimization.md"
 
   next_actions:
-    - action: "Fix auth issues (Clerk JWT + webhook signatures)"
+    - action: "🚨 CRITICAL: Execute Vue → React + SDS Migration"
       priority: "P0"
+      effort: "6.5-9.5 days remaining"
+      owner: "architect agent"
+      blocks: "All future frontend development"
+      guide: "docs/migration-implementation-guide.md"
+      reason: "SDS is React-only, Vue incompatible. Mandatory for long-term maintainability."
+      completed_phases:
+        - "✅ Phase 0: React scaffold setup (COMPLETED 2025-11-23)"
+      remaining_phases:
+        - "Phase 1: Core Infrastructure (0.5 days)"
+        - "Phase 2: Component Migration (4 days)"
+        - "Phase 3: Testing & Validation (2 days)"
+        - "Phase 4: Deployment (1 day)"
+
+    - action: "Fix auth issues (Clerk JWT + webhook signatures)"
+      priority: "P1"
       effort: "2-3 hours"
       blocks: "Story 2 start"
+      note: "Defer until after migration (auth works in both Vue and React)"
 
     - action: "Test multi-user isolation with 2 Clerk users"
-      priority: "P0"
+      priority: "P1"
       effort: "1 hour"
       blocks: "Story 2 start"
+      note: "Defer until after migration"
 
     - action: "Implement aggregation pipeline for unannotated queries"
-      priority: "P1"
+      priority: "P2"
       effort: "2 hours"
       blocks: "Story 3"
 
     - action: "Configure MongoDB connection pooling"
-      priority: "P1"
+      priority: "P2"
       effort: "15 minutes"
       blocks: "Story 3"

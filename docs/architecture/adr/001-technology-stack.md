@@ -1,9 +1,27 @@
 # ADR-001: Technology Stack Selection
 
-**Status:** Accepted
+**Status:** ⚠️ SUPERSEDED by [ADR-006: React + SDS Migration](./006-react-sds-migration.md)
 **Date:** 2025-11-14
+**Superseded Date:** 2025-11-23
 **Deciders:** BMad Product Team
 **Consulted:** Winston (Architect)
+
+---
+
+## ⚠️ DEPRECATION NOTICE
+
+**This ADR describes the ORIGINAL technology stack (Vue 3 + Naive UI) that has been replaced.**
+
+**Current Stack:**
+- **Frontend:** React + Sendle Design System (see [ADR-006](./006-react-sds-migration.md))
+- **Backend:** FastAPI + MongoDB (UNCHANGED - still valid)
+
+**Migration Documentation:**
+- Strategic Rationale: [Course-correction-SDS.md](/docs/Course-correction-SDS.md)
+- UX Specification: [ux-design-specification.md](/docs/ux-design-specification.md)
+- Implementation Guide: [migration-implementation-guide.md](/docs/migration-implementation-guide.md)
+
+**Historical Record:** Backend decisions (FastAPI, MongoDB, Redis, Clerk) remain unchanged and valid.
 
 ---
 

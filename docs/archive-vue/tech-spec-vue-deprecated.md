@@ -1,3 +1,27 @@
+# ⚠️ DEPRECATED - Vue 3 Technical Specification (SUPERSEDED)
+
+**Status:** ARCHIVED - This document is NO LONGER CURRENT
+**Superseded By:** React + Sendle Design System migration documents
+**Archived Date:** November 23, 2025
+**Migration Decision:** See [ADR-006](/docs/architecture/adr/006-react-sds-migration.md)
+
+---
+
+## 🚨 IMPORTANT NOTICE FOR DEVELOPERS
+
+**This technical specification describes the ORIGINAL Vue 3 + Naive UI architecture that has been DEPRECATED.**
+
+**For current implementation specifications, refer to:**
+1. **Strategic Rationale:** [Course-correction-SDS.md](/docs/Course-correction-SDS.md) - WHY we migrated
+2. **UX Design Specification:** [ux-design-specification.md](/docs/ux-design-specification.md) - WHAT to build
+3. **Migration Implementation Guide:** [migration-implementation-guide.md](/docs/migration-implementation-guide.md) - HOW to execute
+
+**Backend sections (FastAPI, MongoDB, API) remain valid** - only frontend stack has changed.
+
+**Historical Record:** This document preserved for reference only - Story 1 was implemented using this Vue stack before migration decision.
+
+---
+
 # Technical Specification: Open Coding Web Application
 
 **Project:** Evals_app

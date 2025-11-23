@@ -8,7 +8,9 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:react": "vite --config vite.config.react.ts",
     "build": "run-p type-check \"build-only {@}\" --",
+    "build:react": "vite build --config vite.config.react.ts",
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
@@ -18,12 +20,19 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.56.2",
     "@clerk/vue": "^1.15.1",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react-swc": "^3.11.0",
     "@vueuse/core": "^14.0.0",
     "axios": "^1.13.2",
     "naive-ui": "^2.43.1",
     "papaparse": "^5.5.3",
     "pinia": "^3.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.2",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },

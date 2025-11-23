@@ -1,0 +1,183 @@
+# Vue → React + SDS Migration Status Tracker
+# Updated: 2025-11-23
+# Architect: Winston
+
+migration_info:
+  start_date: "2025-11-23"
+  target_completion: "TBD"
+  current_phase: "Phase 1: Core Infrastructure"
+  overall_status: "in-progress"
+
+phases:
+  - phase: "Phase 0: React Scaffold Setup"
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
+    tasks:
+      - name: "Initialize React + TypeScript + Vite project"
+        status: "completed"
+        notes: "Installed React 18.3.1, React DOM, React Router, @clerk/clerk-react 5.56.2"
+      - name: "Install Sendle Design System dependencies"
+        status: "completed"
+        notes: "Linked local SDS package via npm link from /Sendle/SDS/sendle-design-system-main/packages/sds-ui"
+      - name: "Configure build pipeline and Vite config"
+        status: "completed"
+        notes: "Created vite.config.react.ts with React SWC plugin, added dev:react and build:react scripts"
+      - name: "Set up React Router for navigation"
+        status: "completed"
+        notes: "React Router 6.28.0 installed, basic routes configured in App.tsx"
+      - name: "Configure TypeScript paths and aliases"
+        status: "completed"
+        notes: "Set up @ alias pointing to ./src directory"
+
+  - phase: "Phase 1: Core Infrastructure"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    tasks:
+      - name: "Migrate Clerk authentication (@clerk/clerk-react)"
+        status: "not-started"
+      - name: "Set up React Context for auth state"
+        status: "not-started"
+      - name: "Migrate API client layer (Axios)"
+        status: "not-started"
+      - name: "Set up React Context for trace state"
+        status: "not-started"
+      - name: "Set up React Context for annotation state"
+        status: "not-started"
+
+  - phase: "Phase 2: Component Migration"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    components:
+      # Views
+      - name: "App.tsx (Root component)"
+        vue_file: "frontend/src/App.vue"
+        react_file: "frontend/src/App.tsx"
+        status: "not-started"
+        notes: ""
+
+      - name: "Dashboard View"
+        vue_file: "frontend/src/views/Dashboard.vue"
+        react_file: "frontend/src/views/Dashboard.tsx"
+        status: "not-started"
+        sds_components: ["Button", "Card", "Table"]
+        notes: ""
+
+      - name: "Evaluation View"
+        vue_file: "frontend/src/views/EvaluationView.vue"
+        react_file: "frontend/src/views/EvaluationView.tsx"
+        status: "not-started"
+        sds_components: ["Button", "Card", "Form"]
+        notes: "Core evaluation interface with quick actions"
+
+      - name: "Import View"
+        vue_file: "frontend/src/views/ImportView.vue"
+        react_file: "frontend/src/views/ImportView.tsx"
+        status: "not-started"
+        sds_components: ["Button", "FileUpload", "Modal"]
+        notes: ""
+
+      - name: "Export View"
+        vue_file: "frontend/src/views/ExportView.vue"
+        react_file: "frontend/src/views/ExportView.tsx"
+        status: "not-started"
+        sds_components: ["Button", "Select", "Modal"]
+        notes: ""
+
+      # Components
+      - name: "AppHeader Component"
+        vue_file: "frontend/src/components/AppHeader.vue"
+        react_file: "frontend/src/components/AppHeader.tsx"
+        status: "not-started"
+        sds_components: ["Button", "Avatar", "Dropdown"]
+        notes: "Navigation and user menu"
+
+      - name: "TraceViewer Component"
+        vue_file: "frontend/src/components/TraceViewer.vue"
+        react_file: "frontend/src/components/TraceViewer.tsx"
+        status: "not-started"
+        sds_components: ["Card", "Button", "Badge"]
+        notes: "Display trace content with turn metadata"
+
+      - name: "AnnotationForm Component"
+        vue_file: "frontend/src/components/AnnotationForm.vue"
+        react_file: "frontend/src/components/AnnotationForm.tsx"
+        status: "not-started"
+        sds_components: ["Button", "TextArea", "Input", "Form"]
+        notes: "Quick actions + conditional fail form"
+
+      - name: "CsvImporter Component"
+        vue_file: "frontend/src/components/CsvImporter.vue"
+        react_file: "frontend/src/components/CsvImporter.tsx"
+        status: "not-started"
+        sds_components: ["Button", "FileUpload", "ProgressBar"]
+        notes: "CSV upload with validation feedback"
+
+      - name: "ExportDialog Component"
+        vue_file: "frontend/src/components/ExportDialog.vue"
+        react_file: "frontend/src/components/ExportDialog.tsx"
+        status: "not-started"
+        sds_components: ["Modal", "Button", "Select", "Checkbox"]
+        notes: "Export options and format selection"
+
+      - name: "ProgressTracker Component"
+        vue_file: "frontend/src/components/ProgressTracker.vue"
+        react_file: "frontend/src/components/ProgressTracker.tsx"
+        status: "not-started"
+        sds_components: ["ProgressBar", "Badge"]
+        notes: "Show annotation completion percentage"
+
+  - phase: "Phase 3: Testing & Validation"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    tasks:
+      - name: "Update Playwright E2E tests (selectors)"
+        status: "not-started"
+      - name: "Manual testing - CSV import flow"
+        status: "not-started"
+      - name: "Manual testing - Evaluation flow"
+        status: "not-started"
+      - name: "Manual testing - Export flow"
+        status: "not-started"
+      - name: "Performance validation (load time < 2s)"
+        status: "not-started"
+      - name: "Cross-browser testing (Chrome, Firefox, Safari)"
+        status: "not-started"
+
+  - phase: "Phase 4: Deployment"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    tasks:
+      - name: "Update Railway configuration for React build"
+        status: "not-started"
+      - name: "Deploy to Railway staging environment"
+        status: "not-started"
+      - name: "Smoke testing on staging"
+        status: "not-started"
+      - name: "Production deployment"
+        status: "not-started"
+      - name: "Post-deployment verification"
+        status: "not-started"
+
+blockers: []
+  # Example:
+  # - blocker: "SDS Button component missing 'loading' prop"
+  #   status: "open"
+  #   workaround: "Built custom loading state"
+  #   resolution: null
+
+notes:
+  - "Migration triggered by strategic alignment with Sendle ecosystem"
+  - "All backend APIs remain unchanged (100% compatible)"
+  - "Sprint 1 UI is minimal - perfect timing for migration"
+  - "Story 2 blocked until migration complete"
+
+reference_documents:
+  - "docs/Course-correction-SDS.md - Strategic rationale"
+  - "docs/ux-design-specification.md - UX blueprint"
+  - "docs/migration-implementation-guide.md - Detailed technical guide"
+  - "docs/architecture/adr/006-react-sds-migration.md - Architecture decision"

@@ -1,5 +1,29 @@
 # Evals Open Coding Tool
 
+## 🚨 MIGRATION IN PROGRESS
+
+**Project Status:** Vue → React + Sendle Design System Migration Active
+**Start Date:** November 23, 2025
+**Current Phase:** Phase 1 - Core Infrastructure (Phase 0 ✅ Complete)
+
+**Important for Developers:**
+- ✅ Sprint 1 (Story 1) completed in Vue 3
+- ✅ Phase 0 Complete: React scaffold, SDS linked, dev server running
+- 🔄 Migration to React + Sendle Design System in progress
+- ⏸️ Sprint 2 (Story 2) blocked until migration complete
+
+**Primary Migration Documents:**
+- **WHY:** [docs/Course-correction-SDS.md](docs/Course-correction-SDS.md) - Strategic rationale
+- **WHAT:** [docs/ux-design-specification.md](docs/ux-design-specification.md) - UX blueprint
+- **HOW:** [docs/migration-implementation-guide.md](docs/migration-implementation-guide.md) - Implementation guide
+- **PROGRESS:** [docs/migration-status.yaml](docs/migration-status.yaml) - Migration tracking
+
+**Documentation Index:** [docs/README.md](docs/README.md) - Complete documentation guide
+
+**Tech Stack Below Reflects FUTURE State (React + SDS)** - Current implementation uses Vue 3 until migration completes.
+
+---
+
 ## About
 
 The **Evals Open Coding Tool** is a modern, web-based platform designed to streamline the human evaluation and annotation of AI model outputs. Built specifically for ML/AI teams who need to conduct systematic quality assessments, this tool transforms the traditionally manual and error-prone process of LLM evaluation into an efficient, collaborative workflow.
@@ -40,12 +64,14 @@ This tool solves these challenges by providing a purpose-built platform that sca
 
 ## Tech Stack
 
-- **Frontend**: Vue 3.5 + TypeScript with Naive UI component library
-- **Backend**: FastAPI (Python 3.13) with async MongoDB driver (Motor)
-- **Database**: MongoDB for flexible schema + Redis for caching
-- **Authentication**: Clerk for secure, scalable user management
-- **Testing**: Playwright (E2E) + Pytest (API) with 65%+ test coverage
-- **Development**: Hot-reload, Docker Compose for local services
+**⚠️ Note:** Frontend stack is transitioning from Vue to React. See migration notice above.
+
+- **Frontend**: React 18+ + TypeScript with Sendle Design System (SDS) *(migrating from Vue 3.5 + Naive UI)*
+- **Backend**: FastAPI (Python 3.13) with async MongoDB driver (Motor) *(unchanged)*
+- **Database**: MongoDB for flexible schema + Redis for caching *(unchanged)*
+- **Authentication**: Clerk for secure, scalable user management *(unchanged)*
+- **Testing**: Playwright (E2E) + Pytest (API) with 65%+ test coverage *(unchanged)*
+- **Development**: Hot-reload, Docker Compose for local services *(unchanged)*
 
 ## Setup Instructions
 

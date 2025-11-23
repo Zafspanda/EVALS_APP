@@ -1,0 +1,15 @@
+# Project Context
+
+## Design System
+This project uses the Sendle Design System for UI components and design patterns.
+
+**Documentation:** https://sendle.github.io/sendle-design-system/?path=/docs/about--docs
+
+When implementing UI components, refer to the Sendle Design System documentation for:
+- Component patterns and usage
+- Design tokens and theming
+- Accessibility guidelines
+- Best practices
+
+## Additional Context
+- Add any other project-specific rules or context here

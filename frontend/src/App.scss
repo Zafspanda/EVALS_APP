@@ -5,18 +5,12 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--sds-color-background);
+  background: var(--sendle-admin-bg-white); // Solid white background
 
   &__main {
     flex: 1;
-    overflow-y: auto;
-    padding: var(--sds-spacing-6); // Increased padding for breathing room
-    max-width: 1600px; // Slightly wider for modern displays
-    margin: 0 auto;
+    // Removed overflow-y: auto to allow sticky positioning to work with viewport scroll
+    // No padding - each view handles its own layout
     width: 100%;
-
-    @media (max-width: 768px) {
-      padding: var(--sds-spacing-4); // Less padding on mobile
-    }
   }
 }

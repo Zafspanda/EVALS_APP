@@ -2,9 +2,13 @@
 @import '@sendle/sds-ui/scss/tokens';
 
 .trace-list {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: var(--sds-spacing-4);
+  min-height: calc(100vh - 80px);
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
 
   // Loading state
   &__loading {
@@ -60,23 +64,20 @@
 
   // Header
   &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--sds-spacing-4);
-
-    @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--sds-spacing-2);
-    }
+    position: sticky;
+    top: 62px; // Below the app header (app header is ~62px tall)
+    z-index: 90;
+    background: white; // Solid white background
+    margin: 0 -32px; // Extend beyond container padding
+    padding: 24px 32px 16px 32px; // Apply padding here
+    border-bottom: 1px solid var(--sds-color-border-default);
   }
 
   &__title {
     margin: 0;
-    font-size: var(--sds-font-size-xl);
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
+    font-size: var(--sendle-admin-font-size-h2);
+    font-weight: 500;
+    color: var(--sendle-admin-text-primary);
   }
 
   &__controls {
@@ -105,41 +106,53 @@
   }
 
   // Table
-  &__table-container {
-    overflow-x: auto;
-    border: 1px solid var(--sds-color-border-default);
-    border-radius: var(--sds-border-radius-md);
-    background: var(--sds-color-background-surface);
-    margin-bottom: var(--sds-spacing-2);
+  &__table-wrapper {
+    margin-bottom: var(--sendle-spacing-md);
+    margin-top: var(--sendle-spacing-md);
   }
 
   &__table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--sds-font-size-sm);
-    min-width: 1200px; // Ensure table doesn't get too narrow
+    font-size: var(--sendle-admin-font-size-base);
+    background: white;
+    border: 1px solid var(--sendle-admin-border-light);
+    border-radius: 4px;
 
     thead {
-      background: var(--sds-color-background-subtle);
-      border-bottom: 2px solid var(--sds-color-border-default);
+      position: sticky;
+      top: 130px; // Below app header (~62px) + Traces heading with padding (~68px)
+      z-index: 80;
+      background: white; // Solid white background
+
+      tr {
+        border-bottom: 2px solid var(--sendle-admin-border-light);
+        background: white; // Solid white background
+      }
 
       th {
-        padding: var(--sds-spacing-4); // Increased padding
+        padding: var(--sendle-spacing-md) var(--sendle-spacing-sm);
         text-align: left;
-        font-weight: var(--sds-font-weight-semibold);
-        color: var(--sds-color-text-secondary);
-        font-size: var(--sds-font-size-xs);
+        font-weight: 600;
+        color: var(--sendle-admin-text-secondary);
+        font-size: var(--sendle-admin-font-size-small);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
+        background: var(--sds-color-background-subtle);
+        position: relative; // Helps with z-index stacking
       }
     }
 
     tbody {
       tr {
-        border-bottom: 1px solid var(--sds-color-border-default);
+        border-bottom: 1px solid var(--sendle-admin-border-light);
 
         &:last-child {
           border-bottom: none;
+        }
+
+        &:hover {
+          background-color: var(--sendle-admin-bg-light);
         }
       }
     }
@@ -182,12 +195,8 @@
   &__row {
     transition: background-color 0.2s ease;
 
-    &:hover {
-      background-color: var(--sds-color-background-hover);
-    }
-
-    // Row highlighting based on annotation status
-    &--pass {
+    // Pass/fail row highlighting
+    &.success {
       background-color: rgba(34, 197, 94, 0.1);
 
       &:hover {
@@ -195,7 +204,7 @@
       }
     }
 
-    &--fail {
+    &.danger {
       background-color: rgba(239, 68, 68, 0.1);
 
       &:hover {
@@ -205,8 +214,8 @@
   }
 
   &__cell {
-    padding: var(--sds-spacing-4); // Increased padding to match headers
-    color: var(--sds-color-text-primary);
+    padding: var(--sendle-spacing-sm);
+    color: var(--sendle-admin-text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 0; // Required for text-overflow to work with table cells
@@ -241,29 +250,40 @@
     }
   }
 
+  // Footer with controls and pagination
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sendle-spacing-md);
+    padding: var(--sendle-spacing-md);
+    background: white;
+    border: 1px solid var(--sendle-admin-border-light);
+    border-radius: 4px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
   // Pagination
   &__pagination {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--sds-spacing-4); // Increased gap
-    margin-top: var(--sds-spacing-6); // More space above pagination
-    padding: var(--sds-spacing-4); // Add padding
-    background: var(--sds-color-background-surface);
-    border-radius: var(--sds-border-radius-md);
-    border: 1px solid var(--sds-color-border-default);
+    gap: var(--sendle-spacing-md);
 
     @media (max-width: 768px) {
-      flex-direction: column;
-      gap: var(--sds-spacing-3);
+      justify-content: space-between;
     }
   }
 
   &__page-info {
-    font-size: var(--sds-font-size-md); // Slightly larger
-    font-weight: var(--sds-font-weight-medium);
-    color: var(--sds-color-text-primary);
-    min-width: 200px; // Prevent layout shift
+    font-size: var(--sendle-admin-font-size-base);
+    font-weight: 500;
+    color: var(--sendle-admin-text-primary);
+    min-width: 200px;
     text-align: center;
   }
 }

@@ -2,69 +2,89 @@
 @import '@sendle/sds-ui/scss/tokens';
 
 .failure-form {
-  margin-top: var(--sds-spacing-6); // Increased top margin
-  padding: var(--sds-spacing-6); // More padding
-  background: var(--sds-color-background-surface);
-  border: 2px solid var(--sds-color-border-error); // Thicker border to make it stand out
-  border-radius: var(--sds-border-radius-lg); // Larger radius
+  margin-top: var(--sendle-spacing-lg); // 36px top margin (large spacing for separation)
+  padding: var(--sendle-spacing-md); // 18px admin padding
+  background: var(--sendle-admin-bg-white); // Admin white background
+  border: 2px solid var(--sendle-admin-danger); // Admin danger color border
+  border-radius: var(--sendle-border-radius-base); // 4px admin radius
+  font-family: var(--sendle-admin-font-family); // Admin font
+  font-size: var(--sendle-admin-font-size-base); // 13px base
 
   &__header {
-    margin-bottom: var(--sds-spacing-5); // More space after header
+    margin-bottom: var(--sendle-spacing-md); // 18px space after header
   }
 
   &__error {
-    margin-bottom: var(--sds-spacing-4); // Increased spacing
+    margin-bottom: var(--sendle-spacing-md); // 18px spacing
   }
 
   &__field {
-    margin-bottom: var(--sds-spacing-5); // More space between fields
+    margin-bottom: var(--sendle-spacing-md); // 18px space between fields
+
+    // Remove bottom margin from all child elements to tighten hint spacing
+    > * {
+      margin-bottom: 0 !important;
+    }
   }
 
   &__label {
     display: block;
-    margin-bottom: var(--sds-spacing-2);
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
-    font-size: var(--sds-font-size-sm);
+    margin-bottom: var(--sendle-spacing-xs); // 5px margin
+    font-weight: 500; // Admin font weight
+    color: var(--sendle-admin-text-primary);
+    font-size: var(--sendle-admin-font-size-base); // 13px
   }
 
   &__required {
-    color: var(--sds-color-text-error);
+    color: var(--sendle-admin-danger); // Admin danger color
+  }
+
+  // Tighten spacing between input and hint text
+  input,
+  .sds-input,
+  .sds-input-wrapper {
+    margin-bottom: 0 !important;
   }
 
   &__hint {
     display: block;
-    margin-top: var(--sds-spacing-1);
-    font-size: var(--sds-font-size-xs);
-    color: var(--sds-color-text-secondary);
+    margin-top: 2px; // Very tight spacing below input
+    font-size: var(--sendle-admin-font-size-small); // 12px
+    color: var(--sendle-admin-text-secondary);
   }
 
   &__error-text {
     display: block;
-    margin-top: var(--sds-spacing-1);
-    font-size: var(--sds-font-size-xs);
-    color: var(--sds-color-text-error);
+    margin-top: var(--sendle-spacing-xs); // 5px margin
+    font-size: var(--sendle-admin-font-size-small); // 12px
+    color: var(--sendle-admin-danger);
   }
 
   &__actions {
     display: flex;
     justify-content: flex-end;
-    gap: var(--sds-spacing-3); // Increased gap between buttons
-    margin-top: var(--sds-spacing-6); // More space before actions
-    padding-top: var(--sds-spacing-4); // Add top padding
-    border-top: 1px solid var(--sds-color-border-default); // Visual separator
+    gap: var(--sendle-spacing-sm); // 9px gap between buttons
+    margin-top: var(--sendle-spacing-md); // 18px space before actions
+    padding-top: var(--sendle-spacing-md); // 18px top padding
+    border-top: 1px solid var(--sendle-admin-border-light); // Admin border separator
+
+    button {
+      // Add explicit horizontal spacing between buttons
+      margin: 0 var(--sendle-spacing-xs); // 5px extra margin on each side
+    }
 
     @media (max-width: 768px) {
       flex-direction: column-reverse;
-      gap: var(--sds-spacing-3);
+      gap: var(--sendle-spacing-sm); // 9px gap
 
       button {
         width: 100%;
+        margin: 0; // Remove extra margin on mobile
       }
     }
   }
 
   form {
-    margin-top: var(--sds-spacing-3);
+    margin-top: var(--sendle-spacing-sm); // 9px top margin
   }
 }

@@ -42,8 +42,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",  # Vue dev server (old)
-        "http://localhost:5174",  # Vue dev server (old)
+        "http://localhost:5173",  # Vite dev server (fallback port)
+        "http://localhost:5174",  # Vite dev server (fallback port)
         "http://localhost:5175",  # React dev server (primary)
         "http://localhost:5176",  # React dev server (fallback)
     ],

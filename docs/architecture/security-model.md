@@ -48,7 +48,7 @@
 ```
 ┌─────────────┐
 │  Frontend   │
-│  (Vue 3)    │
+│  (React 18) │
 └──────┬──────┘
        │ 1. User logs in via Clerk UI
        ▼

@@ -1,15 +1,16 @@
 # Sprint Status Report
 # Generated: 2025-11-14
+# Updated: 2025-11-23 (Post-UX Design & Migration Planning)
 # Project: Evals_app
 
 # STATUS DEFINITIONS:
 # ==================
 # drafted: Story written but not ready for development
 # ready-for-dev: Story approved and ready to start
+# blocked: Cannot proceed due to external dependency (MUST FIX BLOCKERS)
 # in-progress: Currently being implemented
 # review: Implementation complete, awaiting review
 # done: Story completed and deployed/merged
-# blocked: Cannot proceed due to external dependency
 
 project_name: "Evals_app"
 sprint_number: 1
@@ -19,8 +20,9 @@ sprint_end: "2025-11-28"
 # Development Status by Story Key
 development_status:
   # Format: story-key: status
-  story-coding-platform-1: "done"  # Foundation & Core Evaluation
-  story-coding-platform-2: "ready-for-dev"  # Enhanced Evaluation Features
+  story-coding-platform-1: "done"  # Foundation & Core Evaluation (includes UX enhancement)
+  frontend-migration: "in-progress"  # 🚨 CRITICAL: Vue → React + SDS migration (Phase 0 DONE, Phase 1-4 remaining)
+  story-coding-platform-2: "blocked"  # BLOCKED: Deferred until after migration
 
 # Epic Tracking
 epics:
@@ -29,24 +31,132 @@ epics:
     status: "in-progress"
     total_stories: 2
     completed_stories: 1
-    blocked_stories: 0
+    blocked_stories: 1  # Story 2 blocked by auth fixes
 
 # Summary Statistics
 summary:
-  total_stories: 2
+  total_stories: 3  # Story 1 (done) + Migration (in-progress) + Story 2 (blocked)
   drafted: 0
-  ready_for_dev: 1
-  in_progress: 0
+  ready_for_dev: 0
+  in_progress: 1  # frontend-migration (Phase 0 complete)
   review: 0
   done: 1
-  blocked: 0
+  blocked: 1  # Story 2 blocked until migration complete
 
-# Next Actions
+# Blockers (CRITICAL - Must Resolve Before Story 2)
+blockers:
+  - id: "MIGRATION-001"
+    story: "story-coding-platform-2"
+    title: "🚨 Vue → React + SDS Migration Required"
+    severity: "critical"
+    location: "frontend/"
+    impact: "All future frontend work blocked. SDS is React-only, Vue incompatible."
+    fix_effort: "7-10 days"
+    fix_instructions: "See docs/migration-implementation-guide.md for complete 6-phase plan"
+    priority: "P0"
+    reason: "Mandatory for long-term maintainability and Sendle Design System integration"
+
+  - id: "AUTH-001"
+    story: "story-coding-platform-2"
+    title: "Clerk token verification bypassed"
+    severity: "critical"
+    location: "backend/app/api/auth.py:98"
+    impact: "Unauthorized access possible - multi-user testing blocked"
+    fix_effort: "30 minutes"
+    fix_instructions: "See docs/architecture/security-model.md Section 6"
+    priority: "P1 (deferred until after migration)"
+
+  - id: "AUTH-002"
+    story: "story-coding-platform-2"
+    title: "Webhook signature verification disabled"
+    severity: "critical"
+    location: "backend/app/api/auth.py:145"
+    impact: "Attacker can manipulate user data"
+    fix_effort: "30 minutes"
+    fix_instructions: "Install svix package, implement proper verification"
+    priority: "P1 (deferred until after migration)"
+
+  - id: "AUTH-003"
+    story: "story-coding-platform-2"
+    title: "Hardcoded demo user in endpoints"
+    severity: "critical"
+    location: "8 endpoints (annotations.py, traces.py)"
+    impact: "All users share same user_id - data collision"
+    fix_effort: "1 hour"
+    fix_instructions: "Replace Depends(lambda: {'user_id': 'demo-user'}) with get_current_user"
+    priority: "P1 (deferred until after migration)"
+
+# Next Actions (PRIORITIZED)
 next_actions:
-  - "Begin story-coding-platform-2 development"
+  - priority: "P0"
+    action: "🚨 Continue Vue → React + SDS Migration (MIGRATION-001)"
+    effort: "6.5-9.5 days remaining"
+    owner: "architect agent"
+    blocks: "All future frontend development"
+    reference: "docs/migration-implementation-guide.md"
+    completed_phases:
+      - "✅ Phase 0: React scaffold setup (COMPLETED 2025-11-23)"
+    remaining_phases:
+      - "Phase 1: Core Infrastructure (0.5 days)"
+      - "Phase 2: Component Migration (4 days)"
+      - "Phase 3: Testing & Validation (2 days)"
+      - "Phase 4: Deployment (1 day)"
+    status: "IN PROGRESS - Phase 0 complete, ready for Phase 1"
+
+  - priority: "P1"
+    action: "Fix AUTH-001, AUTH-002, AUTH-003 (deferred)"
+    effort: "2-3 hours total"
+    owner: "dev agent"
+    blocks: "Story 2 start"
+    reference: "docs/architecture/security-model.md"
+    note: "Defer until after migration complete"
+
+  - priority: "P1"
+    action: "Test multi-user isolation with 2 Clerk users (deferred)"
+    effort: "1 hour"
+    owner: "dev agent"
+    blocks: "Story 2 start"
+    note: "Defer until after migration complete"
+
+  - priority: "P2"
+    action: "Begin story-coding-platform-2 development"
+    effort: "TBD"
+    owner: "dev agent"
+    depends_on: "Migration complete + AUTH fixes complete"
+
+# Architecture Review (2025-11-17)
+architecture_review:
+  date: "2025-11-17"
+  reviewer: "Winston (Architect Agent)"
+  decision: "GO (with auth fixes)"
+  documentation: "docs/architecture/"
+
+  key_findings:
+    - "Story 1 foundation is solid - clean architecture"
+    - "Quick Actions UX: 30-50% velocity improvement validated"
+    - "3 critical auth issues MUST be fixed before Story 2"
+    - "Performance bottleneck in unannotated query (fix in Story 3)"
+
+  technical_debt:
+    - id: "PERF-001"
+      title: "Unannotated query N+1 pattern"
+      severity: "high"
+      fix_in: "Story 3"
+      effort: "2 hours"
+      reference: "docs/architecture/adr/005-unannotated-query-optimization.md"
 
 # Notes
 notes: |
-  - Sprint 1 focuses on foundation and core evaluation features
-  - Story 1 establishes infrastructure and basic workflow
-  - Story 2 adds enhanced features and optimization
+  - Sprint 1 Story 1: DONE ✅
+  - Story 1 enhanced mid-sprint (Nov 17) with quick action annotation workflow (30-50% velocity improvement)
+  - Architecture review completed (Nov 17): GO decision with auth fixes required
+  - 🚨 COURSE CORRECTION (Nov 23): Vue → React + SDS migration now CRITICAL PATH
+  - UX Design Specification completed (Nov 23): docs/ux-design-specification.md
+  - Migration Implementation Guide completed (Nov 23): docs/migration-implementation-guide.md
+  - ✅ Migration Phase 0 COMPLETE (Nov 23): React scaffold, SDS linked via npm link, dev server running
+  - Story 2: BLOCKED ⚠️ - Deferred until migration complete
+  - Auth fixes (AUTH-001, AUTH-002, AUTH-003): Deferred until migration complete
+  - Architecture documentation: docs/architecture/ (9 files created)
+  - **NEXT AGENT: Architect should continue with Phase 1: Core Infrastructure (API client, React Context)**
+  - Migration is P0 blocker - all future frontend work depends on it
+  - Remaining migration effort: 6.5-9.5 days (Phases 1-4)

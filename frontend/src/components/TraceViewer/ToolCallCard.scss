@@ -1,0 +1,90 @@
+// ToolCallCard Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.tool-call-card {
+  background: var(--sds-color-background-surface);
+  border: 1px solid var(--sds-color-border-default);
+  border-radius: var(--sds-border-radius-md);
+  margin-bottom: var(--sds-spacing-3);
+  overflow: hidden;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sds-spacing-3);
+    cursor: pointer;
+    background: var(--sds-color-background-subtle);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--sds-color-background-hover);
+    }
+
+    &:focus {
+      outline: 2px solid var(--sds-color-border-focus);
+      outline-offset: -2px;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--sds-spacing-2);
+  }
+
+  &__icon {
+    font-size: var(--sds-font-size-md);
+  }
+
+  &__name {
+    font-weight: var(--sds-font-weight-semibold);
+    font-size: var(--sds-font-size-sm);
+    color: var(--sds-color-text-primary);
+    font-family: var(--sds-font-family-mono, 'Courier New', monospace);
+  }
+
+  &__toggle {
+    color: var(--sds-color-text-secondary);
+    font-size: 10px;
+  }
+
+  &__content {
+    padding: var(--sds-spacing-3);
+    background: var(--sds-color-background);
+  }
+
+  &__section {
+    margin-bottom: var(--sds-spacing-3);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: var(--sds-spacing-2);
+    font-size: var(--sds-font-size-sm);
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-secondary);
+  }
+
+  &__code {
+    background: var(--sds-color-background-subtle);
+    border: 1px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-sm);
+    padding: var(--sds-spacing-2);
+    font-family: var(--sds-font-family-mono, 'Courier New', monospace);
+    font-size: var(--sds-font-size-xs);
+    color: var(--sds-color-text-primary);
+    overflow-x: auto;
+    white-space: pre;
+    margin: 0;
+    line-height: 1.5;
+  }
+}

@@ -1,0 +1,101 @@
+// SessionContext Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.session-context {
+  background: var(--sds-color-background-surface);
+  border: 1px solid var(--sds-color-border-default);
+  border-radius: var(--sds-border-radius-md);
+  padding: var(--sds-spacing-4);
+  margin-bottom: var(--sds-spacing-4);
+
+  &__title {
+    margin: 0 0 var(--sds-spacing-3) 0;
+    font-size: var(--sds-font-size-md);
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-primary);
+  }
+
+  &__timeline {
+    position: relative;
+    padding-left: var(--sds-spacing-4);
+    border-left: 2px solid var(--sds-color-border-default);
+  }
+
+  &__turn {
+    margin-bottom: var(--sds-spacing-3);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__turn-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--sds-spacing-2);
+    border-radius: var(--sds-border-radius-sm);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--sds-color-background-hover);
+    }
+
+    &:focus {
+      outline: 2px solid var(--sds-color-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  &__turn-indicator {
+    position: absolute;
+    left: -6px;
+    color: var(--sds-color-primary);
+    font-size: 12px;
+  }
+
+  &__turn-number {
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-primary);
+    font-size: var(--sds-font-size-sm);
+    margin-left: var(--sds-spacing-2);
+  }
+
+  &__toggle {
+    margin-left: auto;
+    color: var(--sds-color-text-secondary);
+    font-size: 10px;
+  }
+
+  &__turn-content {
+    padding: var(--sds-spacing-3);
+    margin-top: var(--sds-spacing-2);
+    margin-left: var(--sds-spacing-2);
+    background: var(--sds-color-background-subtle);
+    border-radius: var(--sds-border-radius-sm);
+  }
+
+  &__message {
+    margin-bottom: var(--sds-spacing-2);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      display: block;
+      margin-bottom: var(--sds-spacing-1);
+      font-size: var(--sds-font-size-sm);
+      color: var(--sds-color-text-secondary);
+    }
+
+    p {
+      margin: 0;
+      font-size: var(--sds-font-size-sm);
+      color: var(--sds-color-text-primary);
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+}

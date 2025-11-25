@@ -1,0 +1,29 @@
+// NOTE: SDS SCSS import removed due to package configuration issues
+// Will be re-added once SDS is properly configured for external use
+
+// Global resets and base styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background: #ffffff; // Solid white background
+}
+
+body {
+  // Font is set by SDS on html element, don't override
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #ffffff; // Solid white background
+}
+
+// Sendle Admin CSS Bridge - harmonizes with admin panel aesthetics
+@import './styles/sendle-admin-bridge';
+
+// Custom app styles
+@import './styles/app';
+@import './styles/components';

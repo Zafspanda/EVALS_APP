@@ -1,0 +1,28 @@
+// CsvImporter Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.csv-importer {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--sds-spacing-6);
+
+  &__upload {
+    margin-bottom: var(--sds-spacing-4);
+  }
+
+  &__alert {
+    margin-top: var(--sds-spacing-4);
+  }
+
+  &__actions {
+    margin-top: var(--sds-spacing-4);
+    display: flex;
+    justify-content: center;
+  }
+
+  &__uploading {
+    margin-top: var(--sds-spacing-4);
+    text-align: center;
+    color: var(--sds-color-text-secondary);
+  }
+}

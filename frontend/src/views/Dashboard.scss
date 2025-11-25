@@ -1,0 +1,278 @@
+// Dashboard View Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.dashboard {
+  padding: 48px 32px; // More generous padding
+  min-height: calc(100vh - 80px);
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__header-card {
+    background: var(--sds-color-background-surface);
+    border: 2px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-md);
+    padding: 16px 24px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 32px;
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: 20px;
+      font-weight: var(--sds-font-weight-semibold);
+      color: var(--sds-color-text-primary);
+    }
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: var(--sds-color-text-secondary);
+    line-height: 1.4;
+  }
+
+  &__loading, &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--sds-spacing-8);
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--sds-color-border-default);
+    border-top-color: var(--sds-color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // 4 equal columns for stat cards
+    gap: 16px; // Gap between stat cards
+    margin-bottom: 32px; // Space before next section
+    max-width: 1000px; // Adjusted for 4 cards
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr); // 3 columns on tablets
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); // 2 columns on mobile
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr; // Stack on very small screens
+    }
+  }
+
+  &__stat-card {
+    background: var(--sds-color-background-surface);
+    border: 2px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-md);
+    padding: 20px 24px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: var(--sds-font-size-md);
+      font-weight: var(--sds-font-weight-semibold);
+      color: var(--sds-color-text-secondary);
+    }
+
+    &--pass {
+      border-color: rgb(34, 197, 94);
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    &--fail {
+      border-color: rgb(239, 68, 68);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    &--rate {
+      border-color: rgb(59, 130, 246);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    &--neutral {
+      border-color: rgb(100, 116, 139);
+      background: rgba(100, 116, 139, 0.05);
+    }
+  }
+
+  &__stat-value {
+    margin: 0;
+    font-size: var(--sds-font-size-xxl);
+    font-weight: var(--sds-font-weight-bold);
+    color: var(--sds-color-text-primary);
+  }
+
+  // Sections (Quick Actions, Recent Annotations)
+  &__section {
+    margin-bottom: 48px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      margin-bottom: 32px;
+    }
+  }
+
+  &__section-title {
+    font-size: var(--sds-font-size-xl);
+    font-weight: var(--sds-font-weight-semibold);
+    color: var(--sds-color-text-primary);
+    margin: 0 0 24px 0;
+  }
+
+  &__section-card {
+    background: var(--sds-color-background-surface);
+    border: 2px solid var(--sds-color-border-default);
+    border-radius: var(--sds-border-radius-lg);
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  // Quick Actions
+  &__quick-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    a {
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+
+      a, button {
+        width: 100%;
+      }
+    }
+  }
+
+  // Recent Annotations Table
+  &__annotations-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--sendle-admin-font-size-base);
+    background: white;
+    border: 1px solid var(--sendle-admin-border-light);
+    border-radius: 4px;
+
+    thead {
+      background: var(--sds-color-background-subtle);
+      border-bottom: 2px solid var(--sendle-admin-border-light);
+
+      th {
+        padding: var(--sendle-spacing-md) var(--sendle-spacing-sm);
+        text-align: left;
+        font-weight: 600;
+        color: var(--sendle-admin-text-secondary);
+        font-size: var(--sendle-admin-font-size-small);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+
+        &.text-center {
+          text-align: center;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid var(--sendle-admin-border-light);
+        transition: background-color 0.2s ease;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: var(--sendle-admin-bg-light);
+        }
+
+        &.success {
+          background-color: rgba(34, 197, 94, 0.1);
+          &:hover {
+            background-color: rgba(34, 197, 94, 0.15);
+          }
+        }
+
+        &.danger {
+          background-color: rgba(239, 68, 68, 0.1);
+          &:hover {
+            background-color: rgba(239, 68, 68, 0.15);
+          }
+        }
+      }
+
+      td {
+        padding: var(--sendle-spacing-sm);
+        color: var(--sendle-admin-text-primary);
+
+        &.text-center {
+          text-align: center;
+        }
+
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &__trace-id {
+    font-family: monospace;
+    font-size: var(--sendle-admin-font-size-small);
+  }
+
+  &__status-icon {
+    font-size: 18px;
+    font-weight: bold;
+
+    &--pass {
+      color: rgb(34, 197, 94);
+    }
+
+    &--fail {
+      color: rgb(239, 68, 68);
+    }
+  }
+
+  &__loading-small {
+    padding: 24px;
+    text-align: center;
+    color: var(--sds-color-text-secondary);
+  }
+
+  &__empty-message {
+    padding: 32px;
+    text-align: center;
+    color: var(--sds-color-text-secondary);
+    background: var(--sds-color-background-subtle);
+    border-radius: var(--sds-border-radius-md);
+  }
+}

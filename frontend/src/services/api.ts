@@ -1,87 +1,122 @@
-import axios from 'axios'
-import { useClerk } from '@clerk/vue'
+// API Service - Migrated from Vue (Axios) to React (Fetch)
+// Uses Clerk for authentication
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+import type {
+  Trace,
+  TracesResponse,
+  Annotation,
+  AdjacentTraces,
+  UserStats,
+  User,
+} from '../types/api';
 
-// Create axios instance
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
-// Add auth token to requests
-api.interceptors.request.use(async (config) => {
+/**
+ * Get Clerk auth token from window.Clerk
+ */
+async function getAuthToken(): Promise<string | null> {
   try {
-    // Get Clerk instance from window (available after plugin is initialized)
-    const clerk = (window as any).Clerk
+    const clerk = (window as any).Clerk;
     if (clerk && clerk.session) {
-      const token = await clerk.session.getToken()
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-      }
+      const token = await clerk.session.getToken();
+      return token;
     }
   } catch (error) {
-    console.warn('Could not get auth token:', error)
+    console.warn('Could not get auth token:', error);
   }
-  return config
-})
+  return null;
+}
 
-// API service methods
+/**
+ * Fetch wrapper with Clerk auth token injection
+ */
+async function fetchWithAuth<T = any>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const token = await getAuthToken();
+
+  const headers: HeadersInit = {
+    ...options.headers,
+  };
+
+  // Add Content-Type for JSON requests (unless it's FormData)
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  // Add auth token if available
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`API Error (${response.status}): ${errorText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * API Service - matches Vue apiService interface
+ */
 export const apiService = {
   // Auth
-  async getCurrentUser() {
-    const response = await api.get('/api/auth/me')
-    return response.data
+  async getCurrentUser(): Promise<User> {
+    return fetchWithAuth<User>('/api/auth/me');
   },
 
   // Traces
-  async importCSV(file: File) {
-    const formData = new FormData()
-    formData.append('file', file)
+  async importCSV(file: File): Promise<{ message: string; count: number }> {
+    const formData = new FormData();
+    formData.append('file', file);
 
-    const response = await api.post('/api/traces/import-csv', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    return response.data
+    return fetchWithAuth('/api/traces/import-csv', {
+      method: 'POST',
+      body: formData,
+    });
   },
 
-  async getTraces(page: number = 1, pageSize: number = 50) {
-    const response = await api.get('/api/traces', {
-      params: { page, page_size: pageSize },
-    })
-    return response.data
+  async getTraces(page: number = 1, pageSize: number = 50): Promise<TracesResponse> {
+    return fetchWithAuth<TracesResponse>(
+      `/api/traces?page=${page}&page_size=${pageSize}`
+    );
   },
 
-  async getTrace(traceId: string) {
-    const response = await api.get(`/api/traces/${traceId}`)
-    return response.data
+  async getTrace(traceId: string): Promise<Trace> {
+    return fetchWithAuth<Trace>(`/api/traces/${traceId}`);
+  },
+
+  async getAdjacentTraces(traceId: string): Promise<AdjacentTraces> {
+    return fetchWithAuth<AdjacentTraces>(`/api/traces/${traceId}/adjacent`);
+  },
+
+  async getNextUnannotatedTrace(): Promise<Trace> {
+    return fetchWithAuth<Trace>('/api/traces/next/unannotated');
   },
 
   // Annotations
-  async saveAnnotation(annotation: {
-    trace_id: string
-    holistic_pass_fail: 'Pass' | 'Fail'
-    first_failure_note?: string
-    open_codes?: string
-    comments_hypotheses?: string
-  }) {
-    const response = await api.post('/api/annotations', annotation)
-    return response.data
+  async saveAnnotation(annotation: Omit<Annotation, 'annotation_id' | 'created_at' | 'updated_at'>): Promise<Annotation> {
+    return fetchWithAuth<Annotation>('/api/annotations', {
+      method: 'POST',
+      body: JSON.stringify(annotation),
+    });
   },
 
-  async getAnnotationForTrace(traceId: string) {
-    const response = await api.get(`/api/annotations/trace/${traceId}`)
-    return response.data
+  async getAnnotationForTrace(traceId: string): Promise<Annotation | null> {
+    return fetchWithAuth<Annotation | null>(`/api/annotations/trace/${traceId}`);
   },
 
-  async getUserStats() {
-    const response = await api.get('/api/annotations/user/stats')
-    return response.data
+  async getUserStats(): Promise<UserStats> {
+    return fetchWithAuth<UserStats>('/api/annotations/user/stats');
   },
-}
+};
 
-export default api
+export default apiService;

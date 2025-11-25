@@ -1,0 +1,224 @@
+# Vue → React + SDS Migration Status Tracker
+# Updated: 2025-11-25
+# Architect: Winston
+
+migration_info:
+  start_date: "2025-11-23"
+  target_completion: "2025-11-23"
+  current_phase: "Phase 3: Testing & Validation"
+  overall_status: "migration-complete-cleanup-done"
+  phase_1_completion: "2025-11-23"
+  phase_2_completion: "2025-11-23"
+  vue_cleanup_date: "2025-11-25"
+  vue_cleanup_doc: "docs/CLEANUP-2025-11-25-Vue-Removal.md"
+
+phases:
+  - phase: "Phase 0: React Scaffold Setup"
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
+    tasks:
+      - name: "Initialize React + TypeScript + Vite project"
+        status: "completed"
+        notes: "Installed React 18.3.1, React DOM, React Router, @clerk/clerk-react 5.56.2"
+      - name: "Install Sendle Design System dependencies"
+        status: "completed"
+        notes: "Linked local SDS package via npm link from /Sendle/SDS/sendle-design-system-main/packages/sds-ui"
+      - name: "Configure build pipeline and Vite config"
+        status: "completed"
+        notes: "Created vite.config.react.ts with React SWC plugin, added dev:react and build:react scripts"
+      - name: "Set up React Router for navigation"
+        status: "completed"
+        notes: "React Router 6.28.0 installed, basic routes configured in App.tsx"
+      - name: "Configure TypeScript paths and aliases"
+        status: "completed"
+        notes: "Set up @ alias pointing to ./src directory"
+
+  - phase: "Phase 1: Core Infrastructure"
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
+    tasks:
+      - name: "Migrate Clerk authentication (@clerk/clerk-react)"
+        status: "completed"
+        notes: "ClerkProvider configured in main.tsx with VITE_CLERK_PUBLISHABLE_KEY"
+      - name: "Set up React Context for auth state"
+        status: "completed"
+        notes: "Using @clerk/clerk-react hooks (useAuth, useUser) - no custom context needed"
+      - name: "Migrate API client layer (Axios → Fetch)"
+        status: "completed"
+        notes: "Created services/api.ts with fetch-based apiService. Clerk token injection via window.Clerk"
+      - name: "Create custom hooks for trace state"
+        status: "completed"
+        notes: "Created hooks/useTraces.ts with useTraces, useTrace, useAdjacentTraces, useNextUnannotated"
+      - name: "Create custom hooks for annotation state"
+        status: "completed"
+        notes: "Created hooks/useAnnotations.ts with useAnnotation, useSaveAnnotation, useUserStats"
+    files_created:
+      - "src/types/api.ts - TypeScript type definitions"
+      - "src/services/api.ts - Fetch-based API service"
+      - "src/hooks/useTraces.ts - Trace data fetching hooks"
+      - "src/hooks/useAnnotations.ts - Annotation data fetching hooks"
+
+  - phase: "Phase 2: Component Migration"
+    status: "completed"
+    start_date: "2025-11-23"
+    completion_date: "2025-11-23"
+    components:
+      # Views
+      - name: "App.tsx (Root component)"
+        vue_file: "frontend/src/App.vue"
+        react_file: "frontend/src/App.tsx"
+        status: "completed"
+        notes: "Integrated AppHeader, set up React Router with all routes"
+
+      - name: "Dashboard View"
+        vue_file: "frontend/src/views/Dashboard.vue"
+        react_file: "frontend/src/views/Dashboard.tsx"
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "User stats display with navigation to Traces and Import"
+
+      - name: "TracesView (List View)"
+        vue_file: "frontend/src/views/TracesView.vue"
+        react_file: "frontend/src/views/TracesView.tsx"
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for TraceList component"
+
+      - name: "TraceDetailView (Evaluation View)"
+        vue_file: "frontend/src/views/EvaluationView.vue"
+        react_file: "frontend/src/views/TraceDetailView.tsx"
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for TraceViewer component"
+
+      - name: "Import View"
+        vue_file: "frontend/src/views/ImportView.vue"
+        react_file: "frontend/src/views/ImportView.tsx"
+        status: "completed"
+        sds_components: []
+        notes: "Simple wrapper for CsvImporter component"
+
+      - name: "Export View"
+        vue_file: "frontend/src/views/ExportView.vue"
+        react_file: "frontend/src/views/ExportView.tsx"
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
+
+      # Components
+      - name: "AppHeader Component"
+        vue_file: "frontend/src/components/AppHeader.vue"
+        react_file: "frontend/src/components/AppHeader/AppHeader.tsx"
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "Navigation with Clerk UserButton integration, responsive design"
+
+      - name: "TraceViewer Component"
+        vue_file: "frontend/src/components/TraceViewer.vue"
+        react_file: "frontend/src/components/TraceViewer/TraceViewer.tsx"
+        status: "completed"
+        sds_components: ["Button", "Divider"]
+        notes: "Includes ToolCallCard and SessionContext subcomponents, custom loading/error states"
+
+      - name: "TraceList Component"
+        vue_file: "frontend/src/components/TraceList.vue"
+        react_file: "frontend/src/components/TraceList/TraceList.tsx"
+        status: "completed"
+        sds_components: ["Button", "Badge"]
+        notes: "Custom table with SDS tokens, row highlighting, pagination"
+
+      - name: "QuickActions Component (was AnnotationForm)"
+        vue_file: "frontend/src/components/AnnotationForm.vue"
+        react_file: "frontend/src/components/QuickActions/QuickActions.tsx"
+        status: "completed"
+        sds_components: ["Button", "Alert"]
+        notes: "Split into QuickActions + FailureForm for separation of concerns"
+
+      - name: "FailureForm Component (was part of AnnotationForm)"
+        vue_file: "frontend/src/components/AnnotationForm.vue"
+        react_file: "frontend/src/components/QuickActions/FailureForm.tsx"
+        status: "completed"
+        sds_components: ["Input", "TextArea", "Button", "Alert"]
+        notes: "Conditional fail form with validation"
+
+      - name: "CsvImporter Component"
+        vue_file: "frontend/src/components/CsvImporter.vue"
+        react_file: "frontend/src/components/CsvImporter/CsvImporter.tsx"
+        status: "completed"
+        sds_components: ["FileUpload", "Button", "Alert"]
+        notes: "Uses SDS FileUpload component with drag-and-drop, file validation (extension, size)"
+
+      - name: "ExportDialog Component"
+        vue_file: "frontend/src/components/ExportDialog.vue"
+        react_file: "frontend/src/components/ExportDialog.tsx"
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
+
+      - name: "ProgressTracker Component"
+        vue_file: "frontend/src/components/ProgressTracker.vue"
+        react_file: "frontend/src/components/ProgressTracker.tsx"
+        status: "skipped"
+        sds_components: []
+        notes: "Not documented in migration guide, skipped as agreed"
+
+  - phase: "Phase 3: Testing & Validation"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    tasks:
+      - name: "Update Playwright E2E tests (selectors)"
+        status: "not-started"
+      - name: "Manual testing - CSV import flow"
+        status: "not-started"
+      - name: "Manual testing - Evaluation flow"
+        status: "not-started"
+      - name: "Manual testing - Export flow"
+        status: "not-started"
+      - name: "Performance validation (load time < 2s)"
+        status: "not-started"
+      - name: "Cross-browser testing (Chrome, Firefox, Safari)"
+        status: "not-started"
+
+  - phase: "Phase 4: Deployment"
+    status: "not-started"
+    start_date: null
+    completion_date: null
+    tasks:
+      - name: "Update Railway configuration for React build"
+        status: "not-started"
+      - name: "Deploy to Railway staging environment"
+        status: "not-started"
+      - name: "Smoke testing on staging"
+        status: "not-started"
+      - name: "Production deployment"
+        status: "not-started"
+      - name: "Post-deployment verification"
+        status: "not-started"
+
+blockers: []
+  # Example:
+  # - blocker: "SDS Button component missing 'loading' prop"
+  #   status: "open"
+  #   workaround: "Built custom loading state"
+  #   resolution: null
+
+notes:
+  - "Migration triggered by strategic alignment with Sendle ecosystem"
+  - "All backend APIs remain unchanged (100% compatible)"
+  - "Sprint 1 UI is minimal - perfect timing for migration"
+  - "Story 2 blocked until migration complete"
+  - "2025-11-25: Vue cleanup complete - all Vue files, dependencies, and references removed"
+  - "2025-11-25: All documentation updated to reflect React 18 + SDS stack"
+  - "2025-11-25: 222 Vue-related npm packages removed"
+  - "2025-11-25: UX fixes completed - Dashboard card styling, TraceList turn display (X of Y), click-to-copy IDs, SDS FileUpload"
+
+reference_documents:
+  - "docs/Course-correction-SDS.md - Strategic rationale"
+  - "docs/ux-design-specification.md - UX blueprint"
+  - "docs/migration-implementation-guide.md - Detailed technical guide"
+  - "docs/architecture/adr/006-react-sds-migration.md - Architecture decision"
+  - "docs/CLEANUP-2025-11-25-Vue-Removal.md - Vue removal and doc cleanup summary"
+  - "docs/HANDOVER-Phase-2-Complete-UX-Review-Needed.md - UX review items before Story 2"

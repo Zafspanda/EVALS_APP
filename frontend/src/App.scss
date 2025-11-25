@@ -1,0 +1,16 @@
+// App Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--sendle-admin-bg-white); // Solid white background
+
+  &__main {
+    flex: 1;
+    // Removed overflow-y: auto to allow sticky positioning to work with viewport scroll
+    // No padding - each view handles its own layout
+    width: 100%;
+  }
+}

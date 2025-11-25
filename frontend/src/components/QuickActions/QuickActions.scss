@@ -1,0 +1,41 @@
+// QuickActions Component Styles
+@import '@sendle/sds-ui/scss/tokens';
+
+.quick-actions {
+  background: var(--sendle-admin-bg-white); // Admin white background
+  border: 1px solid var(--sendle-admin-border-light); // Admin border
+  border-radius: var(--sendle-border-radius-base); // 4px admin radius
+  padding: var(--sendle-spacing-md); // 18px admin padding
+  margin-bottom: var(--sendle-spacing-md); // 18px bottom margin
+
+  &__alert {
+    margin-bottom: var(--sendle-spacing-md); // 18px spacing
+  }
+
+  &__existing {
+    margin-bottom: var(--sendle-spacing-md); // 18px spacing
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--sendle-spacing-sm); // 9px gap between buttons (admin spacing)
+    flex-wrap: wrap;
+    margin-bottom: var(--sendle-spacing-md); // 18px margin below buttons
+
+    button {
+      // Add explicit horizontal spacing between buttons
+      margin: 0 var(--sendle-spacing-xs); // 5px extra margin on each side
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--sendle-spacing-sm); // 9px gap
+
+      button {
+        width: 100%;
+        margin: 0; // Remove extra margin on mobile
+      }
+    }
+  }
+}

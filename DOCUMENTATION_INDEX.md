@@ -3,6 +3,8 @@
 ## Overview
 This index guides you through all project documentation for understanding the Evals_app architecture, test strategy, and implementation status.
 
+**Tech Stack:** React 18.3 + TypeScript + Sendle Design System + FastAPI + MongoDB + Redis + Clerk
+
 ---
 
 ## Documentation Files
@@ -12,7 +14,7 @@ This index guides you through all project documentation for understanding the Ev
 
 **Contains**:
 - Executive summary of the full-stack application
-- Complete technology stack (Vue 3, FastAPI, MongoDB, Redis, Clerk)
+- Complete technology stack (React 18, FastAPI, MongoDB, Redis, Clerk)
 - Existing test frameworks and configurations (Playwright, Vitest, Pytest)
 - Detailed breakdown of all components, services, and API endpoints
 - Data models and database schema
@@ -123,6 +125,26 @@ This index guides you through all project documentation for understanding the Ev
 - Running the application
 - Understanding features
 - Finding API documentation
+
+---
+
+### 5. UX Enhancement Implementation Plan
+**File**: `docs/ux-enhancement-quick-actions-IMPLEMENTATION-PLAN.md`
+**Status**: ✅ IMPLEMENTED AND MERGED (Nov 17, 2025)
+**Purpose**: Technical implementation plan for Quick Action Annotation Workflow
+
+**Contains**:
+- Enhancement rationale (30-50% velocity improvement)
+- Phase 1 implementation requirements
+- API changes (adjacent traces, next unannotated)
+- Component specifications (AnnotationForm, TraceViewer)
+- Definition of Done checklist
+- Git commit references
+
+**Best for**:
+- Understanding the UX enhancement decision
+- Reviewing implementation details
+- Reference for similar workflow patterns
 
 ---
 
@@ -255,15 +277,15 @@ This index guides you through all project documentation for understanding the Ev
 ## Critical Components Needing Tests
 
 ### High Priority
-1. **CsvImporter.vue** - File validation (0 tests)
-2. **AnnotationForm.vue** - Form handling (0 tests)
+1. **CsvImporter.tsx** - File validation (0 tests)
+2. **QuickActions.tsx** - Annotation workflow (0 tests)
 3. **apiService** - API communication (0 tests)
 4. **traces.py** - CSV processing (minimal tests)
 5. **auth.py** - Authentication (minimal tests)
 
 ### Medium Priority
-1. **TraceList.vue** - Pagination (0 tests)
-2. **HomeView.vue** - Statistics (0 tests)
+1. **TraceList.tsx** - Pagination (0 tests)
+2. **Dashboard.tsx** - Statistics (0 tests)
 3. **annotations.py** - CRUD operations (some tests)
 
 ---
@@ -278,8 +300,8 @@ This index guides you through all project documentation for understanding the Ev
 
 ### Development Commands
 ```bash
-# Frontend
-cd frontend && npm install && npm run dev
+# Frontend (React)
+cd frontend && npm install && npm run dev:react
 
 # Backend
 cd backend && python -m venv venv && source venv/bin/activate
@@ -307,7 +329,7 @@ pytest
 ## File Locations Reference
 
 ### Configuration Files
-- Frontend Vite: `frontend/vite.config.ts`
+- Frontend Vite: `frontend/vite.config.react.ts`
 - Frontend Tests: `frontend/vitest.config.ts`, `frontend/playwright.config.ts`
 - Backend Config: `backend/app/core/config.py`
 - Docker: `docker-compose.yml`
@@ -317,10 +339,12 @@ pytest
 - Frontend Unit: `frontend/src/components/__tests__/`
 - Backend Unit: `backend/test_api.py`
 
-### Source Code
-- Frontend Components: `frontend/src/components/`
-- Frontend Views: `frontend/src/views/`
+### Source Code (React)
+- Frontend Components: `frontend/src/components/` (AppHeader, CsvImporter, QuickActions, TraceList, TraceViewer)
+- Frontend Views: `frontend/src/views/` (Dashboard, TracesView, TraceDetailView, ImportView)
+- Frontend Hooks: `frontend/src/hooks/` (useTraces, useAnnotations)
 - Frontend Services: `frontend/src/services/`
+- Frontend Types: `frontend/src/types/`
 - Backend API: `backend/app/api/`
 - Backend Models: `backend/app/models/`
 - Backend Schemas: `backend/app/schemas/`
@@ -336,7 +360,7 @@ pytest
 **A**: Currently 17 tests exist. Aim for 125 total tests (8x increase) to reach 75-85% coverage.
 
 ### Q: What components are most critical to test?
-**A**: CsvImporter, AnnotationForm, and apiService are highest priority due to user-facing functionality.
+**A**: CsvImporter, QuickActions, and apiService are highest priority due to user-facing functionality.
 
 ### Q: How long will testing take?
 **A**: Approximately 4 weeks following the phased approach in TEST_STRATEGY.md.
@@ -363,6 +387,6 @@ These documents were created on **2025-11-15** and should be updated:
 - **Quarterly**: For architecture reviews and strategy adjustments
 - **As needed**: When significant changes occur
 
-Last updated: 2025-11-15
-Estimated next review: 2025-12-15
+Last updated: 2025-11-25
+Note: Migrated from Vue 3 to React 18 + Sendle Design System (2025-11-23/24)
 

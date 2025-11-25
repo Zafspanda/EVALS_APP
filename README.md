@@ -1,23 +1,67 @@
-# Open Coding Evaluation Platform
+# Evals Open Coding Tool
 
-A web application for systematically evaluating chatbot conversation traces using open coding methodology.
+## ✅ Project Status
 
-## Features
+**Current Phase:** Phase 3 - Testing & Validation
+**Tech Stack:** React 18 + Sendle Design System + FastAPI + MongoDB
 
-- CSV import for bulk trace loading (28-column format)
-- Trace viewing with multi-turn context
-- Binary pass/fail annotation
-- Open coding with custom labels
-- Comments and hypotheses tracking
-- User authentication via Clerk
-- Real-time annotation statistics
+**Sprint Status:**
+- ✅ Story 1: Foundation & Core Evaluation - COMPLETE
+- 🟡 Story 2: Advanced Features & Export - READY FOR DEVELOPMENT
+
+**Key Documents:**
+- [docs/ux-design-specification.md](docs/ux-design-specification.md) - UX blueprint
+- [docs/migration-status.yaml](docs/migration-status.yaml) - Progress tracking
+- [docs/architecture/adr/006-react-sds-migration.md](docs/architecture/adr/006-react-sds-migration.md) - Architecture decision
+
+---
+
+## About
+
+The **Evals Open Coding Tool** is a modern, web-based platform designed to streamline the human evaluation and annotation of AI model outputs. Built specifically for ML/AI teams who need to conduct systematic quality assessments, this tool transforms the traditionally manual and error-prone process of LLM evaluation into an efficient, collaborative workflow.
+
+### Why This Tool?
+
+Traditional LLM evaluation often relies on spreadsheets or ad-hoc scripts, leading to:
+- Inconsistent evaluation criteria across annotators
+- Lost context between prompt and response
+- Difficulty tracking annotator agreement
+- No standardized export format for CI/CD integration
+
+This tool solves these challenges by providing a purpose-built platform that scales from small research projects to enterprise-grade evaluation workflows.
+
+## Key Features
+
+### Core Functionality
+- **Quick Action Annotation Workflow** *(Enhanced Nov 2025)*: One-click "Pass & Next" for 30-50% faster evaluation
+  - Skip button for deferred traces
+  - Conditional fail form (only shown when needed)
+  - Auto-navigation to next unannotated trace
+  - Manual Previous/Next for review
+- **Living Rubrics**: Dynamic evaluation criteria that adapt to your specific use cases and failure modes
+- **Golden Set Management**: Curate high-quality reference examples for consistent evaluation standards
+- **Bulk Import/Export**: CSV and JSONL support for seamless integration with ML pipelines
+- **Multi-turn Context**: View complete conversation history for better evaluation context
+
+### Collaboration & Analytics
+- **Real-time Collaboration**: Multiple evaluators can work simultaneously
+- **Annotator Agreement Tracking**: Measure inter-rater reliability and identify disagreements
+- **Comprehensive Analytics**: Track annotation progress, identify patterns, and export insights
+- **User Authentication**: Secure, enterprise-grade authentication via Clerk
+
+### Integration & Export
+- **CI/CD Ready**: Export formats designed for integration with ML pipelines
+- **API-First Design**: RESTful API for programmatic access
+- **Flexible Schema**: MongoDB backend adapts to evolving evaluation requirements
 
 ## Tech Stack
 
-- **Frontend**: Vue 3.5 + TypeScript + Naive UI
-- **Backend**: FastAPI + Python 3.11
-- **Database**: MongoDB + Redis
-- **Authentication**: Clerk
+- **Frontend**: React 18.3 + TypeScript + Sendle Design System (SDS)
+- **Backend**: FastAPI (Python 3.11+) with async MongoDB driver (Motor)
+- **Database**: MongoDB for flexible schema + Redis for caching
+- **Authentication**: Clerk for secure, scalable user management
+- **Testing**: Playwright (E2E) + Pytest (API)
+- **Development**: Vite dev server with hot-reload, Docker Compose for local services
 
 ## Setup Instructions
 
@@ -31,8 +75,8 @@ A web application for systematically evaluating chatbot conversation traces usin
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
-cd Evals_app
+git clone https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool.git
+cd Evals_Open_Coding_Tool
 ```
 
 ### 2. Set Up Backend
@@ -95,10 +139,10 @@ Edit `.env` and add:
 #### Run Development Server
 
 ```bash
-npm run dev
+npm run dev:react
 ```
 
-The application will be available at http://localhost:5173
+The application will be available at http://localhost:5175
 
 ## Usage
 
@@ -119,6 +163,35 @@ The CSV must contain exactly 28 columns with these required fields:
 - `ai_response`: AI's response text
 
 Additional columns are stored as metadata.
+
+### Preparing BotDojo Traces for Import
+
+If you're exporting conversation traces from **BotDojo**, we've included a Claude Code skill that enriches and formats the raw export into the CSV format this tool expects.
+
+**What it does:**
+- Enriches BotDojo traces with accurate tool success metrics
+- Adds turn numbers and session grouping
+- Calculates tool performance statistics
+- Handles contextual interpretation of tool responses (fixes false negatives)
+- Outputs a properly formatted CSV ready for import
+
+**How to use:**
+
+1. Download the skill package: [`claude-tools/botdojo-trace-enrichment.zip`](./claude-tools/botdojo-trace-enrichment.zip)
+
+2. Load it into Claude Code:
+   - Open Claude Code (desktop or web)
+   - Go to Skills settings
+   - Import the `.zip` file
+
+3. Use the skill with your BotDojo export:
+   ```
+   Use the BotDojo Trace Enrichment skill to process my_export.csv
+   ```
+
+4. The enriched CSV will be ready to import into this tool
+
+**Full documentation:** See [`claude-tools/README.md`](./claude-tools/README.md) for detailed information about the enrichment process, custom tool support, and troubleshooting.
 
 ## API Documentation
 
@@ -159,10 +232,16 @@ Evals_app/
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── components/  # Vue components
-│   │   ├── services/    # API services
+│   │   ├── components/  # React components
+│   │   │   ├── AppHeader/
+│   │   │   ├── CsvImporter/
+│   │   │   ├── QuickActions/
+│   │   │   ├── TraceList/
+│   │   │   └── TraceViewer/
 │   │   ├── views/       # Page views
-│   │   └── router/      # Vue router
+│   │   ├── hooks/       # Custom React hooks
+│   │   ├── services/    # API services
+│   │   └── types/       # TypeScript types
 │   └── package.json
 ├── docker-compose.yml
 └── README.md
@@ -170,10 +249,11 @@ Evals_app/
 
 ### Key Components
 
-- **CsvImporter.vue**: Handles CSV file upload and validation
-- **TraceList.vue**: Displays paginated list of traces
-- **TraceViewer.vue**: Shows trace details with context
-- **AnnotationForm.vue**: Form for creating/updating annotations
+- **CsvImporter**: Handles CSV file upload and validation
+- **TraceList**: Displays paginated list of traces with status indicators
+- **TraceViewer**: Shows trace details with multi-turn context
+- **QuickActions**: One-click Pass/Skip/Fail annotation workflow
+- **FailureForm**: Conditional form for failure annotations
 
 ## Troubleshooting
 
@@ -191,6 +271,22 @@ Evals_app/
 - Backend CORS settings are in `app/main.py`
 - Ensure frontend URL is in the allowed origins list
 
+## Contributing
+
+We welcome contributions! Areas where you can help:
+- Adding new export formats
+- Improving annotation UI/UX
+- Enhancing analytics capabilities
+- Writing additional tests
+- Improving documentation
+
+Please open an issue first to discuss major changes.
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Zaf-Sendle/Evals_Open_Coding_Tool/discussions)
+
 ## License
 
-[Your License Here]
+MIT License - see [LICENSE](./LICENSE) file for details.

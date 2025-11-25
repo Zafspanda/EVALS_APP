@@ -7,6 +7,8 @@
 **Sprint:** 1
 **Created:** November 14, 2025
 
+> **Migration Note:** This story was originally implemented in Vue 3, then migrated to React 18 + Sendle Design System (Nov 2025). See [ADR-006](../architecture/adr/006-react-sds-migration.md). Component names below reflect the original Vue implementation; current React components are in `frontend/src/components/`.
+
 ---
 
 ## Story

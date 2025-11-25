@@ -4,7 +4,9 @@
 .trace-viewer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--sds-spacing-4);
+  padding: var(--sendle-spacing-md); // Admin spacing (18px)
+  font-family: var(--sendle-admin-font-family); // Admin font
+  font-size: var(--sendle-admin-font-size-base); // 13px base
 
   // Loading state
   &__loading {
@@ -12,12 +14,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--sds-spacing-8);
+    padding: var(--sendle-spacing-lg); // Admin large spacing (36px)
     text-align: center;
 
     p {
-      margin-top: var(--sds-spacing-3);
-      color: var(--sds-color-text-secondary);
+      margin-top: var(--sendle-spacing-sm); // Admin small spacing (9px)
+      color: var(--sendle-admin-text-secondary); // Admin text color
+      font-size: var(--sendle-admin-font-size-base);
     }
   }
 
@@ -42,20 +45,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--sds-spacing-8);
+    padding: var(--sendle-spacing-lg); // Admin large spacing
     text-align: center;
 
     p {
-      margin: 0 0 var(--sds-spacing-2) 0;
-      color: var(--sds-color-text-primary);
-      font-weight: var(--sds-font-weight-semibold);
+      margin: 0 0 var(--sendle-spacing-sm) 0;
+      color: var(--sendle-admin-text-primary); // Admin text color
+      font-weight: 500;
+      font-size: var(--sendle-admin-font-size-base);
     }
   }
 
   &__error-message {
-    color: var(--sds-color-text-error) !important;
-    font-size: var(--sds-font-size-sm);
-    margin-bottom: var(--sds-spacing-4) !important;
+    color: var(--sendle-admin-danger) !important; // Admin danger color
+    font-size: var(--sendle-admin-font-size-small); // 12px
+    margin-bottom: var(--sendle-spacing-md) !important;
   }
 
   // Empty state
@@ -63,48 +67,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sds-spacing-8);
+    padding: var(--sendle-spacing-lg);
     text-align: center;
 
     p {
       margin: 0;
-      color: var(--sds-color-text-secondary);
-      font-size: var(--sds-font-size-lg);
+      color: var(--sendle-admin-text-secondary);
+      font-size: var(--sendle-admin-font-size-large); // 16px
     }
   }
 
   // Header
   &__header {
-    margin-bottom: var(--sds-spacing-6); // Increased spacing
+    margin-bottom: var(--sendle-spacing-md); // Admin spacing (18px)
   }
 
   &__nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--sds-spacing-4); // Increased gap
-    margin-bottom: var(--sds-spacing-4); // Add margin below nav
+    gap: var(--sendle-spacing-md); // Admin gap (18px)
+    margin-bottom: var(--sendle-spacing-sm); // Admin margin (9px)
 
     @media (max-width: 768px) {
       flex-direction: column;
       align-items: stretch;
-      gap: var(--sds-spacing-3);
+      gap: var(--sendle-spacing-sm);
     }
   }
 
   &__title {
     margin: 0;
-    font-size: var(--sds-font-size-xl);
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
+    font-size: var(--sendle-admin-font-size-h3); // 24px
+    font-weight: 500;
+    color: var(--sendle-admin-text-primary);
     text-align: center;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.1;
 
     @media (max-width: 768px) {
       order: -1;
-      font-size: var(--sds-font-size-lg);
+      font-size: var(--sendle-admin-font-size-h4); // 18px
     }
   }
 
@@ -112,77 +117,134 @@
   &__metadata {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--sds-spacing-4); // Increased gap
-    padding: var(--sds-spacing-6); // More padding
-    background: var(--sds-color-background-surface);
-    border: 1px solid var(--sds-color-border-default);
-    border-radius: var(--sds-border-radius-lg); // Larger radius
-    margin-bottom: var(--sds-spacing-6); // More bottom margin
+    gap: var(--sendle-spacing-md); // Admin gap (18px)
+    padding: var(--sendle-spacing-md); // Admin padding (18px)
+    background: var(--sendle-admin-bg-light); // Light admin background
+    border: 1px solid var(--sendle-admin-border-light); // Admin border (#ddd)
+    border-radius: var(--sendle-border-radius-base); // Admin radius (4px)
+    margin-bottom: var(--sendle-spacing-md);
   }
 
   &__metadata-item {
     display: flex;
     flex-direction: column;
-    gap: var(--sds-spacing-2); // Increased gap between label and value
+    gap: var(--sendle-spacing-xs); // Admin small gap (5px)
 
     strong {
-      font-size: var(--sds-font-size-xs);
-      font-weight: var(--sds-font-weight-semibold);
-      color: var(--sds-color-text-secondary);
+      font-size: var(--sendle-admin-font-size-small); // 12px
+      font-weight: 500;
+      color: var(--sendle-admin-text-secondary); // Admin secondary (#777)
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     span {
-      font-size: var(--sds-font-size-md); // Slightly larger text
-      color: var(--sds-color-text-primary);
+      font-size: var(--sendle-admin-font-size-base); // 13px
+      color: var(--sendle-admin-text-primary); // Admin primary (#333)
       word-break: break-all;
-      line-height: 1.5; // Improved line height
+      line-height: var(--sendle-admin-line-height-base); // 1.428571429
     }
   }
 
-  // Current turn
+  // Conversation container
+  &__conversation {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sendle-spacing-md); // 18px spacing between turns
+  }
+
+  // Turn container (for both previous and current)
+  &__turn {
+    background: var(--sendle-admin-bg-white);
+    border: 1px solid var(--sendle-admin-border-light);
+    border-radius: var(--sendle-border-radius-base);
+    padding: var(--sendle-spacing-md);
+
+    // Previous turns - slightly muted
+    &--previous {
+      opacity: 0.85;
+      background: var(--sendle-admin-bg-light);
+    }
+
+    // Current turn - highlighted
+    &--current {
+      border-color: var(--sds-color-primary);
+      border-width: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  // Turn header (Turn 1, Turn 2, etc.)
+  &__turn-header {
+    margin: calc(-1 * var(--sendle-spacing-md)) calc(-1 * var(--sendle-spacing-md)) var(--sendle-spacing-md);
+    padding: var(--sendle-spacing-sm) var(--sendle-spacing-md);
+    background: var(--sendle-admin-bg-light);
+    border-bottom: 1px solid var(--sendle-admin-border-light);
+    font-size: var(--sendle-admin-font-size-small);
+    font-weight: 600;
+    color: var(--sendle-admin-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    // Current turn header - highlighted
+    &--current {
+      background: var(--sds-color-primary);
+      color: white;
+      font-weight: 700;
+    }
+  }
+
+  // Current turn (keeping for backward compatibility if needed)
   &__current-turn {
-    background: var(--sds-color-background-surface);
-    border: 1px solid var(--sds-color-border-default);
-    border-radius: var(--sds-border-radius-md);
-    padding: var(--sds-spacing-4);
-    margin-bottom: var(--sds-spacing-4);
+    background: var(--sendle-admin-bg-white);
+    border: 1px solid var(--sendle-admin-border-light);
+    border-radius: var(--sendle-border-radius-base);
+    padding: var(--sendle-spacing-md);
+    margin-bottom: var(--sendle-spacing-md);
   }
 
   &__message-block {
-    margin-bottom: var(--sds-spacing-4);
+    margin-bottom: var(--sendle-spacing-md); // Admin spacing (18px)
+    padding-bottom: var(--sendle-spacing-md);
+    border-bottom: 1px solid var(--sendle-admin-border-light);
 
     &:last-child {
       margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
   }
 
   &__message-title {
-    margin: 0 0 var(--sds-spacing-2) 0;
-    font-size: var(--sds-font-size-md);
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
+    margin: 0 0 var(--sendle-spacing-sm) 0; // 9px margin
+    font-size: var(--sendle-admin-font-size-base); // 13px
+    font-weight: 500;
+    color: var(--sendle-admin-text-primary);
+    line-height: 1.1;
   }
 
   &__message-content {
     margin: 0;
-    font-size: var(--sds-font-size-sm);
-    color: var(--sds-color-text-primary);
-    line-height: 1.6;
+    font-size: var(--sendle-admin-font-size-base); // 13px
+    color: var(--sendle-admin-text-primary);
+    line-height: var(--sendle-admin-line-height-base); // 1.428571429
     white-space: pre-wrap;
     word-break: break-word;
   }
 
   // Tool calls
   &__tool-calls {
-    margin: var(--sds-spacing-4) 0;
+    margin: var(--sendle-spacing-md) 0; // Admin spacing
+    padding: var(--sendle-spacing-md);
+    background: var(--sendle-admin-bg-light); // Light background for distinction
+    border-radius: var(--sendle-border-radius-base);
   }
 
   &__tool-calls-title {
-    margin: 0 0 var(--sds-spacing-3) 0;
-    font-size: var(--sds-font-size-md);
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
+    margin: 0 0 var(--sendle-spacing-sm) 0; // 9px margin
+    font-size: var(--sendle-admin-font-size-base); // 13px
+    font-weight: 500;
+    color: var(--sendle-admin-text-primary);
+    line-height: 1.1;
   }
 }

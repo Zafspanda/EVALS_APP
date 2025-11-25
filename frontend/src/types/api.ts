@@ -5,6 +5,7 @@ export interface Trace {
   trace_id: string;
   flow_session: string;
   turn_number: number;
+  total_turns: number;
   user_message: string;
   ai_response: string;
   tool_calls?: ToolCall[];
@@ -42,10 +43,18 @@ export interface AdjacentTraces {
   next: string | null;
 }
 
+export interface RecentAnnotation {
+  trace_id: string;
+  holistic_pass_fail: 'Pass' | 'Fail';
+  updated_at: string;
+}
+
 export interface UserStats {
   total_annotations: number;
   pass_count: number;
   fail_count: number;
+  pass_rate?: number;
+  recent_annotations?: RecentAnnotation[];
 }
 
 export interface TracesResponse {

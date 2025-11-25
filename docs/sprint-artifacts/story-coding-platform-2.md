@@ -8,6 +8,8 @@
 **Created:** November 14, 2025
 **Dependencies:** Story EVAL-001-01 must be complete
 
+> **Implementation Note:** This story will be implemented in React 18 + Sendle Design System. Component names reference React components in `frontend/src/components/`.
+
 ---
 
 ## Story

@@ -1,26 +1,18 @@
 # Evals Open Coding Tool
 
-## 🚨 MIGRATION IN PROGRESS
+## ✅ Project Status
 
-**Project Status:** Vue → React + Sendle Design System Migration Active
-**Start Date:** November 23, 2025
-**Current Phase:** Phase 1 - Core Infrastructure (Phase 0 ✅ Complete)
+**Current Phase:** Phase 3 - Testing & Validation
+**Tech Stack:** React 18 + Sendle Design System + FastAPI + MongoDB
 
-**Important for Developers:**
-- ✅ Sprint 1 (Story 1) completed in Vue 3
-- ✅ Phase 0 Complete: React scaffold, SDS linked, dev server running
-- 🔄 Migration to React + Sendle Design System in progress
-- ⏸️ Sprint 2 (Story 2) blocked until migration complete
+**Sprint Status:**
+- ✅ Story 1: Foundation & Core Evaluation - COMPLETE
+- 🟡 Story 2: Advanced Features & Export - READY FOR DEVELOPMENT
 
-**Primary Migration Documents:**
-- **WHY:** [docs/Course-correction-SDS.md](docs/Course-correction-SDS.md) - Strategic rationale
-- **WHAT:** [docs/ux-design-specification.md](docs/ux-design-specification.md) - UX blueprint
-- **HOW:** [docs/migration-implementation-guide.md](docs/migration-implementation-guide.md) - Implementation guide
-- **PROGRESS:** [docs/migration-status.yaml](docs/migration-status.yaml) - Migration tracking
-
-**Documentation Index:** [docs/README.md](docs/README.md) - Complete documentation guide
-
-**Tech Stack Below Reflects FUTURE State (React + SDS)** - Current implementation uses Vue 3 until migration completes.
+**Key Documents:**
+- [docs/ux-design-specification.md](docs/ux-design-specification.md) - UX blueprint
+- [docs/migration-status.yaml](docs/migration-status.yaml) - Progress tracking
+- [docs/architecture/adr/006-react-sds-migration.md](docs/architecture/adr/006-react-sds-migration.md) - Architecture decision
 
 ---
 
@@ -64,14 +56,12 @@ This tool solves these challenges by providing a purpose-built platform that sca
 
 ## Tech Stack
 
-**⚠️ Note:** Frontend stack is transitioning from Vue to React. See migration notice above.
-
-- **Frontend**: React 18+ + TypeScript with Sendle Design System (SDS) *(migrating from Vue 3.5 + Naive UI)*
-- **Backend**: FastAPI (Python 3.13) with async MongoDB driver (Motor) *(unchanged)*
-- **Database**: MongoDB for flexible schema + Redis for caching *(unchanged)*
-- **Authentication**: Clerk for secure, scalable user management *(unchanged)*
-- **Testing**: Playwright (E2E) + Pytest (API) with 65%+ test coverage *(unchanged)*
-- **Development**: Hot-reload, Docker Compose for local services *(unchanged)*
+- **Frontend**: React 18.3 + TypeScript + Sendle Design System (SDS)
+- **Backend**: FastAPI (Python 3.11+) with async MongoDB driver (Motor)
+- **Database**: MongoDB for flexible schema + Redis for caching
+- **Authentication**: Clerk for secure, scalable user management
+- **Testing**: Playwright (E2E) + Pytest (API)
+- **Development**: Vite dev server with hot-reload, Docker Compose for local services
 
 ## Setup Instructions
 
@@ -149,10 +139,10 @@ Edit `.env` and add:
 #### Run Development Server
 
 ```bash
-npm run dev
+npm run dev:react
 ```
 
-The application will be available at http://localhost:5173
+The application will be available at http://localhost:5175
 
 ## Usage
 
@@ -242,10 +232,16 @@ Evals_app/
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── components/  # Vue components
-│   │   ├── services/    # API services
+│   │   ├── components/  # React components
+│   │   │   ├── AppHeader/
+│   │   │   ├── CsvImporter/
+│   │   │   ├── QuickActions/
+│   │   │   ├── TraceList/
+│   │   │   └── TraceViewer/
 │   │   ├── views/       # Page views
-│   │   └── router/      # Vue router
+│   │   ├── hooks/       # Custom React hooks
+│   │   ├── services/    # API services
+│   │   └── types/       # TypeScript types
 │   └── package.json
 ├── docker-compose.yml
 └── README.md
@@ -253,10 +249,11 @@ Evals_app/
 
 ### Key Components
 
-- **CsvImporter.vue**: Handles CSV file upload and validation
-- **TraceList.vue**: Displays paginated list of traces
-- **TraceViewer.vue**: Shows trace details with context
-- **AnnotationForm.vue**: Form for creating/updating annotations
+- **CsvImporter**: Handles CSV file upload and validation
+- **TraceList**: Displays paginated list of traces with status indicators
+- **TraceViewer**: Shows trace details with multi-turn context
+- **QuickActions**: One-click Pass/Skip/Fail annotation workflow
+- **FailureForm**: Conditional form for failure annotations
 
 ## Troubleshooting
 

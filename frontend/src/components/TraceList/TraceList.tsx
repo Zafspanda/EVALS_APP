@@ -60,10 +60,10 @@ export const TraceList: React.FC = () => {
     const annotation = annotations.get(traceId);
     if (!annotation) return 'trace-list__row';
     if (annotation.holistic_pass_fail === 'Pass') {
-      return 'trace-list__row trace-list__row--pass';
+      return 'trace-list__row success';
     }
     if (annotation.holistic_pass_fail === 'Fail') {
-      return 'trace-list__row trace-list__row--fail';
+      return 'trace-list__row danger';
     }
     return 'trace-list__row';
   };
@@ -71,6 +71,19 @@ export const TraceList: React.FC = () => {
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + '...';
+  };
+
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyToClipboard = async (text: string, id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 1500);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
   };
 
   const handleViewTrace = (traceId: string) => {
@@ -115,105 +128,126 @@ export const TraceList: React.FC = () => {
 
   return (
     <div className="trace-list">
-      <div className="trace-list__header">
-        <h2 className="trace-list__title">Traces</h2>
-        <div className="trace-list__controls">
-          <label htmlFor="page-size">
-            Rows per page:
-            <select
-              id="page-size"
-              value={pageSize}
-              onChange={handlePageSizeChange}
-              className="trace-list__page-size-select"
-            >
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </label>
+      <div className="trace-list__container">
+        <div className="trace-list__header">
+          <h1 className="trace-list__title">Traces</h1>
         </div>
-      </div>
 
-      <div className="trace-list__table-container">
-        <table className="trace-list__table">
-          <thead>
-            <tr>
-              <th className="trace-list__th--status">STATUS</th>
-              <th className="trace-list__th--trace-id">TRACE ID</th>
-              <th className="trace-list__th--session">SESSION</th>
-              <th className="trace-list__th--turn">TURN</th>
-              <th className="trace-list__th--user-message">USER MESSAGE</th>
-              <th className="trace-list__th--ai-response">AI RESPONSE</th>
-              <th className="trace-list__th--actions">ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {traces.length === 0 ? (
+        <div className="trace-list__table-wrapper">
+          <table className="table table-hover trace-list__table">
+            <thead>
               <tr>
-                <td colSpan={7} className="trace-list__empty">
-                  No traces found
-                </td>
+                <th className="trace-list__th--status">STATUS</th>
+                <th className="trace-list__th--trace-id">TRACE ID</th>
+                <th className="trace-list__th--session">SESSION</th>
+                <th className="trace-list__th--turn">TURN</th>
+                <th className="trace-list__th--user-message">USER MESSAGE</th>
+                <th className="trace-list__th--ai-response">AI RESPONSE</th>
+                <th className="trace-list__th--actions">ACTIONS</th>
               </tr>
-            ) : (
-              traces.map((trace) => (
-                <tr key={trace.trace_id} className={getRowClassName(trace.trace_id)}>
-                  <td className="trace-list__cell trace-list__cell--center">
-                    {getStatusIndicator(trace.trace_id)}
-                  </td>
-                  <td className="trace-list__cell" title={trace.trace_id}>
-                    {truncateText(trace.trace_id, 24)}
-                  </td>
-                  <td className="trace-list__cell" title={trace.flow_session}>
-                    {trace.flow_session.substring(0, 8)}...
-                  </td>
-                  <td className="trace-list__cell trace-list__cell--center">
-                    {trace.turn_number}
-                  </td>
-                  <td className="trace-list__cell" title={trace.user_message}>
-                    {truncateText(trace.user_message, 100)}
-                  </td>
-                  <td className="trace-list__cell" title={trace.ai_response}>
-                    {truncateText(trace.ai_response, 100)}
-                  </td>
-                  <td className="trace-list__cell trace-list__cell--center">
-                    <Button
-                      variant="secondary"
-                      size="small"
-                      onClick={() => handleViewTrace(trace.trace_id)}
-                    >
-                      View
-                    </Button>
+            </thead>
+            <tbody>
+              {traces.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="trace-list__empty">
+                    No traces found
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {totalPages > 1 && (
-        <div className="trace-list__pagination">
-          <Button
-            variant="secondary"
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page === 1 || loading}
-          >
-            Previous
-          </Button>
-
-          <span className="trace-list__page-info">
-            Page {page} of {totalPages} ({total} total)
-          </span>
-
-          <Button
-            variant="secondary"
-            onClick={() => handlePageChange(page + 1)}
-            disabled={page === totalPages || loading}
-          >
-            Next
-          </Button>
+              ) : (
+                traces.map((trace) => (
+                  <tr key={trace.trace_id} className={getRowClassName(trace.trace_id)}>
+                    <td className="trace-list__cell trace-list__cell--center">
+                      {getStatusIndicator(trace.trace_id)}
+                    </td>
+                    <td
+                      className="trace-list__cell trace-list__cell--copyable"
+                      onClick={(e) => copyToClipboard(trace.trace_id, `trace-${trace.trace_id}`, e)}
+                      title="Click to copy"
+                    >
+                      {copiedId === `trace-${trace.trace_id}` ? (
+                        <span className="trace-list__copied">Copied!</span>
+                      ) : (
+                        trace.trace_id
+                      )}
+                    </td>
+                    <td
+                      className="trace-list__cell trace-list__cell--copyable"
+                      onClick={(e) => copyToClipboard(trace.flow_session, `session-${trace.trace_id}`, e)}
+                      title="Click to copy"
+                    >
+                      {copiedId === `session-${trace.trace_id}` ? (
+                        <span className="trace-list__copied">Copied!</span>
+                      ) : (
+                        trace.flow_session
+                      )}
+                    </td>
+                    <td className="trace-list__cell trace-list__cell--center">
+                      {trace.turn_number} of {trace.total_turns}
+                    </td>
+                    <td className="trace-list__cell" title={trace.user_message}>
+                      {truncateText(trace.user_message, 100)}
+                    </td>
+                    <td className="trace-list__cell" title={trace.ai_response}>
+                      {truncateText(trace.ai_response, 100)}
+                    </td>
+                    <td className="trace-list__cell trace-list__cell--center">
+                      <Button
+                        variant="secondary"
+                        size="small"
+                        onClick={() => handleViewTrace(trace.trace_id)}
+                      >
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-      )}
+
+        <div className="trace-list__footer">
+          <div className="trace-list__controls">
+            <label htmlFor="page-size">
+              Rows per page:
+              <select
+                id="page-size"
+                value={pageSize}
+                onChange={handlePageSizeChange}
+                className="trace-list__page-size-select"
+              >
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </label>
+          </div>
+
+          {totalPages > 1 && (
+            <div className="trace-list__pagination">
+              <Button
+                variant="secondary"
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 1 || loading}
+              >
+                Previous
+              </Button>
+
+              <span className="trace-list__page-info">
+                Page {page} of {totalPages} ({total} total)
+              </span>
+
+              <Button
+                variant="secondary"
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page === totalPages || loading}
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

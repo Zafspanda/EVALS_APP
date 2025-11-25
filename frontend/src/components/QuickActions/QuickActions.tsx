@@ -10,12 +10,14 @@ import './QuickActions.scss';
 
 interface QuickActionsProps {
   traceId: string;
+  nextTraceId?: string | null;
   existingAnnotation?: Annotation | null;
   onSaveSuccess?: () => void;
 }
 
 export const QuickActions: React.FC<QuickActionsProps> = ({
   traceId,
+  nextTraceId,
   existingAnnotation,
   onSaveSuccess,
 }) => {
@@ -28,17 +30,23 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   const navigate = useNavigate();
 
   const goToNext = async () => {
+    console.log('goToNext called');
     try {
+      console.log('Fetching next unannotated trace...');
       const nextTrace = await fetchNext();
+      console.log('Next trace result:', nextTrace);
+
       if (nextTrace && nextTrace.trace_id) {
+        console.log('Navigating to trace:', nextTrace.trace_id);
         navigate(`/trace/${nextTrace.trace_id}`);
       } else {
+        console.log('No more unannotated traces');
         setSuccess('All traces have been annotated!');
         setTimeout(() => navigate('/traces'), 1500);
       }
     } catch (err) {
-      setError('Failed to find next unannotated trace');
       console.error('Error getting next unannotated trace:', err);
+      setError('Failed to find next unannotated trace');
     }
   };
 
@@ -66,9 +74,24 @@ export const QuickActions: React.FC<QuickActionsProps> = ({
   };
 
   const handleSkip = async () => {
+    console.log('Skip button clicked, nextTraceId:', nextTraceId);
     setError(null);
     setSuccess(null);
-    await goToNext();
+
+    try {
+      // Prefer using adjacent next trace (same as Next button)
+      if (nextTraceId) {
+        console.log('Using adjacent next trace:', nextTraceId);
+        navigate(`/trace/${nextTraceId}`);
+      } else {
+        // Fall back to unannotated endpoint
+        console.log('No adjacent trace, trying unannotated endpoint');
+        await goToNext();
+      }
+    } catch (err) {
+      console.error('Error in handleSkip:', err);
+      setError('Failed to skip to next trace');
+    }
   };
 
   const handleMarkAsFail = () => {

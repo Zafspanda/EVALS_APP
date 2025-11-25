@@ -233,7 +233,7 @@ async def get_adjacent_traces(
 ):
     """
     Get IDs of previous and next traces for efficient navigation
-    Returns: {"previous": "trace_id" | null, "next": "trace_id" | null}
+    Returns: {"prev": "trace_id" | null, "next": "trace_id" | null}
     """
     try:
         db = get_database()
@@ -244,19 +244,35 @@ async def get_adjacent_traces(
         if not current_trace:
             raise HTTPException(status_code=404, detail="Trace not found")
 
-        # Get previous trace (same sort order as list view)
-        previous_cursor = traces_collection.find({
-            "$or": [
-                {"flow_session": {"$gt": current_trace["flow_session"]}},
-                {
-                    "flow_session": current_trace["flow_session"],
-                    "turn_number": {"$lt": current_trace["turn_number"]}
-                }
-            ]
-        }).sort([("flow_session", -1), ("turn_number", 1)]).limit(1)
+        logger.info(f"Current trace: session={current_trace.get('flow_session')}, turn={current_trace.get('turn_number')}")
 
-        previous_trace = await previous_cursor.to_list(length=1)
-        previous_id = previous_trace[0]["trace_id"] if previous_trace else None
+        # Get previous trace (same sort order as list view)
+        # Sort order is: flow_session DESC, turn_number ASC
+        # So "previous" means: same session with turn_number-1, or last turn of next higher session
+
+        # Try same session, previous turn first
+        previous_same_session = await traces_collection.find({
+            "flow_session": current_trace["flow_session"],
+            "turn_number": {"$lt": current_trace["turn_number"]}
+        }).sort([("turn_number", -1)]).limit(1).to_list(length=1)
+
+        logger.info(f"Previous same session query found {len(previous_same_session)} results")
+
+        if previous_same_session:
+            previous_id = previous_same_session[0]["trace_id"]
+            logger.info(f"Found previous in same session: {previous_id}")
+        else:
+            # No previous turn in same session, get last turn of next higher session
+            previous_other_session = await traces_collection.find({
+                "flow_session": {"$gt": current_trace["flow_session"]}
+            }).sort([("flow_session", 1), ("turn_number", -1)]).limit(1).to_list(length=1)
+
+            logger.info(f"Previous other session query found {len(previous_other_session)} results")
+            previous_id = previous_other_session[0]["trace_id"] if previous_other_session else None
+            if previous_id:
+                logger.info(f"Found previous in other session: {previous_id}")
+            else:
+                logger.info("No previous trace found")
 
         # Get next trace
         next_cursor = traces_collection.find({
@@ -273,7 +289,7 @@ async def get_adjacent_traces(
         next_id = next_trace[0]["trace_id"] if next_trace else None
 
         return {
-            "previous": previous_id,
+            "prev": previous_id,
             "next": next_id
         }
 

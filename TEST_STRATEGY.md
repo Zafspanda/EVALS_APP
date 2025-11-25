@@ -27,7 +27,7 @@ This document outlines a comprehensive testing strategy for the Evals_app projec
 |-------|-----------|----------|---------|-------------|
 | **E2E** | Playwright | TypeScript | 5 tests | 15-20 tests |
 | **Integration** | Jest + Fetch Mock | TypeScript | 0 tests | 10-15 tests |
-| **Unit (Frontend)** | Vitest + Vue Test Utils | TypeScript | 1 test | 25-30 tests |
+| **Unit (Frontend)** | Vitest + React Testing Library | TypeScript | 1 test | 25-30 tests |
 | **Unit (Backend)** | Pytest | Python | 11 tests | 30-40 tests |
 | **API** | FastAPI TestClient + Pytest | Python | Included in unit | 15-20 tests |
 
@@ -37,13 +37,15 @@ This document outlines a comprehensive testing strategy for the Evals_app projec
 
 ## Frontend Testing Strategy
 
-### 1. Unit Tests (Vitest + Vue Test Utils)
+### 1. Unit Tests (Vitest + React Testing Library)
+
+> **Note:** Project migrated from Vue to React 18 + Sendle Design System (Nov 2025)
 
 #### Component Tests by Priority
 
 ##### TIER 1 - Critical Components (High Impact)
 
-**CsvImporter.vue** (Currently 0 tests, Target: 8-10 tests)
+**CsvImporter.tsx** (Currently 0 tests, Target: 8-10 tests)
 ```typescript
 // Test cases needed:
 ✓ Renders upload area correctly
@@ -53,48 +55,57 @@ This document outlines a comprehensive testing strategy for the Evals_app projec
 ✓ Upload button enabled only when file selected
 ✓ Shows error message on validation failure
 ✓ Shows success message on successful import
-✓ Emits 'import-complete' event after successful upload
+✓ Calls onImportComplete callback after successful upload
 ✓ Handles network errors gracefully
 ✓ Progress indicator shows during upload
 ```
 
-**AnnotationForm.vue** (Currently 0 tests, Target: 10-12 tests)
+**QuickActions.tsx** (Currently 0 tests, Target: 10-12 tests)
 ```typescript
 // Test cases needed:
-✓ Renders all form fields correctly
-✓ Pass/Fail radio button toggling
-✓ First Failure Note field visible only when Fail selected
-✓ Form validation rules apply correctly
-✓ Save button disabled during submission
-✓ Reset button clears all fields
-✓ Displays existing annotation info when present
-✓ Handles form submission with valid data
-✓ Shows validation errors for required fields
-✓ Handles max length constraints (256, 500, 1000 chars)
-✓ Version display for existing annotations
+✓ Renders Pass, Skip, Fail buttons correctly
+✓ Pass & Next button calls API and navigates
+✓ Skip button navigates without saving
+✓ Mark as Fail button shows FailureForm
+✓ Loading state during API calls
+✓ Success toast messages on save
+✓ Error handling for failed saves
+✓ Keyboard shortcuts (if implemented)
 ```
 
-**TraceList.vue** (Currently 0 tests, Target: 8-10 tests)
+**FailureForm.tsx** (Currently 0 tests, Target: 8-10 tests)
+```typescript
+// Test cases needed:
+✓ Renders all required fields
+✓ First Failure Note field validation (required, 256 chars)
+✓ Open codes field validation (500 chars)
+✓ Comments field validation (required, 1000 chars)
+✓ Submit button disabled until valid
+✓ Cancel button hides form
+✓ Handles form submission with valid data
+✓ Shows validation errors for required fields
+```
+
+**TraceList.tsx** (Currently 0 tests, Target: 8-10 tests)
 ```typescript
 // Test cases needed:
 ✓ Renders data table with columns
 ✓ Displays trace data correctly
 ✓ Pagination controls visible and functional
-✓ Row background color changes based on pass/fail status
+✓ Row styling based on annotation status
 ✓ Page change triggers data reload
 ✓ Page size change works correctly
 ✓ Loading state displays during data fetch
 ✓ Handles empty trace list
-✓ Sorting functionality (flow_session, turn_number)
 ✓ Navigation to trace detail on row click
 ```
 
-**TraceViewer.vue** (Currently 0 tests, Target: 8-10 tests)
+**TraceViewer.tsx** (Currently 0 tests, Target: 8-10 tests)
 ```typescript
 // Test cases needed:
 ✓ Displays trace details correctly
-✓ Shows conversation context (previous turns)
-✓ Renders AnnotationForm component
+✓ Shows conversation context (SessionContext)
+✓ Renders QuickActions component
 ✓ Previous/Next trace navigation buttons
 ✓ Updates when trace prop changes
 ✓ Handles missing context gracefully

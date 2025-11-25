@@ -2,93 +2,27 @@
 @import '@sendle/sds-ui/scss/tokens';
 
 .csv-importer {
-  max-width: 700px; // Slightly wider for better proportions
+  max-width: 700px;
   margin: 0 auto;
-  padding: var(--sds-spacing-6); // Increased padding
+  padding: var(--sds-spacing-6);
 
-  &__dropzone {
-    border: 3px dashed var(--sds-color-border-default); // Thicker dashed border
-    border-radius: var(--sds-border-radius-lg); // Larger radius to match other components
-    padding: var(--sds-spacing-8) var(--sds-spacing-6); // Adjusted padding
-    min-height: 300px; // Ensure adequate height
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: var(--sds-color-background-surface);
-
-    &:hover {
-      border-color: var(--sds-color-primary);
-      background: var(--sds-color-background-hover);
-    }
-
-    &:focus {
-      outline: 2px solid var(--sds-color-border-focus);
-      outline-offset: 2px;
-    }
-
-    &--dragging {
-      border-color: var(--sds-color-primary);
-      background: var(--sds-color-background-hover);
-      transform: scale(1.02);
-    }
-  }
-
-  &__icon {
-    margin-bottom: var(--sds-spacing-4); // More space below icon
-    color: var(--sds-color-text-secondary);
-
-    svg {
-      width: 64px; // Larger icon
-      height: 64px;
-    }
-  }
-
-  &__text {
-    margin: 0 0 var(--sds-spacing-3) 0; // More space before hint
-    font-size: var(--sds-font-size-lg); // Larger text
-    font-weight: var(--sds-font-weight-semibold);
-    color: var(--sds-color-text-primary);
-  }
-
-  &__hint {
-    margin: 0;
-    font-size: var(--sds-font-size-sm); // Slightly larger hint text
-    color: var(--sds-color-text-secondary);
-    line-height: 1.6; // Better line height
-    max-width: 500px; // Constrain width for readability
+  &__upload {
+    margin-bottom: var(--sds-spacing-4);
   }
 
   &__alert {
-    margin-top: var(--sds-spacing-6); // More space above alerts
+    margin-top: var(--sds-spacing-4);
   }
 
-  &__file-info {
-    margin-top: var(--sds-spacing-6); // Increased spacing
-    padding: var(--sds-spacing-6); // More padding
-    background: var(--sds-color-background-surface);
-    border: 2px solid var(--sds-color-border-default); // Thicker border
-    border-radius: var(--sds-border-radius-lg); // Larger radius to match other components
-
-    p {
-      margin: 0 0 var(--sds-spacing-3) 0; // More space between paragraphs
-      font-size: var(--sds-font-size-md); // Slightly larger text
-      color: var(--sds-color-text-primary);
-
-      &:last-of-type {
-        margin-bottom: var(--sds-spacing-4); // More space before button
-      }
-
-      strong {
-        font-weight: var(--sds-font-weight-semibold);
-      }
-    }
+  &__actions {
+    margin-top: var(--sds-spacing-4);
+    display: flex;
+    justify-content: center;
   }
 
-  &__upload-button {
-    width: 100%;
+  &__uploading {
+    margin-top: var(--sds-spacing-4);
+    text-align: center;
+    color: var(--sds-color-text-secondary);
   }
 }

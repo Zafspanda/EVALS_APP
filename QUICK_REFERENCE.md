@@ -2,9 +2,9 @@
 
 ## Project at a Glance
 
-**Type**: Full-Stack Web Application (Vue 3 + FastAPI)
+**Type**: Full-Stack Web Application (React 18 + FastAPI)
 **Purpose**: Evaluate chatbot conversation traces using open coding methodology
-**Status**: Foundation phase with minimal test coverage
+**Status**: Phase 2 complete, Story 2 ready for development
 
 ---
 
@@ -12,8 +12,8 @@
 
 | Metric | Value |
 |--------|-------|
-| Frontend Framework | Vue 3.5 + TypeScript |
-| Backend Framework | FastAPI (Python 3.13) |
+| Frontend Framework | React 18.3 + TypeScript + Sendle Design System |
+| Backend Framework | FastAPI (Python 3.11+) |
 | Database | MongoDB + Redis |
 | Authentication | Clerk |
 | Current Tests | 17 tests (~15% coverage) |
@@ -26,18 +26,18 @@
 ```
 backend/app/                      frontend/src/
 ├── api/                          ├── components/
-│   ├── auth.py       (Auth)      │   ├── CsvImporter.vue
-│   ├── traces.py     (Main)      │   ├── TraceList.vue
-│   └── annotations.py (Main)     │   ├── AnnotationForm.vue
-├── db/                           │   └── TraceViewer.vue
-│   ├── mongodb.py                ├── views/
-│   └── redis.py                  │   ├── HomeView.vue
-├── models/                       │   ├── ImportView.vue
-│   ├── trace.py                  │   └── TracesView.vue
+│   ├── auth.py       (Auth)      │   ├── AppHeader/
+│   ├── traces.py     (Main)      │   ├── CsvImporter/
+│   └── annotations.py (Main)     │   ├── QuickActions/
+├── db/                           │   ├── TraceList/
+│   ├── mongodb.py                │   └── TraceViewer/
+│   └── redis.py                  ├── views/
+├── models/                       │   ├── Dashboard.tsx
+│   ├── trace.py                  │   ├── ImportView.tsx
+│   └── annotation.py             │   └── TracesView.tsx
+├── schemas/                      ├── hooks/
 │   └── annotation.py             ├── services/
-├── schemas/                      │   └── api.ts
-│   └── annotation.py             └── router/
-└── main.py
+└── main.py                       └── types/
 ```
 
 ---
@@ -65,10 +65,10 @@ backend/app/                      frontend/src/
 ## Component Hierarchy
 
 ```
-App.vue
-├── AppHeader.vue (Navigation)
-└── Router outlet
-    ├── HomeView (Dashboard)
+App.tsx
+├── AppHeader (Navigation)
+└── React Router outlet
+    ├── Dashboard (Home)
     │   └── Statistics + Quick Actions
     ├── ImportView
     │   └── CsvImporter
@@ -76,8 +76,10 @@ App.vue
     │   └── TraceList
     └── TraceDetailView
         └── TraceViewer
-            ├── Trace Details
-            └── AnnotationForm
+            ├── SessionContext (multi-turn)
+            ├── ToolCallCard
+            └── QuickActions
+                └── FailureForm (conditional)
 ```
 
 ---
@@ -88,10 +90,9 @@ App.vue
 ```
 frontend/
 ├── e2e/
-│   ├── vue.spec.ts                (1 test - smoke)
 │   └── annotation-flow.spec.ts     (5 tests - workflow)
 ├── src/components/__tests__/
-│   └── HelloWorld.spec.ts          (1 test)
+│   └── (React component tests go here)
 ├── vitest.config.ts               (Unit test config)
 └── playwright.config.ts           (E2E test config)
 ```
@@ -116,7 +117,7 @@ npm run test:unit                    # Run once
 npm run test:unit -- --watch        # Watch mode
 
 # E2E tests (requires running app)
-npm run dev                          # In another terminal
+npm run dev:react                    # In another terminal
 npm run test:e2e                     # Playwright tests
 ```
 
@@ -139,15 +140,15 @@ pytest test_api.py::TestCSVImport::test_csv_validation_invalid_extension -v
 ## Critical Components (Need Tests)
 
 ### High Priority
-1. **CsvImporter.vue** - File upload validation (0 tests)
-2. **AnnotationForm.vue** - Form handling (0 tests)
+1. **CsvImporter.tsx** - File upload validation (0 tests)
+2. **QuickActions.tsx** - Annotation workflow (0 tests)
 3. **apiService** - API communication (0 tests)
 4. **traces.py** - CSV processing (minimal tests)
 5. **auth.py** - Authentication (minimal tests)
 
 ### Medium Priority
-1. **TraceList.vue** - Data table pagination (0 tests)
-2. **HomeView.vue** - Dashboard stats (0 tests)
+1. **TraceList.tsx** - Data table pagination (0 tests)
+2. **Dashboard.tsx** - Dashboard stats (0 tests)
 3. **annotations.py** - CRUD operations (some tests)
 
 ---

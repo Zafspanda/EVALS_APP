@@ -1,7 +1,9 @@
 # Evals App - Comprehensive Project Analysis
 
 ## Executive Summary
-The Evals_app is a full-stack web application for evaluating chatbot conversation traces using open coding methodology. It consists of a Vue 3 frontend (TypeScript), FastAPI backend (Python), MongoDB database, and Redis caching. The project has foundational test infrastructure in place with Playwright for E2E testing and Vitest for unit testing.
+The Evals_app is a full-stack web application for evaluating chatbot conversation traces using open coding methodology. It consists of a React 18 frontend (TypeScript) with Sendle Design System, FastAPI backend (Python), MongoDB database, and Redis caching. The project has foundational test infrastructure in place with Playwright for E2E testing and Vitest for unit testing.
+
+> **Note:** Project migrated from Vue 3 to React 18 + Sendle Design System in November 2025. See [ADR-006](docs/architecture/adr/006-react-sds-migration.md).
 
 ---
 
@@ -17,25 +19,30 @@ Evals_app/
 │   │   ├── db/                # Database connections
 │   │   ├── models/            # Pydantic data models
 │   │   ├── schemas/           # Request/response schemas
-│   │   ├── services/          # Business logic (mostly empty)
+│   │   ├── services/          # Business logic
 │   │   └── main.py            # FastAPI app initialization
 │   ├── requirements.txt        # Python dependencies
 │   ├── test_api.py            # Existing test suite
 │   └── venv/                  # Python virtual environment
-├── frontend/                   # Vue 3 TypeScript application
+├── frontend/                   # React 18 TypeScript application
 │   ├── src/
-│   │   ├── components/        # Vue components
+│   │   ├── components/        # React components
+│   │   │   ├── AppHeader/
+│   │   │   ├── CsvImporter/
+│   │   │   ├── QuickActions/
+│   │   │   ├── TraceList/
+│   │   │   └── TraceViewer/
 │   │   ├── views/             # Page views
+│   │   ├── hooks/             # Custom React hooks
 │   │   ├── services/          # API service layer
-│   │   ├── stores/            # Pinia state management
-│   │   ├── router/            # Vue Router configuration
+│   │   ├── types/             # TypeScript types
 │   │   ├── assets/            # Static assets
-│   │   ├── App.vue            # Root component
-│   │   └── main.ts            # Application entry point
+│   │   ├── App.tsx            # Root component
+│   │   └── main.tsx           # Application entry point
 │   ├── e2e/                   # Playwright E2E tests
 │   ├── src/components/__tests__/ # Vitest unit tests
 │   ├── package.json           # npm dependencies
-│   ├── vite.config.ts         # Vite build configuration
+│   ├── vite.config.react.ts   # Vite build configuration
 │   ├── vitest.config.ts       # Vitest configuration
 │   ├── playwright.config.ts   # Playwright configuration
 │   └── tsconfig.json          # TypeScript configuration
@@ -49,23 +56,22 @@ Evals_app/
 ## 2. TECHNOLOGY STACK
 
 ### Frontend Stack
-- **Framework**: Vue 3.5.22 (with Composition API)
+- **Framework**: React 18.3.1
 - **Language**: TypeScript 5.9
 - **Build Tool**: Vite 7.1.11
-- **UI Library**: Naive UI 2.43.1
-- **Routing**: Vue Router 4.6.3
-- **State Management**: Pinia 3.0.3
+- **UI Library**: Sendle Design System (SDS)
+- **Routing**: React Router 6.30.2
+- **State Management**: React hooks (Context API)
 - **HTTP Client**: Axios 1.13.2
-- **Authentication**: Clerk (via @clerk/vue)
+- **Authentication**: Clerk (via @clerk/clerk-react)
 - **CSV Parsing**: PapaParse 5.5.3
-- **Utilities**: VueUse 14.0.0
 
 ### Frontend Testing & Dev Tools
 - **E2E Testing**: Playwright 1.56.1
 - **Unit Testing**: Vitest 3.2.4
-- **Component Testing**: Vue Test Utils 2.4.6
+- **Component Testing**: React Testing Library
 - **DOM Testing**: JSDOM 27.0.1
-- **Linting**: ESLint 9.37.0 (with Playwright & Vue plugins)
+- **Linting**: ESLint 9.37.0 (with Playwright plugins)
 - **Formatting**: Prettier 3.6.2
 
 ### Backend Stack

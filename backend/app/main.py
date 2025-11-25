@@ -44,7 +44,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",  # Vue dev server (old)
         "http://localhost:5174",  # Vue dev server (old)
-        "http://localhost:5176",  # React dev server
+        "http://localhost:5175",  # React dev server (primary)
+        "http://localhost:5176",  # React dev server (fallback)
     ],
     allow_credentials=True,
     allow_methods=["*"],

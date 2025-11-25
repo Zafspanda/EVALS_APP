@@ -1,0 +1,248 @@
+/**
+ * Sendle Admin CSS Bridge Layer
+ *
+ * This file extracts key design tokens and patterns from the Sendle admin panel
+ * to ensure visual consistency with the admin interface, while maintaining
+ * the modern SDS component architecture.
+ *
+ * Source: Sendle Admin Panel CSS (Bootstrap 3.4.1 based)
+ */
+
+// ==================================================
+// TYPOGRAPHY - Sendle Admin Font Stack
+// ==================================================
+
+:root {
+  // Primary font from Sendle admin (Open Sans based)
+  --sendle-admin-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sendle-admin-font-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  // Font sizes from admin panel
+  --sendle-admin-font-size-base: 13px;
+  --sendle-admin-font-size-large: 16px;
+  --sendle-admin-font-size-small: 12px;
+  --sendle-admin-font-size-h1: 36px;
+  --sendle-admin-font-size-h2: 30px;
+  --sendle-admin-font-size-h3: 24px;
+  --sendle-admin-font-size-h4: 18px;
+
+  // Line heights
+  --sendle-admin-line-height-base: 1.428571429; // Bootstrap default
+  --sendle-admin-line-height-computed: 18px;
+}
+
+// Apply Sendle admin font to body (can coexist with SDS)
+body {
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+}
+
+// Headings alignment with admin panel
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--sendle-admin-font-family);
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1 { font-size: var(--sendle-admin-font-size-h1); margin-bottom: 9px; }
+h2 { font-size: var(--sendle-admin-font-size-h2); margin-bottom: 9px; }
+h3 { font-size: var(--sendle-admin-font-size-h3); margin-bottom: 9px; }
+h4 { font-size: var(--sendle-admin-font-size-h4); margin-bottom: 9px; }
+
+// Small text elements
+small { font-size: 85%; }
+
+// Code elements
+code, kbd, pre, samp {
+  font-family: var(--sendle-admin-font-monospace);
+}
+
+// ==================================================
+// SPACING - Sendle Admin Spacing Patterns
+// ==================================================
+
+:root {
+  // Bootstrap 3 inspired spacing (9px base unit)
+  --sendle-spacing-xs: 5px;
+  --sendle-spacing-sm: 9px;   // Bootstrap default small
+  --sendle-spacing-md: 18px;  // Bootstrap default medium
+  --sendle-spacing-lg: 36px;  // Bootstrap default large
+
+  // Padding patterns from admin
+  --sendle-padding-base-vertical: 6px;
+  --sendle-padding-base-horizontal: 12px;
+
+  --sendle-padding-large-vertical: 10px;
+  --sendle-padding-large-horizontal: 16px;
+
+  --sendle-padding-small-vertical: 5px;
+  --sendle-padding-small-horizontal: 10px;
+}
+
+// Spacing utility classes (Sendle admin style)
+.sendle-mt-xs { margin-top: var(--sendle-spacing-xs); }
+.sendle-mt-sm { margin-top: var(--sendle-spacing-sm); }
+.sendle-mt-md { margin-top: var(--sendle-spacing-md); }
+.sendle-mt-lg { margin-top: var(--sendle-spacing-lg); }
+
+.sendle-mb-xs { margin-bottom: var(--sendle-spacing-xs); }
+.sendle-mb-sm { margin-bottom: var(--sendle-spacing-sm); }
+.sendle-mb-md { margin-bottom: var(--sendle-spacing-md); }
+.sendle-mb-lg { margin-bottom: var(--sendle-spacing-lg); }
+
+.sendle-pt-sm { padding-top: var(--sendle-spacing-sm); }
+.sendle-pt-md { padding-top: var(--sendle-spacing-md); }
+.sendle-pb-sm { padding-bottom: var(--sendle-spacing-sm); }
+.sendle-pb-md { padding-bottom: var(--sendle-spacing-md); }
+
+// ==================================================
+// COLORS - Sendle Admin Color Palette
+// ==================================================
+
+:root {
+  // Primary colors from admin panel
+  --sendle-admin-text-primary: #333;
+  --sendle-admin-text-secondary: #777;
+  --sendle-admin-text-muted: #999;
+
+  // Background colors
+  --sendle-admin-bg-white: #fff;
+  --sendle-admin-bg-light: #f7f7f7;
+  --sendle-admin-bg-muted: #eee;
+  --sendle-admin-bg-dark: #e4e4e4;
+
+  // Border colors
+  --sendle-admin-border-light: #ddd;
+  --sendle-admin-border-default: #aaa;
+  --sendle-admin-border-dark: #888;
+
+  // Interaction colors (from Select2/Bootstrap)
+  --sendle-admin-primary: #337ab7;
+  --sendle-admin-primary-dark: #286090;
+  --sendle-admin-focus: #5897fb;
+  --sendle-admin-focus-alt: #3875d7;
+
+  // State colors
+  --sendle-admin-warning-bg: #fcf8e3;
+  --sendle-admin-danger: #d9534f;
+  --sendle-admin-success: #5cb85c;
+}
+
+// ==================================================
+// FORM ELEMENTS - Sendle Admin Form Styling
+// ==================================================
+
+:root {
+  // Input dimensions
+  --sendle-input-height-base: 34px;
+  --sendle-input-height-large: 46px;
+  --sendle-input-height-small: 30px;
+
+  // Border radius
+  --sendle-border-radius-base: 4px;
+  --sendle-border-radius-large: 6px;
+  --sendle-border-radius-small: 3px;
+}
+
+// Form control base styles (matching admin)
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+}
+
+// ==================================================
+// LINKS - Sendle Admin Link Styling
+// ==================================================
+
+a {
+  color: var(--sendle-admin-primary);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: var(--sendle-admin-primary-dark);
+    text-decoration: underline;
+  }
+}
+
+// ==================================================
+// TABLES - Sendle Admin Table Styling
+// ==================================================
+
+:root {
+  --sendle-table-cell-padding: 8px;
+  --sendle-table-condensed-padding: 5px;
+  --sendle-table-bg: transparent;
+  --sendle-table-border-color: var(--sendle-admin-border-light);
+}
+
+// ==================================================
+// UTILITIES - Helper Classes from Admin
+// ==================================================
+
+// Text utilities
+.text-muted { color: var(--sendle-admin-text-muted); }
+.text-primary { color: var(--sendle-admin-primary); }
+.text-success { color: var(--sendle-admin-success); }
+.text-danger { color: var(--sendle-admin-danger); }
+
+// Background utilities
+.bg-light { background-color: var(--sendle-admin-bg-light); }
+.bg-muted { background-color: var(--sendle-admin-bg-muted); }
+
+// Border utilities
+.border { border: 1px solid var(--sendle-admin-border-light); }
+.border-radius { border-radius: var(--sendle-border-radius-base); }
+
+// Display utilities
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+// ==================================================
+// COMPONENT HARMONIZATION
+// ==================================================
+
+// Ensure SDS components respect admin spacing patterns
+.sds-button,
+button[class*="sds-"] {
+  padding: var(--sendle-padding-base-vertical) var(--sendle-padding-base-horizontal);
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+  border-radius: var(--sendle-border-radius-base);
+}
+
+// Card/Panel components
+.sds-card,
+[class*="card"] {
+  border-radius: var(--sendle-border-radius-base);
+  border-color: var(--sendle-admin-border-light);
+}
+
+// ==================================================
+// RESPONSIVE TWEAKS
+// ==================================================
+
+// Maintain admin panel responsive breakpoints
+@media (max-width: 767px) {
+  body {
+    font-size: 14px; // Slightly larger on mobile
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  // Tablet adjustments
+  h1 { font-size: 30px; }
+  h2 { font-size: 26px; }
+}

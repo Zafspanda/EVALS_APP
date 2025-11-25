@@ -33,6 +33,10 @@ export const AppHeader: React.FC = () => {
   return (
     <header className="app-header">
       <div className="app-header__container">
+        <Link to="/" className="app-header__logo">
+          <img src="/sendle-logo.svg" alt="Sendle" />
+        </Link>
+
         <nav className="app-header__nav">
           <Link
             to="/"

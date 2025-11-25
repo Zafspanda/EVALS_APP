@@ -11,14 +11,18 @@
 html, body, #root {
   height: 100%;
   width: 100%;
+  background: #ffffff; // Solid white background
 }
 
 body {
   // Font is set by SDS on html element, don't override
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // Background and color are also set by SDS
+  background: #ffffff; // Solid white background
 }
+
+// Sendle Admin CSS Bridge - harmonizes with admin panel aesthetics
+@import './styles/sendle-admin-bridge';
 
 // Custom app styles
 @import './styles/app';

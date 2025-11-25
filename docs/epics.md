@@ -81,9 +81,11 @@ Epic: Open Coding Evaluation Platform
 
 ## Technical Decisions
 
-**Stack:** Vue 3.5 + FastAPI + MongoDB + Redis + Clerk Auth
+**Stack:** React 18.3 + Sendle Design System + FastAPI + MongoDB + Redis + Clerk Auth
 **Deployment:** Railway (all-in-one platform)
-**Key Libraries:** Naive UI, Pydantic, Motor, PapaParse
+**Key Libraries:** SDS UI, Pydantic, Motor, PapaParse
+
+> **Note:** Story 1 was originally built in Vue 3, then migrated to React + SDS (Nov 2025). See [ADR-006](./architecture/adr/006-react-sds-migration.md) for details.
 
 ## Resources
 

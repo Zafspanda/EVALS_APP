@@ -165,15 +165,18 @@
   }
 
   &__th--trace-id {
-    width: 200px;
+    width: 320px;
+    min-width: 320px;
   }
 
   &__th--session {
-    width: 130px;
+    width: 320px;
+    min-width: 320px;
   }
 
   &__th--turn {
-    width: 70px;
+    width: 80px;
+    min-width: 80px;
     text-align: center !important;
   }
 
@@ -224,6 +227,24 @@
     &--center {
       text-align: center;
     }
+
+    &--copyable {
+      cursor: pointer;
+      font-family: monospace;
+      font-size: var(--sendle-admin-font-size-small);
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__copied {
+    color: rgb(34, 197, 94);
+    font-weight: 600;
+    font-family: inherit;
   }
 
   &__empty {

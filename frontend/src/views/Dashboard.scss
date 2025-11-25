@@ -113,6 +113,11 @@
       border-color: rgb(59, 130, 246);
       background: rgba(59, 130, 246, 0.05);
     }
+
+    &--neutral {
+      border-color: rgb(100, 116, 139);
+      background: rgba(100, 116, 139, 0.05);
+    }
   }
 
   &__stat-value {

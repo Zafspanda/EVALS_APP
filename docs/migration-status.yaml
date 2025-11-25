@@ -1,14 +1,16 @@
 # Vue → React + SDS Migration Status Tracker
-# Updated: 2025-11-23
+# Updated: 2025-11-25
 # Architect: Winston
 
 migration_info:
   start_date: "2025-11-23"
   target_completion: "2025-11-23"
   current_phase: "Phase 3: Testing & Validation"
-  overall_status: "phase-2-complete"
+  overall_status: "migration-complete-cleanup-done"
   phase_1_completion: "2025-11-23"
   phase_2_completion: "2025-11-23"
+  vue_cleanup_date: "2025-11-25"
+  vue_cleanup_doc: "docs/CLEANUP-2025-11-25-Vue-Removal.md"
 
 phases:
   - phase: "Phase 0: React Scaffold Setup"
@@ -145,8 +147,8 @@ phases:
         vue_file: "frontend/src/components/CsvImporter.vue"
         react_file: "frontend/src/components/CsvImporter/CsvImporter.tsx"
         status: "completed"
-        sds_components: ["Button", "Alert"]
-        notes: "Custom drag-and-drop upload, file validation (extension, size)"
+        sds_components: ["FileUpload", "Button", "Alert"]
+        notes: "Uses SDS FileUpload component with drag-and-drop, file validation (extension, size)"
 
       - name: "ExportDialog Component"
         vue_file: "frontend/src/components/ExportDialog.vue"
@@ -208,9 +210,15 @@ notes:
   - "All backend APIs remain unchanged (100% compatible)"
   - "Sprint 1 UI is minimal - perfect timing for migration"
   - "Story 2 blocked until migration complete"
+  - "2025-11-25: Vue cleanup complete - all Vue files, dependencies, and references removed"
+  - "2025-11-25: All documentation updated to reflect React 18 + SDS stack"
+  - "2025-11-25: 222 Vue-related npm packages removed"
+  - "2025-11-25: UX fixes completed - Dashboard card styling, TraceList turn display (X of Y), click-to-copy IDs, SDS FileUpload"
 
 reference_documents:
   - "docs/Course-correction-SDS.md - Strategic rationale"
   - "docs/ux-design-specification.md - UX blueprint"
   - "docs/migration-implementation-guide.md - Detailed technical guide"
   - "docs/architecture/adr/006-react-sds-migration.md - Architecture decision"
+  - "docs/CLEANUP-2025-11-25-Vue-Removal.md - Vue removal and doc cleanup summary"
+  - "docs/HANDOVER-Phase-2-Complete-UX-Review-Needed.md - UX review items before Story 2"

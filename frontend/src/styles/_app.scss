@@ -1,13 +1,18 @@
 // Additional app-wide styles
-// Spacing utilities
-.mt-sm { margin-top: var(--spacing-sm, 8px); }
-.mt-md { margin-top: var(--spacing-md, 16px); }
-.mt-lg { margin-top: var(--spacing-lg, 24px); }
+// Spacing utilities (now aligned with Sendle admin spacing)
+.mt-sm { margin-top: var(--sendle-spacing-sm, 9px); }
+.mt-md { margin-top: var(--sendle-spacing-md, 18px); }
+.mt-lg { margin-top: var(--sendle-spacing-lg, 36px); }
 
-.mb-sm { margin-bottom: var(--spacing-sm, 8px); }
-.mb-md { margin-bottom: var(--spacing-md, 16px); }
-.mb-lg { margin-bottom: var(--spacing-lg, 24px); }
+.mb-sm { margin-bottom: var(--sendle-spacing-sm, 9px); }
+.mb-md { margin-bottom: var(--sendle-spacing-md, 18px); }
+.mb-lg { margin-bottom: var(--sendle-spacing-lg, 36px); }
 
-.p-sm { padding: var(--spacing-sm, 8px); }
-.p-md { padding: var(--spacing-md, 16px); }
-.p-lg { padding: var(--spacing-lg, 24px); }
+.p-sm { padding: var(--sendle-spacing-sm, 9px); }
+.p-md { padding: var(--sendle-spacing-md, 18px); }
+.p-lg { padding: var(--sendle-spacing-lg, 36px); }
+
+// Typography utilities (Sendle admin style)
+.text-base { font-size: var(--sendle-admin-font-size-base, 13px); }
+.text-large { font-size: var(--sendle-admin-font-size-large, 16px); }
+.text-small { font-size: var(--sendle-admin-font-size-small, 12px); }

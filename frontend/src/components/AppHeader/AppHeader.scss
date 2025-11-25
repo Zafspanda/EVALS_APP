@@ -2,7 +2,7 @@
 @import '@sendle/sds-ui/scss/tokens';
 
 .app-header {
-  background: var(--sds-color-background-surface);
+  background: var(--sendle-admin-bg-white); // Solid white background
   border-bottom: 2px solid var(--sds-color-border-default); // Thicker border
   padding: 16px 24px; // More padding for breathing room
   position: sticky;
@@ -24,6 +24,24 @@
       align-items: stretch;
       gap: 16px;
       padding: 0 8px;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 32px; // Space between logo and nav
+
+    img {
+      height: 28px; // Fixed height for logo
+      width: auto;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      margin-right: 0;
+      margin-bottom: 12px;
     }
   }
 

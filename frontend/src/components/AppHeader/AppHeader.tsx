@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SignedIn, SignedOut, UserButton, useClerk } from '@clerk/clerk-react';
-import { Button, Badge } from '@sendle/sds-ui';
+import { Button, Badge } from '../../sds';
 import { useUserStats } from '../../hooks/useAnnotations';
 import './AppHeader.scss';
 

@@ -1,7 +1,7 @@
 // TraceViewer Component - Main trace display
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Divider } from '@sendle/sds-ui';
+import { Button, Divider } from '../../sds';
 import { useTrace, useAdjacentTraces } from '../../hooks/useTraces';
 import { useAnnotation } from '../../hooks/useAnnotations';
 import ToolCallCard from './ToolCallCard';

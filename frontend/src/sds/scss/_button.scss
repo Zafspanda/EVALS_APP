@@ -1,0 +1,242 @@
+.sds-button {
+  $root: &;
+  --sds-button-outline-color: #{$button-base-focus-outline};
+  background: $button-base-background-color;
+  background-clip: border-box;
+  border: $base-border-width solid transparent;
+  border-radius: $base-border-radius;
+  color: $button-base-font-color;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $sds-font-weight-semi-bold;
+  font-size: $button-base-font-size;
+  line-height: $sds-font-line-height-base;
+  padding: $sds-size-spacing-small $sds-size-spacing-medium;
+  position: relative;
+  text-align: center;
+  text-decoration: none !important;
+  transition: background-color $sds-time-transition-short ease-in-out,
+    box-shadow $sds-time-transition-short ease-in-out;
+  user-select: none;
+  -webkit-appearance: none;
+  white-space: normal;
+
+  &:hover {
+    color: $button-base-font-color;
+    background: $button-base-background-hover;
+  }
+
+  &:focus,
+  &:focus-within {
+    color: $button-base-font-color;
+    outline: 0;
+    background: $button-base-background-focus;
+    box-shadow: $button-box-shadow;
+  }
+
+  &:active {
+    color: $button-base-font-color;
+    text-decoration: none;
+    background: $button-base-background-active;
+  }
+
+  > span ~ ::before {
+    display: inline-flex;
+    content: '';
+    width: $spacing-small;
+  }
+
+  &__text {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__icon {
+    display: inline-flex;
+
+    svg {
+      max-height: 1.3em;
+    }
+  }
+
+  // ghost
+  &--ghost {
+    background: $base-background-color;
+    box-shadow: 0 0 0 $base-border-width currentColor;
+    &:visited:not(:active):not(:hover) {
+      color: $button-base-font-color;
+    }
+  }
+  // link
+  &--link {
+    background: transparent;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  // sizes
+  &--x-small {
+    font-size: $sds-font-size-xs;
+    padding: $sds-size-spacing-xxs $sds-size-spacing-medium;
+  }
+
+  &--small {
+    padding: $sds-size-spacing-xs $sds-size-spacing-medium;
+  }
+
+  &--large {
+    font-size: $sds-font-size-large;
+    padding: $sds-size-spacing-medium;
+  }
+
+  // variants
+  &--primary {
+    --sds-button-outline-color: #{$button-primary-focus-outline};
+    background: $button-primary-background;
+    color: $button-primary-font-color;
+    text-shadow: $button-font-text-shadow-position
+      rgba($button-primary-background-hover, $button-font-text-shadow-opacity);
+
+    &#{$root}--ghost {
+      background: $base-background-color;
+      border-color: $button-primary-border-color;
+      color: $button-primary-ghost-font-color;
+      text-shadow: none;
+      &:visited:not(:active):not(:hover) {
+        color: $button-primary-ghost-font-color;
+      }
+    }
+
+    &:hover {
+      background: $button-primary-background-hover;
+      color: $button-primary-font-color;
+    }
+
+    &:focus,
+    &:focus-within {
+      background: $button-primary-background-focus;
+      box-shadow: $button-box-shadow;
+      color: $button-primary-font-color;
+    }
+
+    &:active {
+      background: $button-primary-background-active;
+      color: $button-primary-font-color;
+    }
+
+    &:visited {
+      color: $button-primary-font-color;
+    }
+  }
+
+  &--secondary {
+    --sds-button-outline-color: #{$button-secondary-focus-outline};
+    background: $button-secondary-background;
+    color: $button-secondary-font-color;
+    text-shadow: $button-font-text-shadow-position
+      rgba($button-secondary-background-hover, $button-font-text-shadow-opacity);
+
+    &#{$root}--ghost {
+      background: $base-background-color;
+      border-color: $button-secondary-border-color;
+      color: $button-secondary-ghost-font-color;
+      text-shadow: none;
+      &:visited:not(:active):not(:hover) {
+        color: $button-secondary-ghost-font-color;
+      }
+    }
+
+    &:hover:not(:active) {
+      background: $button-secondary-background-hover;
+      color: $button-secondary-font-color;
+    }
+
+    &:focus,
+    &:focus-within {
+      background: $button-secondary-background-focus;
+      box-shadow: $button-box-shadow;
+      color: $button-secondary-font-color;
+    }
+
+    &:active {
+      background: $button-secondary-background-active;
+      color: $button-secondary-font-color;
+    }
+
+    &:visited {
+      color: $button-secondary-font-color;
+    }
+  }
+
+  &--risk {
+    --sds-button-outline-color: #{$button-risk-focus-outline};
+    background: $button-risk-background;
+    color: $button-risk-font-color;
+    text-shadow: $button-font-text-shadow-position
+      rgba($button-risk-background-hover, $button-font-text-shadow-opacity);
+
+    &#{$root}--ghost {
+      background: $base-background-color;
+      border-color: $button-risk-border-color;
+      color: $button-risk-ghost-font-color;
+      text-shadow: none;
+      &:visited:not(:active):not(:hover) {
+        color: $button-risk-ghost-font-color;
+      }
+    }
+
+    &#{$root}--link {
+      background: transparent;
+      border-color: transparent;
+      color: $button-risk-ghost-font-color;
+      text-shadow: none;
+      &:focus,
+      &:focus-within {
+        color: $button-risk-ghost-font-color;
+        background: transparent;
+        box-shadow: $button-box-shadow;
+      }
+    }
+
+    &:hover {
+      background: $button-risk-background-hover;
+      color: $button-risk-font-color;
+    }
+
+    &:focus,
+    &:focus-within {
+      background: $button-risk-background-focus;
+      box-shadow: $button-box-shadow;
+      color: $button-risk-font-color;
+    }
+
+    &:active {
+      background: $button-risk-background-active;
+      color: $button-risk-font-color;
+    }
+
+    &:visited {
+      color: $button-risk-font-color;
+    }
+  }
+
+  &:disabled,
+  &[disabled] {
+    background: rgba($button-base-background-color, 0.75);
+    color: rgba($button-base-font-color, 0.45);
+    cursor: not-allowed;
+    text-shadow: none;
+
+    #{$root}__icon svg {
+      color: rgba($button-base-font-color, 0.35);
+    }
+    &:hover, &:focus, &:active, &:visited {
+      background: rgba($button-base-background-color, 0.75);
+      color: rgba($button-base-font-color, 0.45);
+    }
+  }
+}

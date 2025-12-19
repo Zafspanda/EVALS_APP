@@ -1,7 +1,7 @@
 // Dashboard View - Home page with user stats
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Badge, Status } from '@sendle/sds-ui';
+import { Button, Badge, Status } from '../sds';
 import { useUserStats } from '../hooks/useAnnotations';
 import { apiService } from '../services/api';
 import type { Annotation } from '../types/api';

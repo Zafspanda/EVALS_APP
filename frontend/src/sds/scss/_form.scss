@@ -1,0 +1,72 @@
+// Adds a margin (1.5 grid units) to the bottom of any heading placed within a form
+.sds-form {
+  [class^='sds-heading--'] {
+    margin-bottom: $spacing-large;
+  }
+}
+
+/* generic styling for basic form elements */
+.sds-form-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+// Form legend has the same styling as a medium heading
+.sds-form-legend {
+  font: $form-legend-font-weight $form-legend-font-size $form-legend-font-stack;
+  margin: 0 0 $spacing-large;
+  padding: 0;
+  border-bottom: $form-legend-border-width solid $form-legend-border-color;
+}
+
+abbr.sds-required[title] {
+  border: 0;
+  color: $form-required-font-color;
+  cursor: help;
+  text-decoration: none;
+}
+
+// Splits a form into two columns on resolutions above 768px
+.sds-form-split {
+  display: flex;
+  flex: 1 auto;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: end;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .sds-form-split {
+    flex-direction: row;
+    .sds-form-element {
+      &:nth-child(2n + 1) {
+        padding-right: $spacing-base;
+      }
+      &:nth-child(2n) {
+        padding-left: $spacing-base;
+      }
+    }
+    &-25 {
+      .sds-form-element {
+        width: 25%;
+        + .sds-form-element {
+          width: 75%;
+        }
+      }
+    }
+    &-50 {
+      .sds-form-element {
+        width: 50%;
+      }
+    }
+    &-75 {
+      .sds-form-element {
+        width: 75%;
+        + .sds-form-element {
+          width: 25%;
+        }
+      }
+    }
+  }
+}

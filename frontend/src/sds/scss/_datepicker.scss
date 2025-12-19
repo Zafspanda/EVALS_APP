@@ -1,0 +1,220 @@
+@import "tokens";
+@import "variables";
+
+.sds-datepicker {
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  position: relative;
+}
+
+.sds-datepicker__label {
+  line-height: $spacing-large;
+  margin-bottom: $spacing-small;
+  font-weight: $sds-font-weight-normal;
+}
+
+.sds-datepicker__group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sds-datepicker__field {
+  display: flex;
+  align-items: center;
+  border: $sds-size-border-base solid $sds-color-border-base;
+  border-radius: $base-border-radius;
+  background: $sds-color-base-white;
+  padding: $spacing-small;
+  padding-right: 2.5rem; /* Make space for icon button */
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+}
+
+.sds-datepicker__group:hover .sds-datepicker__field {
+  border-color: $sds-color-border-dark;
+}
+
+.sds-datepicker__group:hover .sds-datepicker__icon {
+  border-color: $sds-color-border-dark;
+}
+
+/* Blue highlighting when calendar is open */
+.sds-datepicker__group--open {
+  outline: 2px solid $sds-color-base-blue-default;
+  border-radius: $base-border-radius;
+}
+
+.sds-datepicker__field-text {
+  flex: 1;
+  color: $base-font-color;
+}
+
+.sds-datepicker__placeholder {
+  color: $sds-color-font-secondary;
+  font-style: italic;
+}
+
+.sds-datepicker__icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: $sds-size-border-base solid $sds-color-border-base;
+  background: $sds-color-base-white;
+  border-radius: 0 $base-border-radius $base-border-radius 0;
+  padding: 0 $spacing-small;
+  cursor: pointer;
+}
+
+.sds-datepicker__dialog {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  z-index: 1000;
+  border: $sds-size-border-base solid $sds-color-border-base;
+  border-radius: $base-border-radius;
+  background: $sds-color-base-white;
+  box-shadow: 0 4px 8px 0 rgba(51, 66, 79, 0.30);
+  width: 100%;
+}
+
+.sds-datepicker__dialog--above {
+  top: auto;
+  bottom: calc(100% + 2px);
+  box-shadow: 0 0px 8px 0 rgba(51, 66, 79, 0.30);
+}
+
+.sds-datepicker__error {
+  color: $sds-color-font-error;
+  margin-top: $spacing-xxs;
+  background-color: $sds-color-base-red-tint-90;
+  padding: $spacing-xs $spacing-small;
+  border-radius: $base-border-radius;
+}
+
+.sds-datepicker__hint {
+  font-size: $sds-font-size-xs;
+  line-height: $sds-font-line-height-large;
+  margin-top: $spacing-xxs;
+  color: $sds-color-font-secondary;
+}
+
+.sds-datepicker__calendar {
+  padding: $spacing-medium;
+}
+
+.sds-datepicker__calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-small;
+}
+
+.sds-datepicker__nav-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: $sds-size-spacing-small;
+  border-radius: $sds-size-border-radius-medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sds-datepicker__nav-btn:hover {
+  background: $sds-color-base-overcast-default;
+}
+
+.sds-datepicker__month-year {
+  color: $sds-color-base-midnight-default;
+  font-size: $sds-font-size-medium;
+  font-weight: $sds-font-weight-bold;
+  line-height: $sds-font-line-height-base;
+}
+
+.sds-datepicker__calendar-grid {
+  margin-bottom: $spacing-medium;
+}
+
+.sds-datepicker__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: $spacing-xs;
+}
+
+.sds-datepicker__weekday {
+  padding: $spacing-xs;
+  text-align: center;
+  color: $sds-color-base-asphalt-default;
+  font-size: $sds-font-size-xs;
+  line-height: $sds-font-line-height-meta-xs;
+}
+
+.sds-datepicker__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.sds-datepicker__day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sds-datepicker__day {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  color: $sds-color-base-midnight-default;
+  font-size: $sds-font-size-medium;
+  line-height: $sds-font-line-height-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sds-datepicker__day:hover {
+  background: $sds-color-base-overcast-default;
+}
+
+.sds-datepicker__day--today {
+  background: $sds-color-base-overcast-default;
+}
+
+.sds-datepicker__day--selected {
+  background: $sds-color-base-orange-default;
+  color: $sds-color-base-white;
+}
+
+.sds-datepicker__day--selected:hover {
+  background: $sds-color-base-orange-shade-20;
+}
+
+.sds-datepicker__day--adjacent {
+  color: $sds-color-base-concrete-default;
+}
+
+.sds-datepicker__calendar-footer {
+  display: flex;
+  justify-content: center;
+  border-top: $sds-size-border-base solid $sds-color-border-base;
+  padding-top: $sds-size-spacing-small;
+}
+
+/* Invalid/Error state styles */
+.sds-datepicker__group--invalid .sds-datepicker__field {
+  border-color: $sds-color-base-red-shade-20;
+}
+
+.sds-datepicker__group--invalid .sds-datepicker__icon {
+  border-color: $sds-color-base-red-shade-20;
+}

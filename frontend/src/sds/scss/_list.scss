@@ -1,0 +1,15 @@
+ul.sds-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sds-list {
+  &__subheader {
+    margin: $sds-size-spacing-small 0;
+    color: $sds-color-font-secondary;
+    font-size: $sds-font-size-small;
+    font-weight: $sds-font-weight-normal;
+    line-height: $sds-font-line-height-meta;
+  }
+}

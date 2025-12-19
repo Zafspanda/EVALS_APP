@@ -1,0 +1,171 @@
+
+// Do not edit directly
+// Generated on Fri, 19 Dec 2025 05:02:38 GMT
+
+$sds-asset-font-opensans-name: "'Open Sans'";
+$sds-asset-font-opensans-ttf: "./tokens/assets/fonts/OpenSans-Regular.ttf";
+$sds-asset-font-roboto-name: "Roboto";
+$sds-asset-font-roboto-ttf: "./tokens/assets/fonts/Roboto-Regular.ttf";
+$sds-color-background-base: #ffffff;
+$sds-color-background-alt: #f7f8fa;
+$sds-color-background-disabled: #e9edf0;
+$sds-color-background-inverse: #33424f;
+$sds-color-background-success: #e5f6ee;
+$sds-color-background-error: #fcebec;
+$sds-color-background-warning: #fff8eb;
+$sds-color-background-info: #e6f7ff;
+$sds-color-background-link: #ffffff;
+$sds-color-background-button-primary-base: #ff6800;
+$sds-color-background-button-primary-hover: #c85200;
+$sds-color-background-button-primary-active: #993e00;
+$sds-color-background-button-primary-focus: #c85200;
+$sds-color-background-button-primary-disabled: #e9edf0;
+$sds-color-background-button-secondary-base: #33424f;
+$sds-color-background-button-secondary-hover: #1f282f;
+$sds-color-background-button-secondary-active: #33424f;
+$sds-color-background-button-secondary-focus: #33424f;
+$sds-color-background-button-secondary-disabled: #e9edf0;
+$sds-color-background-overlay-light: rgba(255, 255, 255, 0.8);
+$sds-color-background-overlay-dark: rgba(0, 0, 0, 0.27);
+$sds-color-base-midnight-default: #33424f;
+$sds-color-base-midnight-shade-40: #1f282f;
+$sds-color-base-asphalt-default: #6d7883;
+$sds-color-base-concrete-default: #b4bfc9;
+$sds-color-base-overcast-default: #e9edf0;
+$sds-color-base-silver-default: #f7f8fa;
+$sds-color-base-orange-default: #ff6800;
+$sds-color-base-orange-shade-40: #993e00;
+$sds-color-base-orange-shade-20: #c85200;
+$sds-color-base-orange-tint-40: #ffa466;
+$sds-color-base-orange-tint-60: #ffc299;
+$sds-color-base-teal-default: #62cccc;
+$sds-color-base-teal-shade-40: #3d7b7a;
+$sds-color-base-teal-shade-20: #52a4a3;
+$sds-color-base-teal-shade-10: #5cb8b7;
+$sds-color-base-teal-tint-40: #a3e1e0;
+$sds-color-base-teal-tint-60: #c2ebea;
+$sds-color-base-blue-default: #009de3;
+$sds-color-base-blue-shade-20: #0095b5;
+$sds-color-base-blue-shade-10: #008dcc;
+$sds-color-base-blue-tint-90: #e6f7ff;
+$sds-color-base-red-default: #e93d45;
+$sds-color-base-red-shade-40: #8b2429;
+$sds-color-base-red-shade-20: #ba3037;
+$sds-color-base-red-tint-40: #f18a8f;
+$sds-color-base-red-tint-60: #f6b1b4;
+$sds-color-base-red-tint-90: #fcebec;
+$sds-color-base-green-default: #3db147;
+$sds-color-base-green-shade-10: #007f48;
+$sds-color-base-green-tint-90: #e5f6ee;
+$sds-color-base-yellow-default: #ffbe37;
+$sds-color-base-yellow-shade-20: #916c1f;
+$sds-color-base-yellow-tint-90: #fff8eb;
+$sds-color-base-white: #ffffff;
+$sds-color-base-black: #000000;
+$sds-color-border-light: #f7f8fa;
+$sds-color-border-base: #e9edf0;
+$sds-color-border-dark: #b4bfc9;
+$sds-color-border-error: #e93d45;
+$sds-color-border-warning: #ffbe37;
+$sds-color-border-success: #3db147;
+$sds-color-border-button-primary-base: #ff6800;
+$sds-color-border-button-primary-hover: #c85200;
+$sds-color-border-button-primary-active: #993e00;
+$sds-color-border-button-primary-focus: #c85200;
+$sds-color-border-button-primary-disabled: #e9edf0;
+$sds-color-border-button-secondary-base: #33424f;
+$sds-color-border-button-secondary-hover: #33424f;
+$sds-color-border-button-secondary-active: #33424f;
+$sds-color-border-button-secondary-focus: #33424f;
+$sds-color-border-button-secondary-disabled: #e9edf0;
+$sds-color-brand-primary-lighter: #ffc299;
+$sds-color-brand-primary-light: #ffa466;
+$sds-color-brand-primary-base: #ff6800;
+$sds-color-brand-primary-dark: #c85200;
+$sds-color-brand-primary-darker: #993e00;
+$sds-color-brand-secondary-base: #33424f;
+$sds-color-brand-secondary-light: #e9edf0;
+$sds-color-brand-secondary-lighter: #f7f8fa;
+$sds-color-brand-secondary-dark: #1f282f;
+$sds-color-chart-stacked-base-100: #ffc299;
+$sds-color-chart-stacked-base-200: #ffa466;
+$sds-color-chart-stacked-base-300: #ff6800;
+$sds-color-chart-stacked-base-400: #c85200;
+$sds-color-chart-stacked-base-500: #993e00;
+$sds-color-font-base: #33424f;
+$sds-color-font-secondary: #6d7883;
+$sds-color-font-tertiary: #b4bfc9;
+$sds-color-font-link: #008dcc;
+$sds-color-font-active: #008dcc;
+$sds-color-font-error: #ba3037;
+$sds-color-font-warning: #916c1f;
+$sds-color-font-success: #3db147;
+$sds-color-font-disabled: #6d7883;
+$sds-color-font-inverse-base: #ffffff;
+$sds-color-font-inverse-secondary: #f7f8fa;
+$sds-color-font-inverse-tertiary: #e9edf0;
+$sds-color-font-inverse-link: #ffa466;
+$sds-color-font-inverse-active: #e9edf0;
+$sds-color-font-inverse-error: #fcebec;
+$sds-color-font-inverse-warning: #fff8eb;
+$sds-color-font-inverse-success: #e5f6ee;
+$sds-color-font-inverse-disabled: #f7f8fa;
+$sds-color-font-button-primary: #ffffff;
+$sds-color-font-button-secondary: #008dcc;
+$sds-font-family-base: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$sds-font-family-headings: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$sds-font-family-code: Roboto, monospace;
+$sds-font-size-xs: 0.75rem; // 12px - The smallest font size we display in our apps
+$sds-font-size-small: 0.875rem; // 14px
+$sds-font-size-medium: 1rem; // 16px
+$sds-font-size-large: 1.25rem; // 20px
+$sds-font-size-xl: 1.5rem; // 24px
+$sds-font-size-xxl: 2rem; // 32px
+$sds-font-size-xxxl: 3rem; // 48px
+$sds-font-size-base: 1rem;
+$sds-font-line-height-base: 1.5; // line height for body copy
+$sds-font-line-height-hero: 1.166667; // super tight line height for hero heading only
+$sds-font-line-height-large: 1.25; // line height for headings
+$sds-font-line-height-medium: 1.333334; // line height for headings
+$sds-font-line-height-small: 1.2; // line height for headings
+$sds-font-line-height-single: 1; // use for sinlge line applications, such as buttons
+$sds-font-line-height-meta: 1.42857; // use for meta content
+$sds-font-line-height-meta-xs: 1.66667; // use with blocks of text sized xs or xxs
+$sds-font-weight-normal: 400; // Normal weight for body copy
+$sds-font-weight-semi-bold: 600; // Give weight to labels and smaller font sizes
+$sds-font-weight-bold: 700; // Emphasis and headings
+$sds-font-weight-extra-bold: 800; // Use for hero headings
+$sds-font-letter-spacing-normal: 1;
+$sds-font-letter-spacing-tight: -1;
+$sds-size-border-small: 0.0625rem;
+$sds-size-border-medium: 0.125rem;
+$sds-size-border-large: 0.25rem;
+$sds-size-border-base: 0.0625rem; // 1px
+$sds-size-border-radius-small: 0.125rem; // 2px
+$sds-size-border-radius-medium: 0.25rem; // 4px
+$sds-size-border-radius-large: 0.5rem; // 8px
+$sds-size-border-radius-base: 0.25rem; // 4px
+$sds-size-icon-small: 1.5rem;
+$sds-size-icon-base: 2rem;
+$sds-size-icon-large: 2.5rem;
+$sds-size-icon-xl: 3rem;
+$sds-size-icon-xxl: 5rem;
+$sds-size-spacing-tiny: 0.0625rem; // 1px
+$sds-size-spacing-xxs: 0.125rem; // 2px
+$sds-size-spacing-xs: 0.25rem; // 4px
+$sds-size-spacing-small: 0.5rem; // 8px
+$sds-size-spacing-medium: 1rem; // 16px
+$sds-size-spacing-large: 1.5rem; // 24px
+$sds-size-spacing-xl: 2rem; // 32px
+$sds-size-spacing-xxl: 3rem; // 48px
+$sds-size-spacing-base: 1rem; // 16px
+$sds-time-transition-short: 0.20s;
+$sds-time-transition-base: 0.40s;
+$sds-time-transition-long: 0.60s;
+$sds-time-transition-xl: 1.00s;
+$sds-time-delay-short: 0.05s;
+$sds-time-delay-base: 0.10s;
+$sds-time-delay-long: 0.20s;
+$sds-time-duration-short: 2.00s;
+$sds-time-duration-base: 4.00s;
+$sds-time-duration-long: 6.00s;

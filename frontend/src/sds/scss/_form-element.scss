@@ -1,0 +1,131 @@
+.sds-form-element {
+  $root: &;
+  margin-bottom: $spacing-large;
+  position: relative;
+  font-size: $sds-font-size-base;
+
+  &__label {
+    display: inline-block;
+    color: $form-label-font-color;
+    font-size: $form-label-font-size;
+    font-family: $form-label-font-stack;
+    font-weight: $form-label-font-weight;
+    line-height: $form-label-line-height;
+    margin-right: $spacing-small;
+    margin-bottom: $spacing-small;
+    .sds-meta--small {
+      color: $form-label-meta-font-color;
+      line-height: inherit;
+      margin-left: $spacing-xs;
+    }
+  }
+
+  &__control {
+    display: flex;
+    background-color: $form-item-background-color;
+    border: $form-item-border-width solid $form-item-border-color;
+    border-radius: $form-item-border-radius;
+    color: $form-item-font-color;
+    font-size: $form-item-font-size;
+    font-weight: $form-item-font-weight;
+    line-height: $form-item-line-height;
+
+    + #{$root}__help {
+      margin-top: $sds-size-spacing-xs;
+    }
+  }
+
+  &__item {
+    border: none;
+    border-radius: $form-item-border-radius;
+    background-color: $form-item-background-color;
+    font-family: $sds-font-family-base;
+    font-size: $form-item-font-size;
+    font-weight: $form-item-font-weight;
+    line-height: $form-item-height;
+    min-height: $form-item-height - ($form-item-border-width * 2);
+    padding: 0 $spacing-small;
+    transition: border $form-item-transition-timing linear,
+      background-color $form-item-transition-timing linear;
+    width: 100%;
+    min-width: 0;
+    &:focus,
+    &:active {
+      background-color: $form-item-background-color;
+      outline: 0;
+      box-shadow: $form-item-box-shadow-position
+        rgba($form-item-focus-outline, $form-item-box-shadow-opacity);
+    }
+    &:disabled,
+    &[disabled] {
+      background-color: $form-item-background-color-disabled;
+      box-shadow: none;
+    }
+  }
+
+  &__help {
+    border-radius: $sds-size-border-radius-base;
+    font-size: $sds-font-size-base;
+    background-color: $form-item-background-color-error;
+    color: $form-color-invalid;
+    display: block;
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    width: 100%;
+    transition: height $sds-time-transition-base $sds-time-delay-short,
+      padding $sds-time-transition-base $sds-time-delay-short,
+      opacity $sds-time-transition-base $sds-time-delay-short;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  &__hint {
+    font-size: $sds-font-size-xs;
+    margin: $sds-size-spacing-small 0 0 0;
+  }
+
+  &--surround-text {
+    $this: &;
+    align-self: center;
+    padding: 0 $spacing-small;
+
+    &#{$this}-prepend,
+    &#{$this}-append {
+      color: $form-label-font-color;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-basis: $sds-size-spacing-xxl;
+    }
+    &#{$this}-prepend {
+      padding-right: $sds-size-spacing-small;
+      border-right: $form-item-border-width solid $form-item-border-color;
+    }
+    &#{$this}-append {
+      padding-left: $sds-size-spacing-small;
+      border-left: $form-item-border-width solid $form-item-border-color;
+    }
+  }
+
+  &--has-focus {
+    .sds-form-element__label {
+      color: $form-label-font-color-focus;
+    }
+  }
+}
+
+.sds-form--problem {
+  .sds-form-element__help {
+    opacity: 1;
+    height: auto;
+    padding: $spacing-xs $spacing-small;
+  }
+  .sds-form-element__control {
+    border-color: $form-color-invalid;
+  }
+}

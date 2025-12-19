@@ -1,0 +1,42 @@
+.sds-avatar {
+  $root: &;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: $sds-size-border-base solid $sds-color-border-dark;
+
+  // Size variants
+  &--small {
+    width: 24px;
+    height: 24px;
+  }
+
+  &--large {
+    width: 48px;
+    height: 48px;
+  }
+
+  // Image styling
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // Icon styling
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: $sds-color-font-base;
+  }
+}
+

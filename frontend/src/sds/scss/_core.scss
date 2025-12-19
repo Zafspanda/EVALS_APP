@@ -1,0 +1,18 @@
+@import 'normalize';
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: $sds-font-family-base;
+  font-size: $sds-font-size-medium;
+  line-height: $sds-font-line-height-base;
+  background-color: $sds-color-base-white;
+  color: $sds-color-font-base;
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}

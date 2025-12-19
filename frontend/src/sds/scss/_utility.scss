@@ -1,0 +1,125 @@
+$sds-directions: 'top', 'right', 'bottom', 'left', 'around', 'none';
+
+$sds-spacing-map: (
+  none: 0,
+  tiny: $spacing-tiny,
+  xxs: $spacing-xxs,
+  xs: $spacing-xs,
+  small: $spacing-small,
+  medium: $spacing-medium,
+  large: $spacing-large,
+  xl: $spacing-xl,
+  xxl: $spacing-xxl,
+  base: $spacing-base,
+);
+
+$sds-color-map-bc: (
+  none: transparent,
+  default: $sds-color-background-base,
+  default-reverse: $sds-color-background-inverse,
+  alt: $sds-color-background-alt,
+  disabled: $sds-color-background-disabled,
+  success: $sds-color-base-green-shade-10,
+  success-light: $sds-color-background-success,
+  risk: $sds-color-base-red-shade-20,
+  risk-light: $sds-color-background-error,
+  warning: $sds-color-base-yellow-default,
+  warning-light: $sds-color-background-warning,
+  notice: $sds-color-base-blue-shade-20,
+  notice-light: $sds-color-background-info,
+  info: $sds-color-base-asphalt-default,
+  primary: $sds-color-brand-primary-base,
+  primary-light: $sds-color-brand-primary-light,
+  secondary: $sds-color-brand-secondary-base,
+  secondary-light: $sds-color-brand-secondary-light,
+  premium: $sds-color-base-yellow-default,
+);
+
+$sds-color-map-tc: (
+  none: transparent,
+  default: $sds-color-base-midnight-default,
+  default-reverse: $sds-color-base-white,
+  meta: $sds-color-base-asphalt-default,
+  meta-reverse: $sds-color-base-concrete-default,
+  primary: $sds-color-base-orange-default,
+  primary-reverse: $sds-color-base-orange-tint-40,
+  secondary: $sds-color-brand-secondary-base,
+  secondary-reverse: $sds-color-brand-secondary-light,
+  notice: $sds-color-base-blue-shade-10,
+  notice-reverse: $sds-color-base-blue-tint-90,
+  risk: $sds-color-base-red-shade-20,
+  risk-reverse: $sds-color-base-red-tint-40,
+  success: $sds-color-base-green-shade-10,
+  success-reverse: $sds-color-base-green-tint-90,
+  warning: $sds-color-base-yellow-shade-20,
+  warning-reverse: $sds-color-base-yellow-tint-90,
+);
+
+$sds-font-size-map: (
+  xs: $sds-font-size-xs,
+  small: $sds-font-size-small,
+  medium: $sds-font-size-medium,
+  large: $sds-font-size-large,
+  xl: $sds-font-size-xl,
+  xxl: $sds-font-size-xxl,
+  xxxl: $sds-font-size-xxxl,
+  base: $sds-font-size-base,
+);
+
+@mixin utilities($map, $property: 'margin') {
+  @if $property == 'margin' or $property == 'padding' {
+    @each $dir in $sds-directions {
+      @if $dir == 'none' {
+        &--none {
+          #{$property}: 0 !important;
+        }
+      } @else if $dir == 'around' {
+        &_#{$dir} {
+          @each $key, $val in $map {
+            &--#{$key} {
+              #{$property}: $val !important;
+            }
+          }
+        }
+      } @else {
+        &_#{$dir} {
+          @each $key, $val in $map {
+            &--#{$key} {
+              #{$property}-#{$dir}: $val !important;
+            }
+          }
+        }
+      }
+    }
+  } @else {
+    @each $key, $val in $map {
+      &--#{$key} {
+        #{$property}: $val !important;
+      }
+    }
+  }
+}
+
+.sds-u {
+  &-m {
+    @include utilities($sds-spacing-map, 'margin');
+  }
+  &-p {
+    @include utilities($sds-spacing-map, 'padding');
+  }
+  &-bc {
+    @include utilities($sds-color-map-bc, 'background-color');
+  }
+  &-tc {
+    @include utilities($sds-color-map-tc, 'color');
+  }
+  &-fs {
+    @include utilities($sds-font-size-map, 'font-size');
+  }
+}
+
+// add a small text shadow to white text on dark backgrounds to aid a11y
+.sds-u-tc--default-reverse {
+  text-shadow: $inverse-font-text-shadow-position
+    rgba($inverse-font-text-shadow-color, $inverse-font-text-shadow-opacity);
+}

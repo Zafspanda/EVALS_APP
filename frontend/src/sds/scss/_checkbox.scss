@@ -1,0 +1,117 @@
+@function url-friendly-colour($colour) {
+  @return '%23' + str-slice('#{$colour}', 2, -1);
+}
+
+.sds-checkbox {
+  input[type='checkbox'] {
+    width: 1px;
+    height: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+
+    ~ .sds-checkbox__label .sds-checkbox_faux {
+      position: relative;
+      background: $form-checkbox-backgound-color;
+      border: $form-item-border-width solid $form-item-border-color;
+      border-radius: $form-item-border-radius;
+      display: inline-block;
+      height: $form-checkbox-size;
+      width: $form-checkbox-size;
+      margin-right: $spacing-small;
+      transition: border $form-item-transition-timing ease-in-out,
+        background-color $form-item-transition-timing ease-in-out,
+        box-shadow $form-item-transition-timing ease-in-out;
+      vertical-align: middle;
+      top: -$spacing-xxs;
+    }
+
+    &:focus ~ .sds-checkbox__label .sds-checkbox_faux {
+      background-color: $form-checkbox-backgound-color;
+      outline: 0;
+      box-shadow: $form-item-box-shadow-position
+        rgba($form-item-focus-outline, $form-item-box-shadow-opacity);
+    }
+
+    &:checked ~ .sds-checkbox__label .sds-checkbox_faux {
+      background-color: $form-checkbox-checked-backgound-color;
+      border-color: $form-checkbox-checked-border-color;
+      &::after {
+        display: block;
+        content: '';
+        height: $form-checkbox-size;
+        width: $form-checkbox-size;
+        position: absolute;
+        top: 0.3125rem;
+        left: 0.1875rem;
+        background: url("data:image/svg+xml;utf8,<svg width='12px' height='9px' viewBox='0 0 12 9' xmlns='http://www.w3.org/2000/svg'><path fill='#{url-friendly-colour($form-checkbox-check-color)}' d='M0.0753232623,5.44552529 C-0.0251077541,5.22940523 -0.0251077541,4.98126737 0.0753232623,4.7651473 L0.878771394,4.08476932 C0.97920241,3.8946637 1.38092648,3.8946637 1.58178851,4.08476932 L3.9921329,6.47609783 L10.419718,0.142579211 C10.62058,-0.0475264036 11.0223041,-0.0475264036 11.1227351,0.142579211 L11.9261832,0.822957198 C12.0246056,1.03907727 12.0246056,1.28721512 11.9261832,1.50333519 L4.39385697,8.85742079 C4.16085701,9.0475264 3.8234088,9.0475264 3.59040884,8.85742079 L3.59040884,8.86742635 L0.0753232623,5.44552529 Z'></path></svg>")
+          no-repeat;
+      }
+    }
+
+    &:disabled ~ .sds-checkbox__label .sds-checkbox_faux {
+      background-color: $form-item-background-color-disabled;
+      border-color: $form-item-border-color;
+    }
+
+    &:disabled:checked ~ .sds-checkbox__label .sds-checkbox_faux {
+      background-color: $form-checkbox-checked-disabled-backgound-color;
+      border-color: $form-checkbox-checked-disabled-border-color;
+    }
+  }
+
+  &--accent {
+    background-color: $sds-color-base-silver-default;
+  }
+
+  &--block {
+    padding: $spacing-large;
+    border-radius: $form-item-border-radius;
+
+    .sds-form-element {
+      &__label {
+        display: flex;
+        margin-bottom: 0;
+        line-height: $sds-font-line-height-base;
+
+        .sds-checkbox_faux {
+          flex: 0 0 auto;
+          align-self: center;
+          margin-right: $spacing-medium !important;
+        }
+      }
+      &__annotation {
+        align-self: center;
+        margin-left: auto !important;
+      }
+      &__hint {
+        margin-top: $spacing-base;
+        margin-bottom: 0;
+      }
+    }
+    input[type='checkbox'] ~ .sds-checkbox__label .sds-checkbox_faux {
+      top: 0;
+    }
+  }
+}
+
+.sds-form--problem {
+  .sds-checkbox [type='checkbox'] ~ .sds-checkbox__label .sds-checkbox_faux,
+  &.sds-checkbox [type='checkbox'] ~ .sds-checkbox__label .sds-checkbox_faux {
+    border-color: $form-color-invalid;
+    border-width: $form-item-border-width;
+  }
+  .sds-checkbox
+    [type='checkbox']:checked
+    ~ .sds-checkbox__label
+    .sds-checkbox_faux:after,
+  &.sds-checkbox
+    [type='checkbox']:checked
+    ~ .sds-checkbox__label
+    .sds-checkbox_faux:after {
+    border-color: $form-color-invalid;
+  }
+}

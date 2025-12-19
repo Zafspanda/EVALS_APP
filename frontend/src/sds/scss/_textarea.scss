@@ -1,0 +1,10 @@
+.sds-textarea {
+  background-color: $form-item-background-color;
+  border-radius: $form-item-border-radius;
+  line-height: $form-item-line-height;
+  padding: $spacing-small;
+  resize: vertical;
+  transition: border $form-item-transition-timing linear,
+    background-color $form-item-transition-timing linear;
+  width: 100%;
+}

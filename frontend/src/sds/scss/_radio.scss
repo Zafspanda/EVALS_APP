@@ -1,0 +1,81 @@
+.sds-radio-container {
+  display: flex;
+  flex-wrap: wrap;
+  > .sds-radio {
+    margin-right: 24px;
+  }
+  &--vertical {
+    flex-direction: column;
+  }
+}
+
+.sds-radio [type='radio'] {
+  width: 1px;
+  height: 1px;
+  border: 0;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  ~ .sds-radio__label .sds-radio_faux {
+    position: relative;
+    background: $form-radio-backgound-color;
+    border: $form-item-border-width solid $form-item-border-color;
+    border-radius: 50%;
+    display: inline-block;
+    height: $form-radio-size;
+    width: $form-radio-size;
+    margin-right: $spacing-small;
+    transition: border $form-item-transition-timing ease-in-out,
+      background-color $form-item-transition-timing ease-in-out,
+      box-shadow $form-item-transition-timing ease-in-out;
+    vertical-align: middle;
+    top: -$spacing-xxs;
+  }
+  &:focus ~ .sds-radio__label .sds-radio_faux {
+    background-color: $form-radio-backgound-color;
+    outline: 0;
+    box-shadow: $form-item-box-shadow-position
+      rgba($form-item-focus-outline, $form-item-box-shadow-opacity);
+  }
+  &:checked ~ .sds-radio__label .sds-radio_faux {
+    background-color: $form-radio-checked-backgound-color;
+    border-color: $form-radio-checked-border-color;
+    &::after {
+      display: block;
+      content: '';
+      height: $form-radio-size;
+      width: $form-radio-size;
+      position: absolute;
+      top: 0.1875rem;
+      left: 0.1875rem;
+      background: url("data:image/svg+xml;utf8,<svg width='12px' height='12px' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'><circle fill='#{url-friendly-colour($form-radio-check-color)}' cx='6' cy='6' r='6'></circle></svg>")
+        no-repeat;
+    }
+  }
+  &:disabled ~ .sds-radio__label .sds-radio_faux {
+    background-color: $form-item-background-color-disabled;
+    border-color: $form-item-border-color;
+  }
+  &:disabled:checked ~ .sds-radio__label .sds-radio_faux {
+    background-color: $form-item-background-color-disabled;
+    border-color: $form-checkbox-checked-disabled-border-color;
+    &::after {
+      background: url("data:image/svg+xml;utf8,<svg width='12px' height='12px' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'><circle fill='#{url-friendly-colour($form-checkbox-checked-disabled-backgound-color)}' cx='6' cy='6' r='6'></circle></svg>")
+        no-repeat;
+    }
+  }
+}
+
+.sds-form--problem {
+  .sds-radio [type='radio'] ~ .sds-radio__label .sds-radio_faux,
+  &.sds-radio [type='radio'] ~ .sds-radio__label .sds-radio_faux {
+    border-color: $form-color-invalid;
+    border-width: $form-item-border-width;
+  }
+  .sds-radio [type='radio']:checked ~ .sds-radio__label .sds-radio_faux:after,
+  &.sds-radio [type='radio']:checked ~ .sds-radio__label .sds-radio_faux:after {
+    border-color: $form-color-invalid;
+  }
+}

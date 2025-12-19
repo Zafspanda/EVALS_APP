@@ -1,0 +1,66 @@
+// TypeBlock Component Styles
+
+.sds-type-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    width: 100%;
+    padding: 0;
+
+    &--with-title {
+      gap: $spacing-small;
+    }
+
+    &--reversed {
+      flex-direction: column-reverse;
+    }
+
+    &--centered {
+      text-align: center;
+    }
+  }
+
+  &__heading {
+    margin: 0;
+    font-family: $sds-font-family-headings;
+    font-size: $sds-font-size-xl;
+    font-weight: $sds-font-weight-bold;
+    line-height: $sds-font-line-height-medium;
+    color: $sds-color-font-base;
+  }
+
+  &__description {
+    margin: 0;
+    font-family: $sds-font-family-base;
+    font-size: $sds-font-size-medium;
+    font-weight: $sds-font-weight-normal;
+    line-height: $sds-font-line-height-base;
+    color: $sds-color-font-base;
+  }
+
+  &__primary {
+    margin: 0;
+    font-family: $sds-font-family-base;
+    font-size: $sds-font-size-medium;
+    font-weight: $sds-font-weight-bold;
+    line-height: $sds-font-line-height-base;
+    color: $sds-color-font-base;
+  }
+
+  &__secondary {
+    margin: 0;
+    font-family: $sds-font-family-base;
+    font-size: $sds-font-size-small;
+    font-weight: $sds-font-weight-normal;
+    line-height: $sds-font-line-height-meta;
+    color: $sds-color-font-secondary;
+  }
+}
+

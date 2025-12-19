@@ -1,7 +1,7 @@
 // QuickActions Component - Main annotation actions
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Alert } from '@sendle/sds-ui';
+import { Button, Alert } from '../../sds';
 import { useSaveAnnotation } from '../../hooks/useAnnotations';
 import { useNextUnannotated } from '../../hooks/useTraces';
 import type { Annotation } from '../../types/api';

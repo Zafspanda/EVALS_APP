@@ -1,7 +1,7 @@
 // TraceList Component - Paginated list of traces
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Badge } from '@sendle/sds-ui';
+import { Button, Badge } from '../../sds';
 import { useTraces } from '../../hooks/useTraces';
 import { apiService } from '../../services/api';
 import type { Trace, Annotation } from '../../types/api';

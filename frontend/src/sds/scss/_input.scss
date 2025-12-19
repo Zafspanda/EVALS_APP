@@ -1,0 +1,12 @@
+.sds-input {
+  &::placeholder {
+    color: $form-placeholder-font-color;
+    font-style: italic;
+  }
+  &::-moz-placeholder {
+    opacity: 1;
+  }
+  &[type='number'] {
+    padding-right: 0;
+  }
+}

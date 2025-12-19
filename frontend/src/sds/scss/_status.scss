@@ -1,0 +1,52 @@
+.sds-status {
+  $root: &;
+  font-size: 1em;
+
+  &__indicator {
+    display: inline-block;
+    width: $sds-font-size-xs;
+    height: $sds-font-size-xs;
+    border-radius: 50%;
+    background-color: $sds-color-base-overcast-default;
+  }
+
+  &__text {
+    margin-left: $sds-size-spacing-small;
+  }
+
+  &--info {
+    #{$root}__indicator {
+      background-color: $sds-color-base-blue-default;
+    }
+  }
+  &--success {
+    #{$root}__indicator {
+      background-color: $sds-color-base-green-default;
+    }
+  }
+  &--warning {
+    #{$root}__indicator {
+      background-color: $sds-color-base-yellow-default;
+    }
+  }
+  &--risk {
+    #{$root}__indicator {
+      background-color: $sds-color-base-red-default;
+    }
+  }
+  &--disabled {
+    #{$root}__indicator {
+      background-color: $sds-color-base-asphalt-default;
+    }
+  }
+
+  &--small {
+    font-size: $sds-font-size-small;
+  }
+  &--base {
+    font-size: $sds-font-size-base;
+  }
+  &--large {
+    font-size: $sds-font-size-large;
+  }
+}

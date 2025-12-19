@@ -1,6 +1,6 @@
 // FailureForm Component - Form for marking traces as failed
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Input, TextArea, Button, Alert } from '@sendle/sds-ui';
+import { Input, TextArea, Button, Alert } from '../../sds';
 import { useSaveAnnotation } from '../../hooks/useAnnotations';
 import type { Annotation } from '../../types/api';
 import './FailureForm.scss';

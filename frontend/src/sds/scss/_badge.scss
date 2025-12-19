@@ -1,0 +1,67 @@
+.sds-badge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.sds-badge {
+  $root: &;
+
+  &__background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: #fff;
+    width: 13px;
+    height: 13px;
+  }
+
+  svg {
+    z-index: 1;
+  }
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  // Color modifiers
+  &--default {
+    color: $base-font-color;
+  }
+
+  &--inactive {
+    color: $sds-color-base-orange-default;
+  }
+
+  &--success {
+    color: $sds-color-base-green-default;
+  }
+
+  // Alignment modifiers
+  &--top-right {
+    top: -5px;
+    right: -5px;
+  }
+
+  &--bottom-right {
+    bottom: -5px;
+    right: -5px;
+  }
+
+  &--top-left {
+    top: -5px;
+    left: -5px;
+  }
+
+  &--bottom-left {
+    bottom: 0;
+    left: -5px;
+  }
+}
+

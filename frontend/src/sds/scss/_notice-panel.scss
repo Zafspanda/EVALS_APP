@@ -1,0 +1,63 @@
+.sds-notice-panel {
+  $root: &;
+  border-radius: $sds-size-border-radius-base;
+  display: flex;
+  font-size: $sds-font-size-base;
+  background-color: $sds-color-background-alt;
+  justify-content: space-between;
+
+  a {
+    text-decoration: underline;
+  }
+
+  &__content {
+    display: block;
+    flex: 1 1 auto;
+    padding: $spacing-medium;
+    color: $sds-color-font-base;
+  }
+
+  // additional class for the button to close the message
+  &__close {
+    border: 0;
+    background: transparent;
+    color: currentColor;
+    height: initial;
+    opacity: 0.8;
+    padding: $spacing-base;
+    cursor: pointer;
+    transition: all $sds-time-transition-short ease;
+    > span {
+      height: $spacing-medium;
+    }
+    svg {
+      fill: currentColor;
+    }
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+  &__title {
+    font-weight: $sds-font-weight-bold;
+  }
+  // variations
+  &#{$root}--warning {
+    background-color: $sds-color-background-warning;
+    color: $sds-color-base-yellow-shade-20;
+  }
+  &#{$root}--risk {
+    background-color: $sds-color-background-error;
+    color: $sds-color-base-red-shade-20;
+    a {
+      color: inherit;
+    }
+  }
+  // appearance
+  &#{$root}--centered {
+    text-align: center;
+  }
+  &#{$root}--inline {
+    display: inline-flex;
+  }
+}

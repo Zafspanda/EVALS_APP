@@ -1,0 +1,83 @@
+@mixin sds-table-collapse {
+  border-top: $sds-size-spacing-small solid $sds-color-base-overcast-default;
+
+  &.sds-table--bold {
+    border-top: $sds-size-spacing-small solid $sds-color-background-inverse;
+  }
+  &.sds-table--subtle {
+    border-top-width: $sds-size-border-base;
+  }
+  &.sds-table--headless {
+    border-top-width: $sds-size-border-base;
+  }
+
+  .sds-table__table {
+    display: block;
+
+    thead,
+    tbody,
+    tfoot {
+      display: block;
+    }
+  }
+
+  .sds-table__row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: $table-cell-padding / 2 0;
+
+    .sds-table__cell,
+    .sds-table__header {
+      &:first-of-type {
+        padding-left: $table-cell-padding;
+      }
+      &:last-of-type {
+        padding-right: $table-cell-padding;
+      }
+    }
+  }
+
+  .sds-table__row--header {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  .sds-table__cell {
+    flex-basis: 100%;
+    border: 0;
+    padding-top: $sds-size-spacing-small;
+    padding-bottom: $sds-size-spacing-small;
+
+    &:before {
+      content: attr(data-label);
+      display: block;
+      font-weight: bold;
+      font-size: $sds-font-size-xs;
+    }
+  }
+
+  &.sds-table--spacious {
+    .sds-table__row {
+      padding: $sds-size-spacing-large / 2 0;
+    }
+    .sds-table__cell {
+      padding-top: $sds-size-spacing-large / 2;
+      padding-bottom: $sds-size-spacing-large / 2;
+    }
+  }
+
+  &.sds-table--compact {
+    .sds-table__row {
+      padding: $sds-size-spacing-small / 2 0;
+    }
+    .sds-table__cell {
+      padding-top: $sds-size-spacing-small / 2;
+      padding-bottom: $sds-size-spacing-small / 2;
+    }
+  }
+}

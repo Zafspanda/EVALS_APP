@@ -1,0 +1,71 @@
+.sds-alert-message {
+  $root: &;
+  border-radius: $alert-message-border-radius;
+  display: flex;
+  padding: $spacing-medium 0;
+  font-size: $sds-font-size-base;
+
+  &__content {
+    padding: 0 $spacing-medium;
+    line-height: 2;
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-medium;
+    margin-left: auto;
+  }
+  // additional class for the button to close the message
+  &__close {
+    border-radius: 50%;
+    color: currentColor;
+    height: initial;
+    opacity: 0.8;
+    padding: $spacing-small;
+    transition: all $sds-time-transition-short ease;
+    > span {
+      height: $alert-message-icon-size;
+      width: $alert-message-icon-size;
+      font-size: $alert-message-icon-size;
+    }
+    svg {
+      fill: currentColor;
+      height: $alert-message-icon-size;
+      width: $alert-message-icon-size;
+    }
+    &:hover {
+      background-color: transparent;
+      border: 1px solid currentColor;
+      opacity: 1;
+    }
+  }
+  &__title {
+    font-weight: $alert-message-title-font-weight;
+  }
+  &--inline {
+    padding: $spacing-xs 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  // variations
+  &#{$root}--info {
+    background-color: $alert-message-info-backgound-color;
+    color: $alert-message-info-font-color;
+  }
+  &#{$root}--success {
+    background-color: $alert-message-success-backgound-color;
+    color: $alert-message-success-font-color;
+  }
+  &#{$root}--warning {
+    background-color: $alert-message-warning-backgound-color;
+    color: $alert-message-warning-font-color;
+  }
+  &#{$root}--risk {
+    background-color: $alert-message-risk-backgound-color;
+    color: $alert-message-risk-font-color;
+  }
+}

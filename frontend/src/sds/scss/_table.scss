@@ -1,0 +1,153 @@
+.sds-table {
+  $root: &;
+
+  /* Radius used by inner cells. Outer radius - border width = smooth curve
+   * This needs to be calculated at runtime so storing in a custom property. */
+  --cell-radius: calc(#{$sds-size-border-radius-large} - #{$sds-size-border-base});
+
+  border: $sds-size-border-base solid $sds-color-base-overcast-default;
+  border-radius: $sds-size-border-radius-large;
+  width: 100%;
+
+  &__table {
+    width: 100%;
+    font-size: $sds-font-size-base;
+    border-collapse: collapse;
+  }
+
+  &__row {
+    border-bottom: $sds-size-border-base solid $sds-color-base-overcast-default;
+
+    &:not(#{$root}__row--header) {
+      &:last-of-type {
+        border-bottom: 0;
+      }
+
+      &:focus {
+        background-color: $sds-color-base-silver-default;
+        border-radius: $sds-size-border-radius-base;
+        box-shadow: 0 0 0 $sds-size-border-base $sds-color-base-blue-default;
+        outline: $sds-size-border-base solid $sds-color-base-blue-default;
+      }
+    }
+
+    #{$root}__cell,
+    #{$root}__header {
+      &:first-of-type {
+        padding-left: $sds-size-spacing-large;
+      }
+      &:last-of-type {
+        padding-right: $sds-size-spacing-large;
+      }
+    }
+
+    &:first-of-type {
+      #{$root}__cell,
+      #{$root}__header {
+        &:first-of-type {
+          border-radius: var(--cell-radius) 0 0 0;
+        }
+        &:last-of-type:not(:first-of-type) {
+          border-radius: 0 var(--cell-radius) 0 0;
+        }
+      }
+    }
+
+    &:last-of-type:not(:first-of-type) {
+      #{$root}__cell,
+      #{$root}__header {
+        &:first-of-type {
+          border-radius: 0 0 0 var(--cell-radius);
+        }
+        &:last-of-type:not(:first-of-type) {
+          border-radius: 0 0 var(--cell-radius) 0;
+        }
+      }
+    }
+
+    &--header {
+      color: $sds-color-font-inverse-base;
+      font-weight: bold;
+      #{$root}__cell,
+      #{$root}__header {
+        background: $table-header-background-color;
+      }
+    }
+
+    &--highlight {
+      background-color: $table-row-highlight-background-color;
+    }
+  }
+
+  &__cell {
+    padding: $table-cell-padding;
+    flex: 1 1 auto;
+    vertical-align: top;
+  }
+  &__header {
+    padding: $table-header-padding;
+    flex: 1 1 auto;
+    vertical-align: top;
+    color: $sds-color-base-midnight-default;
+  }
+
+  &--spacious {
+    #{$root}__cell {
+      padding-top: $sds-size-spacing-large;
+      padding-bottom: $sds-size-spacing-large;
+    }
+  }
+  &--compact {
+    #{$root}__cell {
+      padding-top: $sds-size-spacing-small;
+      padding-bottom: $sds-size-spacing-small;
+    }
+    #{$root}__header {
+      padding-top: $sds-size-spacing-small;
+      padding-bottom: $sds-size-spacing-small;
+    }
+  }
+
+  &--bold {
+    #{$root}__header {
+      color: $sds-color-font-inverse-base;
+      background-color: $sds-color-background-inverse;
+    }
+  }
+  &--subtle {
+    #{$root}__header {
+      color: $sds-color-base-midnight-default;
+      background-color: $sds-color-background-base;
+    }
+  }
+  &--headless {
+    #{$root}__row--header {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+    }
+  }
+
+  &--striped {
+    #{$root}__row:nth-last-of-type(even):not(#{$root}__row--header) {
+      background-color: $sds-color-base-silver-default;
+    }
+  }
+
+  &--highlight-hover {
+    #{$root}__row:not(#{$root}__row--header) {
+      &:active,
+      &:hover {
+        background-color: $sds-color-base-blue-tint-90;
+      }
+    }
+  }
+
+  &--collapsed {
+    @include sds-table-collapse;
+  }
+}

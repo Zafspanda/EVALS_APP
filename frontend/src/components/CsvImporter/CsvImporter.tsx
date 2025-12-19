@@ -1,6 +1,6 @@
 // CsvImporter Component - CSV file upload with SDS FileUpload
 import React, { useState } from 'react';
-import { FileUpload, Alert, Button } from '@sendle/sds-ui';
+import { FileUpload, Alert, Button } from '../../sds';
 import { apiService } from '../../services/api';
 import './CsvImporter.scss';
 

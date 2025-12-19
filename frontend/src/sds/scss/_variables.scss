@@ -1,0 +1,157 @@
+@import "tokens";
+
+// Base
+
+// grid
+$spacing-tiny: $sds-size-spacing-tiny; // 1px
+$spacing-xxs: $sds-size-spacing-xxs; // 2px
+$spacing-xs: $sds-size-spacing-xs; // 4px
+$spacing-small: $sds-size-spacing-small; // 8px
+$spacing-medium: $sds-size-spacing-medium; // 16px
+$spacing-large: $sds-size-spacing-large; // 24px
+$spacing-xl: $sds-size-spacing-xl; // 32px
+$spacing-xxl: $sds-size-spacing-xxl; // 48px
+$spacing-base: $sds-size-spacing-base; // 16px
+
+// borders
+$base-border-color: $sds-color-base-concrete-default;
+$base-border-width: $sds-size-border-base;
+$base-border-radius: $sds-size-border-radius-base;
+
+// font colours
+$base-font-color: $sds-color-font-base;
+$base-font-color-inverse: $sds-color-font-inverse-base;
+$inverse-font-text-shadow-color: $sds-color-font-base;
+$inverse-font-text-shadow-position: 1px 1px 1px;
+$inverse-font-text-shadow-opacity: .3;
+$link-font-color: $sds-color-font-link;
+$link-font-color-active: $sds-color-font-active;
+$secondary-font-color: $sds-color-font-secondary;
+$secondary-font-color-inverse: $sds-color-font-inverse-secondary;
+$tertiary-font-color: $sds-color-font-tertiary;
+$tertiary-font-color-inverse: $sds-color-font-inverse-tertiary;
+
+// Background colours
+$base-background-color: $sds-color-background-base;
+$base-background-color-inverse: $sds-color-background-inverse;
+
+// Buttons
+$button-base-font-color: $base-font-color;
+$button-base-font-color-disabled: $sds-color-base-asphalt-default;
+$button-base-font-size: $sds-font-size-medium; // 16px
+$button-base-line-height: $sds-font-line-height-single;
+$button-base-background-color: $sds-color-base-overcast-default;
+$button-base-background-hover: $sds-color-base-concrete-default;
+$button-base-background-active: $sds-color-base-asphalt-default;
+$button-base-background-focus: $sds-color-base-overcast-default;
+$button-base-background-disabled: $sds-color-base-concrete-default;
+$button-base-focus-outline: currentColor;
+$button-font-text-shadow-position: 1px 1px 2px;
+$button-font-text-shadow-opacity: .6;
+$button-font-box-shadow-position: 0 0 0 0.2rem;
+$button-font-box-shadow-opacity: .5;
+$button-box-shadow: 0 0 0 2px white, 0 0 0 4px var(--sds-button-outline-color);
+$button-height-xs: $spacing-large; //24px
+$button-height-small: $spacing-xl; //32px
+$button-height-default: $spacing-xl + $spacing-small; //40px
+$button-height-large: $spacing-xxl; //48px
+
+$button-primary-font-color: $sds-color-base-white;
+$button-primary-border-color: $sds-color-border-button-primary-base;
+$button-primary-background: $sds-color-background-button-primary-base;
+$button-primary-background-hover: $sds-color-background-button-primary-hover;
+$button-primary-background-active: $sds-color-background-button-primary-active;
+$button-primary-background-focus: $sds-color-background-button-primary-base;
+$button-primary-background-disabled: $sds-color-background-button-primary-disabled;
+$button-primary-focus-outline: $sds-color-background-button-primary-focus;
+$button-primary-ghost-font-color: $sds-color-base-orange-shade-20;
+
+$button-secondary-font-color: $sds-color-base-white;
+$button-secondary-border-color: $sds-color-border-button-secondary-base;
+$button-secondary-background: $sds-color-background-button-secondary-base;
+$button-secondary-background-hover: $sds-color-background-button-secondary-hover;
+$button-secondary-background-active: $sds-color-background-button-secondary-active;
+$button-secondary-background-focus: $sds-color-background-button-secondary-base;
+$button-secondary-background-disabled: $sds-color-background-button-secondary-disabled;
+$button-secondary-focus-outline: $button-secondary-background;
+$button-secondary-ghost-font-color: $sds-color-base-teal-shade-20;
+
+$button-risk-font-color: $sds-color-base-white;
+$button-risk-border-color: $sds-color-base-red-shade-20;
+$button-risk-background: $sds-color-base-red-default;
+$button-risk-background-hover: $sds-color-base-red-shade-20;
+$button-risk-background-active: $sds-color-base-red-shade-40;
+$button-risk-background-focus: $sds-color-base-red-default;
+$button-risk-focus-outline: $sds-color-base-red-shade-20;
+$button-risk-ghost-font-color: $sds-color-base-red-shade-20;
+
+// Forms
+$form-legend-font-stack: $sds-font-family-headings;
+$form-legend-font-color: $base-font-color;
+$form-legend-font-size: $sds-font-size-xl;
+$form-legend-line-height: $sds-font-line-height-medium;
+$form-legend-font-weight: $sds-font-weight-bold;
+$form-legend-border-color: transparent;
+$form-legend-border-width: 0;
+$form-label-font-stack: $sds-font-family-base;
+$form-label-font-color: $base-font-color;
+$form-label-font-color-focus: $sds-color-base-blue-shade-10;
+$form-label-meta-font-color: $secondary-font-color;
+$form-label-font-size: $sds-font-size-base;
+$form-label-line-height: $sds-font-line-height-single;
+$form-label-font-weight: $sds-font-weight-normal;
+$form-item-font-color: $sds-color-font-base;
+$form-item-font-size: $sds-font-size-base;
+$form-item-line-height: $sds-font-line-height-base;
+$form-item-font-weight: $sds-font-weight-normal;
+$form-item-background-color: $sds-color-background-base;
+$form-item-border-color: $sds-color-border-dark;
+$form-item-border-width: $sds-size-border-base;
+$form-item-border-radius: $sds-size-border-radius-base;
+$form-item-transition-timing: $sds-time-transition-short;
+$form-item-focus-outline: $sds-color-base-blue-default;
+$form-item-background-color-disabled: $sds-color-base-overcast-default;
+$form-item-box-shadow-position: 0 0 0 0.2rem;
+$form-item-box-shadow-opacity: .5;
+$form-item-height: $sds-size-spacing-medium + $sds-size-spacing-large;
+$form-item-background-color-error: $sds-color-base-red-tint-90;
+$form-required-font-color: $sds-color-base-red-shade-20;
+$form-placeholder-font-color: $sds-color-font-secondary;
+$form-checkbox-size: $spacing-base + $spacing-xs;
+$form-checkbox-backgound-color: $form-item-background-color;
+$form-checkbox-checked-backgound-color: $sds-color-base-blue-default;
+$form-checkbox-checked-border-color: $sds-color-base-blue-default;
+$form-checkbox-check-width: $sds-size-border-medium;
+$form-checkbox-check-color: $sds-color-base-white;
+$form-checkbox-checked-disabled-backgound-color: $sds-color-base-concrete-default;
+$form-checkbox-checked-disabled-border-color: $sds-color-base-concrete-default;
+$form-radio-size: $spacing-base + $spacing-xs;
+$form-radio-backgound-color: $form-item-background-color;
+$form-radio-checked-backgound-color: $sds-color-base-white;
+$form-radio-checked-border-color: $sds-color-base-blue-default;
+$form-radio-check-width: $sds-size-border-medium;
+$form-radio-check-color: $sds-color-base-blue-default;
+$form-radio-checked-disabled-backgound-color: $sds-color-base-concrete-default;
+$form-radio-checked-disabled-border-color: $sds-color-base-concrete-default;
+$form-color-valid: $sds-color-base-green-shade-10;
+$form-color-invalid: $sds-color-base-red-shade-20;
+
+// Alert message
+$alert-message-border-radius: $base-border-radius;
+$alert-message-title-font-weight: $sds-font-weight-bold;
+$alert-message-info-backgound-color: $sds-color-base-blue-tint-90;
+$alert-message-success-backgound-color: $sds-color-base-green-tint-90;
+$alert-message-warning-backgound-color: $sds-color-base-yellow-tint-90;
+$alert-message-risk-backgound-color: $sds-color-base-red-tint-90;
+$alert-message-info-font-color: $sds-color-base-blue-shade-10;
+$alert-message-success-font-color: $sds-color-base-green-shade-10;
+$alert-message-warning-font-color: $sds-color-base-yellow-shade-20;
+$alert-message-risk-font-color: $sds-color-base-red-shade-20;
+$alert-message-icon-size: $spacing-medium - $sds-size-spacing-xs; //12px
+
+// Tables
+$table-cell-padding: $sds-size-spacing-base;
+$table-header-padding: $sds-size-spacing-base;
+$table-header-background-color: $sds-color-base-overcast-default;
+$table-header-background-color: $sds-color-base-overcast-default;
+$table-row-highlight-background-color: $sds-color-base-blue-tint-90;

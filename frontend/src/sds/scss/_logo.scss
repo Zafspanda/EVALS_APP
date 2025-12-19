@@ -1,0 +1,56 @@
+.logo-primary {
+    $root: &;
+    &-wordmark {
+        fill: currentColor;
+    }
+    &-spacers {
+        fill: none;
+    }
+    &-marque-lower {
+        fill: $sds-color-base-orange-default;
+    }
+    &-marque-upper {
+        fill: lighten( $sds-color-base-orange-default, 12.5% );
+    }
+    &--reversed {
+        color: $sds-color-font-inverse-base;
+        #{$root}-marque-lower {
+            fill: currentColor;
+        }
+        #{$root}-marque-upper {
+            fill: currentColor;
+            fill-opacity: 0.75;
+        }
+    }
+}
+
+.logo-secondary {
+    $root: &;
+    &-marque-lower {
+        fill: $sds-color-base-orange-default;
+    }
+    &-marque-upper {
+        fill: lighten( $sds-color-base-orange-default, 12.5% );
+    }
+    &--dark {
+        color: $sds-color-font-base;
+        #{$root}-marque-lower {
+            fill: currentColor;
+        }
+        #{$root}-marque-upper {
+            fill: currentColor;
+            fill-opacity: 0.75;
+        }
+    }
+    &--reversed {
+        color: $sds-color-font-inverse-base;
+        #{$root}-marque-lower {
+            fill: currentColor;
+        }
+        #{$root}-marque-upper {
+            fill: currentColor;
+            fill-opacity: 0.75;
+        }
+    }
+}
+

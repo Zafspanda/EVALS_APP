@@ -6,6 +6,8 @@ import { Button, Badge } from '../../sds';
 import { useUserStats } from '../../hooks/useAnnotations';
 import './AppHeader.scss';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
 export const AppHeader: React.FC = () => {
   const location = useLocation();
   const { openSignIn } = useClerk();
@@ -56,6 +58,29 @@ export const AppHeader: React.FC = () => {
           >
             Import CSV
           </Link>
+          <div className="app-header__dropdown">
+            <span className="app-header__nav-item app-header__dropdown-trigger">
+              API Docs ▾
+            </span>
+            <div className="app-header__dropdown-menu">
+              <a
+                href={`${API_BASE_URL}/docs`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="app-header__dropdown-item"
+              >
+                Swagger UI
+              </a>
+              <a
+                href={`${API_BASE_URL}/redoc`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="app-header__dropdown-item"
+              >
+                ReDoc
+              </a>
+            </div>
+          </div>
         </nav>
 
         <div className="app-header__right">

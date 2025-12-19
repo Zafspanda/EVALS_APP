@@ -38,6 +38,8 @@ playwright-report/
 frontend/test-results/
 frontend/playwright-report/
 frontend/playwright/.cache/
+.playwright-mcp/
+Screenshots/
 
 # Build outputs
 dist/
@@ -88,3 +90,9 @@ frontend/dist-ssr/
 **/clerk_secret*
 CLERK_*
 *.backup
+
+# Debug scripts
+backend/debug_traces.py
+
+# Standalone/temporary docs
+docs/sendle-admin-standalone.css

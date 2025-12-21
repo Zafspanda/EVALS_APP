@@ -9,7 +9,7 @@ import logging
 from app.core.config import settings
 from app.db.mongodb import close_mongo_connection, connect_to_mongo
 from app.db.redis import close_redis_connection, connect_to_redis
-from app.api import auth, traces, annotations
+from app.api import auth, traces, annotations, migration
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -53,6 +53,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(traces.router, prefix="/api/traces", tags=["Traces"])
 app.include_router(annotations.router, prefix="/api/annotations", tags=["Annotations"])
+app.include_router(migration.router, prefix="/api/migration", tags=["Migration"])
 
 @app.get("/")
 async def root():

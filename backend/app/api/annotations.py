@@ -14,7 +14,7 @@ from app.schemas.annotation import AnnotationCreate, AnnotationUpdate
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-@router.post("/")
+@router.post("")
 async def create_or_update_annotation(
     annotation: AnnotationCreate,
     current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing

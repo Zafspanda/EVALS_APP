@@ -135,7 +135,7 @@ async def import_csv(
         logger.error(f"Error importing CSV: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.get("/")
+@router.get("")
 async def list_traces(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=settings.max_page_size),

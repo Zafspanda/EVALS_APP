@@ -217,16 +217,49 @@ This document tracks the development progress across chat sessions. Each session
 #### 2. Documentation Cleanup (COMPLETE)
 - Removed obsolete `frontend/dist-react/` from `.gitignore` (already had `frontend/dist/`)
 
-### In Progress
+#### 3. Frontend Deployment (COMPLETE)
+- Frontend deployed and accessible at: `https://frontend-production-52ba.up.railway.app`
+- Backend service renamed from `EVALS_APP` to `backend` for consistency
 
-#### 3. Frontend Deployment (AWAITING REDEPLOY)
-- Railway should auto-redeploy after the fix
-- Once deployed, need to generate public domain
+#### 4. Backend CORS Configuration (COMPLETE)
+- Added `BACKEND_CORS_ORIGINS` environment variable in Railway
+- Value: `http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176,https://frontend-production-52ba.up.railway.app`
+
+#### 5. FastAPI Routing Fixes (COMPLETE)
+- **Problem 1**: 307 Temporary Redirect on `/api/traces` breaking CORS preflight
+- **Solution**: Added `redirect_slashes=False` to FastAPI app config
+- **Commit**: `96f9296` - fix: Disable redirect_slashes to prevent 307 redirects breaking CORS
+
+- **Problem 2**: After disabling redirects, routes returned 404 (routes defined as `"/"` only matched with trailing slash)
+- **Solution**: Changed route definitions from `"/"` to `""` in traces.py and annotations.py
+- **Commit**: `cb8322a` - fix: Update route paths to match without trailing slash
+
+#### 6. Test Data (COMPLETE)
+- Created sample CSV at `test-data/sample-traces.csv` for testing imports
+
+### Railway Project Status
+
+| Service | Type | Status | URL |
+|---------|------|--------|-----|
+| MongoDB | Database | ✅ Online | Internal: `mongodb.railway.internal:27017` |
+| Redis | Database | ✅ Online | Internal: `redis.railway.internal:6379` |
+| backend | GitHub | ✅ Online | https://evalsapp-production.up.railway.app |
+| frontend | GitHub | ✅ Online | https://frontend-production-52ba.up.railway.app |
 
 ### Files Modified This Session
 - `frontend/vite.config.react.ts` - Changed build output to `dist`
 - `.gitignore` - Removed obsolete `dist-react` entry
+- `backend/app/main.py` - Added `redirect_slashes=False`
+- `backend/app/api/traces.py` - Changed route from `"/"` to `""`
+- `backend/app/api/annotations.py` - Changed route from `"/"` to `""`
+- `test-data/sample-traces.csv` - NEW: Sample test data
 - `docs/BUILD-PROCESS-HISTORY.md` - This update
+
+### In Progress
+
+#### 7. CSV Import Testing (AWAITING BACKEND REDEPLOY)
+- Backend needs to redeploy with routing fixes
+- Then test CSV import with user's actual trace data
 
 ---
 
@@ -234,16 +267,17 @@ This document tracks the development progress across chat sessions. Each session
 
 To continue from where we left off:
 
-1. **Frontend deployment**:
-   - Verify Railway build succeeds with `dist` output
-   - Generate public domain for frontend service
-   - Add frontend URL to backend's `BACKEND_CORS_ORIGINS`
+1. **Verify backend routing fix**:
+   - Check Railway backend deployment is complete
+   - Test CSV import at https://frontend-production-52ba.up.railway.app/import
+   - Verify traces list loads correctly
 
-2. **Clerk webhook**:
+2. **Clerk webhook** (if auth needed):
    - Create webhook in Clerk: `https://evalsapp-production.up.railway.app/api/auth/webhook`
-   - Add `CLERK_WEBHOOK_SECRET` to EVALS_APP service variables
+   - Add `CLERK_WEBHOOK_SECRET` to backend service variables
 
 3. **Test full application**:
-   - Verify frontend can connect to backend
-   - Test authentication flow
-   - Test trace import and annotation features
+   - Import CSV traces
+   - View traces list
+   - Test annotation workflow (Pass/Fail/Skip)
+   - Verify navigation between traces

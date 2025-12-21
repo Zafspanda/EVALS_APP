@@ -159,7 +159,7 @@ This document tracks the development progress across chat sessions. Each session
 - `backend/railway.toml` - NEW: Railway deployment config
 - `backend/app/core/config.py` - CORS origins from environment
 - `backend/app/main.py` - Dynamic CORS configuration
-- `.gitignore` - Added frontend/dist-react/
+- `.gitignore` - Added frontend build output directory
 
 ---
 
@@ -204,13 +204,39 @@ This document tracks the development progress across chat sessions. Each session
 
 ---
 
+## Session 4 - 2025-12-22
+
+### Completed Tasks
+
+#### 1. Frontend Build Output Fix (COMPLETE)
+- **Problem**: Railway build failed with error: `"/app/dist": not found`
+- **Root Cause**: Vite config (`vite.config.react.ts`) was outputting to `dist-react` (legacy from Vue migration) but Railway expected `dist`
+- **Solution**: Changed `outDir` from `dist-react` to `dist`
+- **Commit**: `692508a` - fix: Change build output to dist for Railway deployment
+
+#### 2. Documentation Cleanup (COMPLETE)
+- Removed obsolete `frontend/dist-react/` from `.gitignore` (already had `frontend/dist/`)
+
+### In Progress
+
+#### 3. Frontend Deployment (AWAITING REDEPLOY)
+- Railway should auto-redeploy after the fix
+- Once deployed, need to generate public domain
+
+### Files Modified This Session
+- `frontend/vite.config.react.ts` - Changed build output to `dist`
+- `.gitignore` - Removed obsolete `dist-react` entry
+- `docs/BUILD-PROCESS-HISTORY.md` - This update
+
+---
+
 ## Instructions for Next Session
 
 To continue from where we left off:
 
 1. **Frontend deployment**:
-   - User sets root directory to `frontend` in Railway dashboard
-   - Generate public domain for frontend
+   - Verify Railway build succeeds with `dist` output
+   - Generate public domain for frontend service
    - Add frontend URL to backend's `BACKEND_CORS_ORIGINS`
 
 2. **Clerk webhook**:

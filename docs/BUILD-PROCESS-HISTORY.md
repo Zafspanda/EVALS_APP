@@ -86,11 +86,97 @@ This document tracks the development progress across chat sessions. Each session
 
 ---
 
+## Session 2 - 2025-12-22 (Continuation)
+
+### Completed Tasks
+
+#### 1. Backend Deployment Configuration (COMPLETE)
+- **Problem**: Railway couldn't detect how to build the app from repo root
+- **Solution**: Added deployment configuration files and set root directory
+- **Changes**:
+  - Created `backend/Procfile` with uvicorn start command
+  - Created `backend/railway.toml` with healthcheck and restart policies
+  - Updated `backend/app/core/config.py` - CORS origins now read from `BACKEND_CORS_ORIGINS` env var
+  - Updated `backend/app/main.py` - Uses `settings.cors_origins` instead of hardcoded list
+  - Added `frontend/dist-react/` to `.gitignore`
+- **Commit**: `563ba41` - feat: Add Railway deployment configuration for backend
+
+#### 2. EVALS_APP Backend Service (COMPLETE)
+- **Service**: GitHub-connected service named `EVALS_APP`
+- **Root Directory**: Set to `backend` in Railway settings
+- **Status**: ✅ Online and healthy
+- **Public URL**: https://evalsapp-production.up.railway.app
+- **Health Check**: `/health` endpoint returns `{"status":"healthy"}`
+
+**Environment Variables Configured:**
+- `MONGODB_URL` → `${{MongoDB.MONGO_URL}}` (references Railway MongoDB service)
+- `MONGODB_DB_NAME` → `eval_platform`
+- `REDIS_URL` → `${{Redis.REDIS_URL}}` (references Railway Redis service)
+- `CLERK_BACKEND_API_KEY` → User's Clerk secret key
+- `VITE_CLERK_PUBLISHABLE_KEY` → User's Clerk publishable key
+
+**Key Issue Fixed**: Original variable was `MONGO_URL` but app expected `MONGODB_URL`
+
+#### 3. CLI Backend Service Deleted
+- Initially deployed a CLI-based "backend" service
+- Deleted in favor of GitHub-connected EVALS_APP service for auto-deployments
+
+#### 4. Frontend Service Created (PARTIAL)
+- **Service**: GitHub-connected service named `frontend`
+- **Repo**: `Zafspanda/EVALS_APP`
+- **Environment Variables Set**:
+  - `VITE_API_BASE_URL` → `https://evalsapp-production.up.railway.app`
+  - `VITE_CLERK_PUBLISHABLE_KEY` → User's Clerk publishable key
+
+### In Progress
+
+#### 5. Frontend Deployment (NEEDS USER ACTION)
+- **Status**: Service created, variables set
+- **Pending**: User needs to set root directory to `frontend` in Railway dashboard
+  1. Go to frontend service → Settings
+  2. Click "Add Root Directory"
+  3. Enter `frontend`
+  4. Save to trigger deployment
+
+#### 6. Backend CORS Update (PENDING)
+- Once frontend has a public URL, add it to backend's `BACKEND_CORS_ORIGINS`
+
+#### 7. Clerk Webhook Setup (PENDING)
+- Create webhook in Clerk dashboard pointing to: `https://evalsapp-production.up.railway.app/api/auth/webhook`
+- Add `CLERK_WEBHOOK_SECRET` to EVALS_APP service
+
+### Railway Project Status
+
+| Service | Type | Status | URL |
+|---------|------|--------|-----|
+| MongoDB | Database | ✅ Online | Internal: `mongodb.railway.internal:27017` |
+| Redis | Database | ✅ Online | Internal: `redis.railway.internal:6379` |
+| EVALS_APP (backend) | GitHub | ✅ Online | https://evalsapp-production.up.railway.app |
+| frontend | GitHub | ⏳ Needs root dir | (pending) |
+
+### Files Modified This Session
+- `backend/Procfile` - NEW: Railway web process definition
+- `backend/railway.toml` - NEW: Railway deployment config
+- `backend/app/core/config.py` - CORS origins from environment
+- `backend/app/main.py` - Dynamic CORS configuration
+- `.gitignore` - Added frontend/dist-react/
+
+---
+
 ## Instructions for Next Session
 
-To continue from where we left off, the next task is completing the Railway deployment:
+To continue from where we left off:
 
-1. User needs to run `railway up` interactively in the backend folder
-2. Configure environment variables in Railway dashboard
-3. Deploy frontend service
-4. Set up Clerk webhook after backend is live
+1. **Frontend deployment**:
+   - User sets root directory to `frontend` in Railway dashboard
+   - Generate public domain for frontend
+   - Add frontend URL to backend's `BACKEND_CORS_ORIGINS`
+
+2. **Clerk webhook**:
+   - Create webhook in Clerk: `https://evalsapp-production.up.railway.app/api/auth/webhook`
+   - Add `CLERK_WEBHOOK_SECRET` to EVALS_APP service variables
+
+3. **Test full application**:
+   - Verify frontend can connect to backend
+   - Test authentication flow
+   - Test trace import and annotation features

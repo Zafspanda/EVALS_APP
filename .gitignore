@@ -50,6 +50,7 @@ Screenshots/
 dist/
 build/
 frontend/dist/
+frontend/dist-react/
 backend/dist/
 *.egg-info/
 .cache/

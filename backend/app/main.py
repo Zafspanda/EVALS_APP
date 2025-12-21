@@ -38,15 +38,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Configure CORS
+# Configure CORS - origins from settings (BACKEND_CORS_ORIGINS env var)
+logger.info(f"Configuring CORS with origins: {settings.cors_origins}")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite dev server (fallback port)
-        "http://localhost:5174",  # Vite dev server (fallback port)
-        "http://localhost:5175",  # React dev server (primary)
-        "http://localhost:5176",  # React dev server (fallback)
-    ],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -11,7 +11,12 @@ class Settings(BaseSettings):
     project_name: str = "Open Coding Evaluation Platform"
 
     # Server
-    backend_cors_origins: list[str] = ["http://localhost:5173", "http://localhost:5174"]
+    backend_cors_origins: str = "http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176"
+
+    @property
+    def cors_origins(self) -> list[str]:
+        """Parse CORS origins from comma-separated string"""
+        return [origin.strip() for origin in self.backend_cors_origins.split(",") if origin.strip()]
 
     # MongoDB
     mongodb_url: str = "mongodb://localhost:27017"

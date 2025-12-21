@@ -21,8 +21,13 @@ frontend/.env
 .vscode/
 .idea/
 .bmad/
-.claude/
 .cursor/
+
+# Claude Code - ignore local settings but keep project config
+.claude/*
+!.claude/settings.json
+!.claude/skills/
+.claude/settings.local.json
 *.swp
 *.swo
 *~

@@ -66,18 +66,30 @@ Frontend (React 18 + TypeScript)     Backend (FastAPI + Python)
 - `POST /api/annotations` - Create/update annotation (upsert)
 - `GET /api/annotations/user/stats` - User statistics
 
+### API Documentation
+- **Swagger UI**: http://localhost:8000/docs (interactive)
+- **ReDoc**: http://localhost:8000/redoc (read-only)
+
 ## Tech Stack
 
-- **Frontend**: React 18, TypeScript, Vite, Sendle Design System (`@sendle/sds-ui`), React Router, Axios, Clerk React
+- **Frontend**: React 18, TypeScript, Vite, Local SDS components (`src/sds/`), React Router, Axios, Clerk React
 - **Backend**: FastAPI, Python 3.11+, Motor (async MongoDB), Redis, Pydantic
 - **Database**: MongoDB 7.0 (traces, annotations, users collections)
 - **Auth**: Clerk
+- **Deployment**: Vercel (frontend)
 
 ## Design System
 
-This project uses **Sendle Design System** for all UI components. Reference: https://sendle.github.io/sendle-design-system/
+This project uses a **local copy of Sendle Design System** components in `frontend/src/sds/`. This enables Vercel deployment (npm link doesn't work in Vercel's build environment).
 
-Import components from `@sendle/sds-ui` - do not create custom UI components when SDS equivalents exist.
+Import components from the local SDS:
+```tsx
+import { Button, Alert, Input } from '../../sds';  // Adjust path based on file location
+```
+
+Reference docs: https://sendle.github.io/sendle-design-system/
+
+Do not create custom UI components when SDS equivalents exist.
 
 ## Database Schema
 

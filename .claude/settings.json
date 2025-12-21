@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '\\n⚠️  BEFORE COMPACTING: Run /update-build-history to save session progress!\\n'"
+          }
+        ]
+      }
+    ]
+  }
+}

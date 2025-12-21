@@ -1,0 +1,6 @@
+trace_id,flow_session,turn_number,user_message,ai_response
+trace_001,session_abc,1,Hello how are you?,I'm doing well thank you! How can I help you today?
+trace_001,session_abc,2,Can you help me with my order?,Of course! I'd be happy to help with your order. Could you please provide your order number?
+trace_002,session_def,1,I need to track my parcel,Sure! I can help you track your parcel. Please share your tracking number.
+trace_002,session_def,2,It's SND123456,Great! I found your parcel. It's currently in transit and expected to arrive tomorrow.
+trace_003,session_ghi,1,What are your delivery times?,Our standard delivery times are 2-7 business days depending on your location.

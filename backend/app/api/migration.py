@@ -181,7 +181,7 @@ async def import_local_annotations():
     One-time endpoint to import annotations from local development.
     This endpoint will overwrite existing annotations for the same trace_id/user_id.
     """
-    db = await get_database()
+    db = get_database()
     traces_collection = db["traces"]
     annotations_collection = db["annotations"]
 

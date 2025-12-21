@@ -163,6 +163,47 @@ This document tracks the development progress across chat sessions. Each session
 
 ---
 
+## Session 3 - 2025-12-22
+
+### Completed Tasks
+
+#### 1. Build History Automation (COMPLETE)
+- **Problem**: User couldn't find pre-compact hook and slash command for updating build history
+- **Root Cause**: Skill was in `.claude/skills/` but not properly formatted; hook was missing `matcher` field
+- **Solution**: Created both global slash command and skill for flexibility
+
+**Changes Made:**
+
+1. **Global Slash Command** (`~/.claude/commands/update-build-history.md`)
+   - Explicit invocation via `/update-build-history`
+   - Available across all projects
+
+2. **Global Skill** (`~/.claude/skills/update-build-history/SKILL.md`)
+   - Natural language triggers: "save session progress", "update build history", "document what we did"
+   - Uses YAML frontmatter format with proper `name` and `description` fields
+
+3. **Fixed PreCompact Hook** (both global and project-level)
+   - Added missing `matcher: ""` field to trigger on both manual and auto-compact
+   - Global: `~/dotfiles/settings.json`
+   - Project: `.claude/settings.json`
+
+4. **Cleanup**
+   - Removed non-working project skill file (`.claude/skills/update-build-history.md`)
+
+### Files Modified This Session
+- `~/.claude/commands/update-build-history.md` - NEW: Global slash command
+- `~/.claude/skills/update-build-history/SKILL.md` - NEW: Global skill with YAML frontmatter
+- `~/dotfiles/settings.json` - Added PreCompact hook
+- `.claude/settings.json` - Fixed PreCompact hook format
+
+### Notes
+- Skills require `SKILL.md` file inside a named directory (not just a `.md` file)
+- Skills use YAML frontmatter with `name` and `description` fields
+- Slash commands are simpler `.md` files in the `commands/` directory
+- PreCompact hook supports matchers: `manual`, `auto`, or empty for both
+
+---
+
 ## Instructions for Next Session
 
 To continue from where we left off:

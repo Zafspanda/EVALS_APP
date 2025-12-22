@@ -1,6 +1,6 @@
 # Sprint Status Report
 # Generated: 2025-11-14
-# Updated: 2025-11-25 (Synced with migration-status.yaml)
+# Updated: 2025-12-22 (Migration complete, auth blockers active)
 # Project: Evals_app
 
 # STATUS DEFINITIONS:
@@ -21,8 +21,9 @@ sprint_end: "2025-11-28"
 development_status:
   # Format: story-key: status
   story-coding-platform-1: "done"  # Foundation & Core Evaluation (includes UX enhancement)
-  frontend-migration: "in-progress"  # 🚨 CRITICAL: Vue → React + SDS migration (Phase 0-2 DONE, Phase 3-4 remaining)
-  story-coding-platform-2: "blocked"  # BLOCKED: Deferred until after migration
+  frontend-migration: "done"  # ✅ COMPLETE: Vue → React + SDS migration, deployed to Railway
+  story-coding-platform-2: "blocked"  # BLOCKED: Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
+  auth-full-completion: "in-progress"  # 🔐 AUTH FIXES: Clerk token verification, webhook signatures, real user IDs
 
 # Epic Tracking
 epics:
@@ -31,98 +32,102 @@ epics:
     status: "in-progress"
     total_stories: 2
     completed_stories: 1
-    blocked_stories: 1  # Story 2 blocked by auth fixes
+    blocked_stories: 1  # Story 2 blocked by auth fixes (migration complete)
+    deployment:
+      frontend: "https://frontend-production-52ba.up.railway.app"
+      backend: "https://evalsapp-production.up.railway.app"
+      platform: "Railway"
 
 # Summary Statistics
 summary:
-  total_stories: 3  # Story 1 (done) + Migration (in-progress) + Story 2 (blocked)
+  total_stories: 4  # Story 1 (done) + Migration (done) + Auth (in-progress) + Story 2 (blocked)
   drafted: 0
   ready_for_dev: 0
-  in_progress: 1  # frontend-migration (Phase 0-2 complete)
+  in_progress: 1  # auth-full-completion
   review: 0
-  done: 1
-  blocked: 1  # Story 2 blocked until migration complete
+  done: 2  # Story 1 + Migration
+  blocked: 1  # Story 2 blocked until auth complete
 
 # Blockers (CRITICAL - Must Resolve Before Story 2)
 blockers:
   - id: "MIGRATION-001"
     story: "story-coding-platform-2"
-    title: "🚨 Vue → React + SDS Migration Required"
-    severity: "critical"
+    title: "✅ Vue → React + SDS Migration"
+    severity: "resolved"
     location: "frontend/"
-    impact: "All future frontend work blocked. SDS is React-only, Vue incompatible."
-    fix_effort: "7-10 days"
-    fix_instructions: "See docs/migration-implementation-guide.md for complete 6-phase plan"
-    priority: "P0"
-    reason: "Mandatory for long-term maintainability and Sendle Design System integration"
+    resolution_date: "2025-12-22"
+    resolution: "Migration complete. Deployed to Railway. Local SDS in frontend/src/sds/"
 
   - id: "AUTH-001"
     story: "story-coding-platform-2"
-    title: "Clerk token verification bypassed"
+    title: "🔐 Clerk token verification bypassed"
     severity: "critical"
     location: "backend/app/api/auth.py:98"
     impact: "Unauthorized access possible - multi-user testing blocked"
     fix_effort: "30 minutes"
     fix_instructions: "See docs/architecture/security-model.md Section 6"
-    priority: "P1 (deferred until after migration)"
+    priority: "P0"
+    status: "in-progress"
+    branch: "feature/full-auth-completion"
 
   - id: "AUTH-002"
     story: "story-coding-platform-2"
-    title: "Webhook signature verification disabled"
+    title: "🔐 Webhook signature verification disabled"
     severity: "critical"
     location: "backend/app/api/auth.py:145"
     impact: "Attacker can manipulate user data"
     fix_effort: "30 minutes"
     fix_instructions: "Install svix package, implement proper verification"
-    priority: "P1 (deferred until after migration)"
+    priority: "P0"
+    status: "in-progress"
+    branch: "feature/full-auth-completion"
 
   - id: "AUTH-003"
     story: "story-coding-platform-2"
-    title: "Hardcoded demo user in endpoints"
+    title: "🔐 Hardcoded demo user in endpoints"
     severity: "critical"
     location: "8 endpoints (annotations.py, traces.py)"
     impact: "All users share same user_id - data collision"
     fix_effort: "1 hour"
     fix_instructions: "Replace Depends(lambda: {'user_id': 'demo-user'}) with get_current_user"
-    priority: "P1 (deferred until after migration)"
+    priority: "P0"
+    status: "in-progress"
+    branch: "feature/full-auth-completion"
 
 # Next Actions (PRIORITIZED)
 next_actions:
   - priority: "P0"
-    action: "🚨 Continue Vue → React + SDS Migration (MIGRATION-001)"
-    effort: "6.5-9.5 days remaining"
-    owner: "architect agent"
-    blocks: "All future frontend development"
-    reference: "docs/migration-implementation-guide.md"
-    completed_phases:
-      - "✅ Phase 0: React scaffold setup (COMPLETED 2025-11-23)"
-      - "✅ Phase 1: Core Infrastructure (COMPLETED 2025-11-23)"
-      - "✅ Phase 2: Component Migration (COMPLETED 2025-11-23)"
-    remaining_phases:
-      - "Phase 3: Testing & Validation (2 days)"
-      - "Phase 4: Deployment (1 day)"
-    status: "IN PROGRESS - Phase 0-2 complete, ready for Phase 3"
-
-  - priority: "P1"
-    action: "Fix AUTH-001, AUTH-002, AUTH-003 (deferred)"
+    action: "🔐 Complete AUTH-001, AUTH-002, AUTH-003"
     effort: "2-3 hours total"
     owner: "dev agent"
     blocks: "Story 2 start"
     reference: "docs/architecture/security-model.md"
-    note: "Defer until after migration complete"
+    branch: "feature/full-auth-completion"
+    status: "IN PROGRESS"
+    tasks:
+      - "AUTH-001: Implement proper Clerk JWT token verification"
+      - "AUTH-002: Install svix, implement webhook signature verification"
+      - "AUTH-003: Replace demo-user with real get_current_user in all endpoints"
+      - "Set up Clerk webhook in dashboard"
+      - "Add CLERK_WEBHOOK_SECRET to Railway env vars"
 
-  - priority: "P1"
-    action: "Test multi-user isolation with 2 Clerk users (deferred)"
+  - priority: "P0"
+    action: "Test multi-user isolation with 2 Clerk users"
     effort: "1 hour"
     owner: "dev agent"
     blocks: "Story 2 start"
-    note: "Defer until after migration complete"
+    depends_on: "AUTH fixes complete"
 
-  - priority: "P2"
+  - priority: "P1"
     action: "Begin story-coding-platform-2 development"
     effort: "TBD"
     owner: "dev agent"
-    depends_on: "Migration complete + AUTH fixes complete"
+    depends_on: "AUTH fixes complete + multi-user verified"
+
+  - priority: "DONE"
+    action: "✅ Vue → React + SDS Migration (MIGRATION-001)"
+    completion_date: "2025-12-22"
+    notes: "All 4 phases complete. Deployed to Railway. Local SDS in frontend/src/sds/"
 
 # Architecture Review (2025-11-17)
 architecture_review:
@@ -153,10 +158,12 @@ notes: |
   - 🚨 COURSE CORRECTION (Nov 23): Vue → React + SDS migration now CRITICAL PATH
   - UX Design Specification completed (Nov 23): docs/ux-design-specification.md
   - Migration Implementation Guide completed (Nov 23): docs/migration-implementation-guide.md
-  - ✅ Migration Phase 0-2 COMPLETE (Nov 23-25): React scaffold, all components migrated, Vue cleanup done
-  - Story 2: BLOCKED ⚠️ - Deferred until migration complete
-  - Auth fixes (AUTH-001, AUTH-002, AUTH-003): Deferred until migration complete
+  - ✅ MIGRATION COMPLETE (Dec 22): All 4 phases done, deployed to Railway
+  - ✅ LOCAL SDS (Dec 22): Copied SDS to frontend/src/sds/ for CI compatibility
+  - ✅ RAILWAY DEPLOYMENT (Dec 22): Frontend + Backend live
+    - Frontend: https://frontend-production-52ba.up.railway.app
+    - Backend: https://evalsapp-production.up.railway.app
+  - 🔐 AUTH IN PROGRESS: Branch feature/full-auth-completion created
+  - Story 2: BLOCKED ⚠️ - Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
   - Architecture documentation: docs/architecture/ (9 files created)
-  - **NEXT AGENT: Continue with Phase 3: Testing & Validation**
-  - Migration is P0 blocker - all future frontend work depends on it
-  - Remaining migration effort: ~3 days (Phases 3-4)
+  - **NEXT AGENT: Complete auth fixes, then unblock Story 2**

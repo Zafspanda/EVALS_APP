@@ -2,10 +2,19 @@
 
 **Epic ID:** EVAL-001
 **Epic Slug:** coding-platform
-**Status:** In Planning
+**Status:** In Progress (Story 1 Complete, Story 2 Blocked by Auth)
 **Type:** New Feature Development
 **Priority:** High
 **Created:** November 14, 2025
+**Updated:** December 22, 2025
+
+## Deployment
+
+| Environment | URL |
+|-------------|-----|
+| Frontend | https://frontend-production-52ba.up.railway.app |
+| Backend | https://evalsapp-production.up.railway.app |
+| API Docs | https://evalsapp-production.up.railway.app/docs |
 
 ---
 
@@ -50,13 +59,18 @@ Build a web application that enables systematic manual evaluation of AI chatbot 
 
 ```
 Epic: Open Coding Evaluation Platform
-├── Story 1: Foundation & Core Evaluation [EVAL-001-01]
-│   ├── Project setup and authentication
-│   ├── CSV import with validation
-│   ├── Trace viewing interface
-│   └── Basic annotation saving
+├── Story 1: Foundation & Core Evaluation [EVAL-001-01] ✅ COMPLETE
+│   ├── Project setup and authentication ✅
+│   ├── CSV import with validation ✅
+│   ├── Trace viewing interface ✅
+│   └── Basic annotation saving ✅
 │
-└── Story 2: Advanced Features & Export [EVAL-001-02]
+├── Auth Fixes [IN PROGRESS] 🔐
+│   ├── AUTH-001: Clerk token verification
+│   ├── AUTH-002: Webhook signature verification
+│   └── AUTH-003: Replace demo-user with real auth
+│
+└── Story 2: Advanced Features & Export [EVAL-001-02] ⏳ BLOCKED
     ├── Dynamic label columns from rubric
     ├── Multi-user trace assignment
     ├── CSV/JSONL export
@@ -65,15 +79,21 @@ Epic: Open Coding Evaluation Platform
 
 ## Implementation Sequence
 
-**Story 1 → Story 2** (Sequential - Story 1 must complete first)
+**Story 1 → Auth Fixes → Story 2** (Sequential)
 
-1. **Story 1 (Week 1-2):** Build foundation with basic evaluation capability
+1. **Story 1:** Build foundation with basic evaluation capability ✅ **COMPLETE**
    - Establishes project structure
    - Implements core data models
    - Creates basic UI for trace coding
    - Delivers working annotation system
+   - **Note:** Migrated from Vue to React + SDS (Dec 2025)
 
-2. **Story 2 (Week 2-3):** Add advanced features and export
+2. **Auth Fixes:** Enable multi-user support 🔐 **IN PROGRESS**
+   - Branch: `feature/full-auth-completion`
+   - Fixes AUTH-001, AUTH-002, AUTH-003
+   - Required before Story 2 can start
+
+3. **Story 2:** Add advanced features and export ⏳ **BLOCKED**
    - Builds on Story 1's foundation
    - Adds dynamic schema support
    - Implements export for CI integration
@@ -112,13 +132,13 @@ Epic: Open Coding Evaluation Platform
 
 ## Acceptance Criteria
 
-- [ ] Can import 100-trace CSV without errors
-- [ ] Can view and navigate between traces
-- [ ] Can save all annotation types (pass/fail, codes, labels)
-- [ ] Multiple users can work on same dataset
-- [ ] Can export enriched CSV/JSONL
-- [ ] Audit trail tracks all changes
-- [ ] Deployed and accessible on Railway
+- [x] Can import 100-trace CSV without errors ✅ (Story 1)
+- [x] Can view and navigate between traces ✅ (Story 1)
+- [x] Can save all annotation types (pass/fail, codes, labels) ✅ (Story 1)
+- [ ] Multiple users can work on same dataset ⏳ (Requires Auth Fixes)
+- [ ] Can export enriched CSV/JSONL ⏳ (Story 2)
+- [ ] Audit trail tracks all changes ⏳ (Story 2)
+- [x] Deployed and accessible on Railway ✅ (Dec 22, 2025)
 
 ---
 

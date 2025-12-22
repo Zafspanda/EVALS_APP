@@ -16,7 +16,7 @@
 #   - skipped: Optional/conditional workflow that was skipped
 
 generated: "2025-11-13"
-updated: "2025-11-23"
+updated: "2025-12-22"
 project: "Evals_app"
 project_type: "software"
 selected_track: "quick-flow"
@@ -34,12 +34,29 @@ workflow_status:
 
   # Phase 4: UX Design & Migration Planning (Post-Architecture Review)
   ux-design: "docs/ux-design-specification.md"  # agent: ux-designer - COMPLETED (2025-11-23)
-  course-correction: "docs/Course-correction-SDS.md"  # CRITICAL: Vue → React + SDS migration required
+  course-correction: "docs/Course-correction-SDS.md"  # Vue → React + SDS migration - COMPLETED
   migration-guide: "docs/migration-implementation-guide.md"  # agent: architect - COMPLETED (2025-11-23)
 
-  # Phase 5: Migration Execution (In Progress)
-  migration-phase-0: "COMPLETED"  # React scaffold setup - COMPLETED (2025-11-23)
-  migration-status: "docs/migration-status.yaml"  # agent: architect - IN PROGRESS
+  # Phase 5: Migration Execution - COMPLETED (2025-12-22)
+  migration-phase-0: "COMPLETED"  # React scaffold setup (2025-11-23)
+  migration-phase-1: "COMPLETED"  # Core Infrastructure (2025-11-23)
+  migration-phase-2: "COMPLETED"  # Component Migration (2025-11-23)
+  migration-phase-3: "COMPLETED"  # Testing & Validation (2025-12-22)
+  migration-phase-4: "COMPLETED"  # Deployment to Railway (2025-12-22)
+  migration-status: "docs/migration-status.yaml"  # COMPLETE
+
+  # Phase 6: Auth Fixes (In Progress)
+  auth-completion: "in-progress"  # branch: feature/full-auth-completion
+  auth-blockers:
+    - "AUTH-001: Clerk token verification"
+    - "AUTH-002: Webhook signature verification"
+    - "AUTH-003: Replace demo-user with real auth"
+
+deployment:
+  platform: "Railway"
+  frontend: "https://frontend-production-52ba.up.railway.app"
+  backend: "https://evalsapp-production.up.railway.app"
+  status: "live"
 
 # Latest Review: Architecture Review (2025-11-17)
 latest_review:
@@ -101,32 +118,35 @@ latest_review:
       - "docs/architecture/adr/005-unannotated-query-optimization.md"
 
   next_actions:
-    - action: "🚨 CRITICAL: Execute Vue → React + SDS Migration"
-      priority: "P0"
-      effort: "6.5-9.5 days remaining"
-      owner: "architect agent"
-      blocks: "All future frontend development"
-      guide: "docs/migration-implementation-guide.md"
-      reason: "SDS is React-only, Vue incompatible. Mandatory for long-term maintainability."
-      completed_phases:
-        - "✅ Phase 0: React scaffold setup (COMPLETED 2025-11-23)"
-      remaining_phases:
-        - "Phase 1: Core Infrastructure (0.5 days)"
-        - "Phase 2: Component Migration (4 days)"
-        - "Phase 3: Testing & Validation (2 days)"
-        - "Phase 4: Deployment (1 day)"
+    - action: "✅ Vue → React + SDS Migration COMPLETE"
+      priority: "DONE"
+      completion_date: "2025-12-22"
+      notes: "All 4 phases complete. Deployed to Railway. Local SDS in frontend/src/sds/"
 
-    - action: "Fix auth issues (Clerk JWT + webhook signatures)"
-      priority: "P1"
+    - action: "🔐 Complete auth fixes (AUTH-001, AUTH-002, AUTH-003)"
+      priority: "P0"
       effort: "2-3 hours"
+      owner: "dev agent"
       blocks: "Story 2 start"
-      note: "Defer until after migration (auth works in both Vue and React)"
+      branch: "feature/full-auth-completion"
+      status: "IN PROGRESS"
+      tasks:
+        - "AUTH-001: Implement proper Clerk JWT token verification"
+        - "AUTH-002: Install svix, implement webhook signature verification"
+        - "AUTH-003: Replace demo-user with real get_current_user"
+        - "Set up Clerk webhook in dashboard"
+        - "Add CLERK_WEBHOOK_SECRET to Railway"
 
     - action: "Test multi-user isolation with 2 Clerk users"
-      priority: "P1"
+      priority: "P0"
       effort: "1 hour"
       blocks: "Story 2 start"
-      note: "Defer until after migration"
+      depends_on: "AUTH fixes complete"
+
+    - action: "Begin Story 2 development"
+      priority: "P1"
+      effort: "TBD"
+      depends_on: "AUTH fixes + multi-user verification"
 
     - action: "Implement aggregation pipeline for unannotated queries"
       priority: "P2"

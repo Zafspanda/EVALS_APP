@@ -1,0 +1,295 @@
+/**
+ * Sendle Admin Standalone CSS
+ *
+ * A standalone CSS file containing Sendle admin panel design tokens and styles.
+ * No preprocessor required - just include this file in your project.
+ *
+ * Source: Sendle Admin Panel (Bootstrap 3.4.1 based)
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="sendle-admin-standalone.css">
+ *   or
+ *   @import url('sendle-admin-standalone.css');
+ */
+
+/* ==================================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ================================================== */
+
+:root {
+  /* Typography - Sendle Admin Font Stack */
+  --sendle-admin-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sendle-admin-font-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  /* Font sizes */
+  --sendle-admin-font-size-base: 13px;
+  --sendle-admin-font-size-large: 16px;
+  --sendle-admin-font-size-small: 12px;
+  --sendle-admin-font-size-h1: 36px;
+  --sendle-admin-font-size-h2: 30px;
+  --sendle-admin-font-size-h3: 24px;
+  --sendle-admin-font-size-h4: 18px;
+
+  /* Line heights */
+  --sendle-admin-line-height-base: 1.428571429;
+  --sendle-admin-line-height-computed: 18px;
+
+  /* Spacing (Bootstrap 3 inspired, 9px base unit) */
+  --sendle-spacing-xs: 5px;
+  --sendle-spacing-sm: 9px;
+  --sendle-spacing-md: 18px;
+  --sendle-spacing-lg: 36px;
+
+  /* Padding patterns */
+  --sendle-padding-base-vertical: 6px;
+  --sendle-padding-base-horizontal: 12px;
+  --sendle-padding-large-vertical: 10px;
+  --sendle-padding-large-horizontal: 16px;
+  --sendle-padding-small-vertical: 5px;
+  --sendle-padding-small-horizontal: 10px;
+
+  /* Colors - Text */
+  --sendle-admin-text-primary: #333;
+  --sendle-admin-text-secondary: #777;
+  --sendle-admin-text-muted: #999;
+
+  /* Colors - Backgrounds */
+  --sendle-admin-bg-white: #fff;
+  --sendle-admin-bg-light: #f7f7f7;
+  --sendle-admin-bg-muted: #eee;
+  --sendle-admin-bg-dark: #e4e4e4;
+
+  /* Colors - Borders */
+  --sendle-admin-border-light: #ddd;
+  --sendle-admin-border-default: #aaa;
+  --sendle-admin-border-dark: #888;
+
+  /* Colors - Interactive/Brand */
+  --sendle-admin-primary: #337ab7;
+  --sendle-admin-primary-dark: #286090;
+  --sendle-admin-focus: #5897fb;
+  --sendle-admin-focus-alt: #3875d7;
+
+  /* Colors - State */
+  --sendle-admin-warning-bg: #fcf8e3;
+  --sendle-admin-danger: #d9534f;
+  --sendle-admin-success: #5cb85c;
+
+  /* Form elements */
+  --sendle-input-height-base: 34px;
+  --sendle-input-height-large: 46px;
+  --sendle-input-height-small: 30px;
+
+  /* Border radius */
+  --sendle-border-radius-base: 4px;
+  --sendle-border-radius-large: 6px;
+  --sendle-border-radius-small: 3px;
+
+  /* Tables */
+  --sendle-table-cell-padding: 8px;
+  --sendle-table-condensed-padding: 5px;
+  --sendle-table-bg: transparent;
+  --sendle-table-border-color: #ddd;
+}
+
+/* ==================================================
+   BASE STYLES
+   ================================================== */
+
+body {
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+  color: var(--sendle-admin-text-primary);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--sendle-admin-font-family);
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1 { font-size: var(--sendle-admin-font-size-h1); margin-bottom: 9px; }
+h2 { font-size: var(--sendle-admin-font-size-h2); margin-bottom: 9px; }
+h3 { font-size: var(--sendle-admin-font-size-h3); margin-bottom: 9px; }
+h4 { font-size: var(--sendle-admin-font-size-h4); margin-bottom: 9px; }
+
+small { font-size: 85%; }
+
+code, kbd, pre, samp {
+  font-family: var(--sendle-admin-font-monospace);
+}
+
+/* Links */
+a {
+  color: var(--sendle-admin-primary);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--sendle-admin-primary-dark);
+  text-decoration: underline;
+}
+
+/* Form controls */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+  padding: var(--sendle-padding-base-vertical) var(--sendle-padding-base-horizontal);
+  border: 1px solid var(--sendle-admin-border-light);
+  border-radius: var(--sendle-border-radius-base);
+  height: var(--sendle-input-height-base);
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--sendle-admin-focus);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(88, 151, 251, 0.25);
+}
+
+textarea {
+  height: auto;
+  min-height: 80px;
+}
+
+/* Buttons */
+button,
+.btn {
+  font-family: var(--sendle-admin-font-family);
+  font-size: var(--sendle-admin-font-size-base);
+  line-height: var(--sendle-admin-line-height-base);
+  padding: var(--sendle-padding-base-vertical) var(--sendle-padding-base-horizontal);
+  border-radius: var(--sendle-border-radius-base);
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--sendle-admin-primary);
+  border-color: var(--sendle-admin-primary-dark);
+  color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--sendle-admin-primary-dark);
+}
+
+.btn-default {
+  background-color: var(--sendle-admin-bg-white);
+  border-color: var(--sendle-admin-border-light);
+  color: var(--sendle-admin-text-primary);
+}
+
+.btn-default:hover,
+.btn-default:focus {
+  background-color: var(--sendle-admin-bg-light);
+}
+
+.btn-danger {
+  background-color: var(--sendle-admin-danger);
+  border-color: #d43f3a;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: var(--sendle-admin-success);
+  border-color: #4cae4c;
+  color: #fff;
+}
+
+/* ==================================================
+   UTILITY CLASSES
+   ================================================== */
+
+/* Text utilities */
+.text-muted { color: var(--sendle-admin-text-muted); }
+.text-primary { color: var(--sendle-admin-primary); }
+.text-success { color: var(--sendle-admin-success); }
+.text-danger { color: var(--sendle-admin-danger); }
+.text-secondary { color: var(--sendle-admin-text-secondary); }
+
+/* Font size utilities */
+.text-base { font-size: var(--sendle-admin-font-size-base); }
+.text-large { font-size: var(--sendle-admin-font-size-large); }
+.text-small { font-size: var(--sendle-admin-font-size-small); }
+
+/* Background utilities */
+.bg-white { background-color: var(--sendle-admin-bg-white); }
+.bg-light { background-color: var(--sendle-admin-bg-light); }
+.bg-muted { background-color: var(--sendle-admin-bg-muted); }
+
+/* Border utilities */
+.border { border: 1px solid var(--sendle-admin-border-light); }
+.border-radius { border-radius: var(--sendle-border-radius-base); }
+
+/* Margin utilities */
+.mt-xs { margin-top: var(--sendle-spacing-xs); }
+.mt-sm { margin-top: var(--sendle-spacing-sm); }
+.mt-md { margin-top: var(--sendle-spacing-md); }
+.mt-lg { margin-top: var(--sendle-spacing-lg); }
+
+.mb-xs { margin-bottom: var(--sendle-spacing-xs); }
+.mb-sm { margin-bottom: var(--sendle-spacing-sm); }
+.mb-md { margin-bottom: var(--sendle-spacing-md); }
+.mb-lg { margin-bottom: var(--sendle-spacing-lg); }
+
+.mr-xs { margin-right: var(--sendle-spacing-xs); }
+.mr-sm { margin-right: var(--sendle-spacing-sm); }
+.mr-md { margin-right: var(--sendle-spacing-md); }
+
+.ml-xs { margin-left: var(--sendle-spacing-xs); }
+.ml-sm { margin-left: var(--sendle-spacing-sm); }
+.ml-md { margin-left: var(--sendle-spacing-md); }
+
+/* Padding utilities */
+.p-xs { padding: var(--sendle-spacing-xs); }
+.p-sm { padding: var(--sendle-spacing-sm); }
+.p-md { padding: var(--sendle-spacing-md); }
+.p-lg { padding: var(--sendle-spacing-lg); }
+
+.pt-sm { padding-top: var(--sendle-spacing-sm); }
+.pt-md { padding-top: var(--sendle-spacing-md); }
+.pb-sm { padding-bottom: var(--sendle-spacing-sm); }
+.pb-md { padding-bottom: var(--sendle-spacing-md); }
+
+/* Display utilities */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ==================================================
+   RESPONSIVE ADJUSTMENTS
+   ================================================== */
+
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  h1 { font-size: 30px; }
+  h2 { font-size: 26px; }
+}

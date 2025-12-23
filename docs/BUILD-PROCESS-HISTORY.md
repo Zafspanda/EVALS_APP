@@ -419,37 +419,108 @@ This document tracks the development progress across chat sessions. Each session
 
 ---
 
+## Session 7 - 2025-12-23
+
+### Completed Tasks
+
+#### 1. Auth Implementation CODE COMPLETE ✅
+
+Executed Story AUTH.1 and completed all code changes:
+
+| Task | Status |
+|------|--------|
+| Add PyJWT + svix dependencies | ✅ Done |
+| Add clerk_jwks_url to config.py | ✅ Done |
+| Implement JWT verification (AUTH-001) | ✅ Done |
+| Implement Svix webhook verification (AUTH-002) | ✅ Done |
+| Create get_current_user dependency (AUTH-003) | ✅ Done |
+| Replace demo-user in annotations.py (3 places) | ✅ Done |
+| Replace demo-user in traces.py (5 places) | ✅ Done |
+| Local testing (401 verification) | ✅ Done |
+
+**Key Changes to `backend/app/api/auth.py`:**
+- Added `get_jwks_client()` - Cached JWKS client for Clerk public keys
+- Rewrote `verify_clerk_token()` - Uses PyJWT with RS256 algorithm
+- Created `get_current_user()` - FastAPI dependency for protected endpoints
+- Rewrote `clerk_webhook()` - Uses Svix for signature verification
+- Renamed `/me` route handler to `get_current_user_info()` to avoid naming conflict
+
+#### 2. Local Testing Passed ✅
+```
+GET /api/traces (no auth) → 401 "Missing or invalid authorization header"
+GET /api/traces (invalid token) → 401 "Invalid or expired token"
+GET /api/annotations/user/stats (no auth) → 401
+```
+
+#### 3. Documentation Created ✅
+
+**New File: `docs/sprint-artifacts/auth-completion-checklist.md`**
+- Step-by-step manual deployment guide
+- Railway environment variable instructions
+- Clerk webhook setup instructions
+- Production testing verification checklist
+
+**Updated Files:**
+- `docs/sprint-status.yaml` - AUTH blockers marked "code-complete", next actions updated
+- `docs/sprint-artifacts/story-auth-completion-1.md` - Dev Agent Record filled in, task checkboxes updated
+
+### Commits This Session
+- `839fd68` - feat(auth): Implement full Clerk authentication (AUTH-001, AUTH-002, AUTH-003)
+- `dfa3f9b` - docs: Add auth completion checklist and update sprint status
+
+### Current Branch
+`feature/full-auth-completion` (pushed to GitHub)
+
+### Files Modified This Session
+- `backend/requirements.txt` - Added PyJWT>=2.8.0, svix>=1.0.0
+- `backend/app/core/config.py` - Added clerk_jwks_url setting
+- `backend/app/api/auth.py` - Complete rewrite with proper JWT/webhook verification
+- `backend/app/api/annotations.py` - Replaced 3 demo-user with Depends(get_current_user)
+- `backend/app/api/traces.py` - Replaced 5 demo-user with Depends(get_current_user)
+- `docs/sprint-artifacts/auth-completion-checklist.md` - NEW: Manual steps guide
+- `docs/sprint-artifacts/story-auth-completion-1.md` - Updated with Dev Agent Record
+- `docs/sprint-status.yaml` - Updated status and next actions
+
+### What's Left (Manual Steps)
+
+The code is complete but requires **manual user action** for deployment:
+
+1. **Merge to main**: `git checkout main && git merge feature/full-auth-completion && git push`
+2. **Add CLERK_JWKS_URL to Railway**: Find URL in Clerk Dashboard → API Keys → Show API URLs
+3. **Create Clerk Webhook**: Point to `https://evalsapp-production.up.railway.app/api/auth/webhook`
+4. **Add CLERK_WEBHOOK_SECRET to Railway**: Copy from Clerk webhook settings
+5. **Verify in Production**: Log in, create annotation, verify user_id is Clerk ID (not "demo-user")
+
+---
+
 ## Instructions for Next Session
 
-### Primary Task: Execute Story AUTH.1
+### Primary Task: Complete Auth Deployment
 
-The dev agent should execute `story-auth-completion-1`:
+**Checklist File**: `docs/sprint-artifacts/auth-completion-checklist.md`
 
-1. **Read the story**: `docs/sprint-artifacts/story-auth-completion-1.md`
-2. **Reference the tech-spec**: `docs/tech-spec-auth.md`
-3. **Use the dev-story workflow**: `/bmad:bmm:workflows:dev-story`
+If manual steps are still pending:
+1. Merge `feature/full-auth-completion` to main
+2. Configure Railway environment variables
+3. Set up Clerk webhook
+4. Test in production
 
-### Branch
-Work on: `feature/full-auth-completion`
+If auth is deployed and verified:
+1. Mark `story-auth-completion-1` as Done
+2. Update AUTH blockers to "resolved" in sprint-status.yaml
+3. Begin `story-coding-platform-2` development
 
-### Key Implementation References
-- **Security Model**: `docs/architecture/security-model.md` - Contains exact code examples
-- **JWT verification example**: security-model.md:159-177
-- **Svix verification example**: security-model.md:248-274
-
-### Dependencies to Add
-```
-svix>=1.0.0
-PyJWT>=2.8.0
-```
+### Branch Status
+- `feature/full-auth-completion` - Code complete, needs merge to main
+- `main` - Production deployment branch
 
 ### Production URLs
 - Frontend: https://frontend-production-52ba.up.railway.app
 - Backend API: https://evalsapp-production.up.railway.app
 - API Docs: https://evalsapp-production.up.railway.app/docs
 
-### Post-Auth Setup (after code complete)
-1. Add `CLERK_JWKS_URL` to Railway backend environment
-2. Create Clerk webhook pointing to `/api/auth/webhook`
-3. Add `CLERK_WEBHOOK_SECRET` to Railway backend environment
-4. Test multi-user isolation with 2 Clerk accounts
+### Required Environment Variables (Railway Backend)
+| Variable | Where to Find |
+|----------|---------------|
+| `CLERK_JWKS_URL` | Clerk Dashboard → API Keys → Show API URLs |
+| `CLERK_WEBHOOK_SECRET` | Created when setting up webhook in Clerk Dashboard |

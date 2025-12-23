@@ -34,7 +34,7 @@ REQUIRED_COLUMNS = [
 @router.post("/import-csv")
 async def import_csv(
     file: UploadFile = File(...),
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Import traces from CSV file
@@ -139,7 +139,7 @@ async def import_csv(
 async def list_traces(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=settings.max_page_size),
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     List traces with pagination
@@ -183,7 +183,7 @@ async def list_traces(
 @router.get("/{trace_id}")
 async def get_trace(
     trace_id: str,
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Get a single trace by ID
@@ -229,7 +229,7 @@ async def get_trace(
 @router.get("/{trace_id}/adjacent")
 async def get_adjacent_traces(
     trace_id: str,
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Get IDs of previous and next traces for efficient navigation
@@ -301,7 +301,7 @@ async def get_adjacent_traces(
 
 @router.get("/next/unannotated")
 async def get_next_unannotated_trace(
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Get the first trace without an annotation for the current user

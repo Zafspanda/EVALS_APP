@@ -1,13 +1,13 @@
 """
-Authentication API endpoints
+Authentication API endpoints and utilities
 """
 from fastapi import APIRouter, HTTPException, Depends, Request
-from typing import Dict, Any
-import httpx
+from typing import Dict, Any, Optional
 import logging
-import hashlib
-import hmac
 from datetime import datetime
+
+import jwt
+from jwt import PyJWKClient
 
 from app.core.config import settings
 from app.db.mongodb import get_database
@@ -15,68 +15,134 @@ from app.db.mongodb import get_database
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-@router.post("/webhook")
-async def clerk_webhook(request: Request):
+# =============================================================================
+# JWKS Client (cached for performance)
+# =============================================================================
+
+_jwks_client: Optional[PyJWKClient] = None
+
+
+def get_jwks_client() -> Optional[PyJWKClient]:
+    """Get or create cached JWKS client for Clerk token verification"""
+    global _jwks_client
+    if _jwks_client is None and settings.clerk_jwks_url:
+        _jwks_client = PyJWKClient(settings.clerk_jwks_url)
+    return _jwks_client
+
+
+# =============================================================================
+# JWT Token Verification (AUTH-001 Fix)
+# =============================================================================
+
+async def verify_clerk_token(token: str) -> Optional[Dict[str, Any]]:
     """
-    Webhook endpoint for Clerk events
-    Syncs user data from Clerk to MongoDB
+    Verify a Clerk JWT token using JWKS public keys.
+
+    Returns user data dict on success, None on failure.
     """
     try:
-        # Get the webhook payload
-        payload = await request.body()
-        headers = dict(request.headers)
+        jwks_client = get_jwks_client()
+        if not jwks_client:
+            logger.error("CLERK_JWKS_URL not configured")
+            return None
 
-        # Verify webhook signature if secret is configured
-        if settings.clerk_webhook_secret:
-            signature = headers.get("svix-signature")
-            if not verify_webhook_signature(payload, signature, settings.clerk_webhook_secret):
-                raise HTTPException(status_code=401, detail="Invalid webhook signature")
+        # Get signing key from JWKS
+        signing_key = jwks_client.get_signing_key_from_jwt(token)
 
-        # Parse the webhook data
-        data = await request.json()
-        event_type = data.get("type")
-        event_data = data.get("data")
+        # Decode and verify the token
+        claims = jwt.decode(
+            token,
+            signing_key.key,
+            algorithms=["RS256"],
+            options={"verify_aud": False}  # Clerk doesn't always set audience
+        )
 
-        logger.info(f"Received Clerk webhook: {event_type}")
+        return {
+            "user_id": claims.get("sub"),
+            "email": claims.get("email"),
+            "session_id": claims.get("sid")
+        }
 
-        # Handle different event types
-        if event_type == "user.created" or event_type == "user.updated":
-            await sync_user(event_data)
-        elif event_type == "user.deleted":
-            await delete_user(event_data.get("id"))
-
-        return {"status": "success"}
-
+    except jwt.ExpiredSignatureError:
+        logger.warning("Token expired")
+        return None
+    except jwt.InvalidTokenError as e:
+        logger.error(f"Invalid JWT: {e}")
+        return None
     except Exception as e:
-        logger.error(f"Error processing webhook: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error verifying Clerk token: {e}")
+        return None
+
+
+# =============================================================================
+# Auth Dependency (AUTH-003 Fix)
+# =============================================================================
+
+async def get_current_user(request: Request) -> Dict[str, str]:
+    """
+    FastAPI dependency that extracts and verifies the current user from JWT.
+
+    Use this in all protected endpoints:
+        current_user: Dict = Depends(get_current_user)
+
+    Returns:
+        Dict with user_id, email (if available)
+
+    Raises:
+        HTTPException 401 if token is missing, invalid, or expired
+    """
+    auth_header = request.headers.get("authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=401,
+            detail="Missing or invalid authorization header"
+        )
+
+    token = auth_header.split(" ")[1]
+    user_data = await verify_clerk_token(token)
+
+    if not user_data:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired token"
+        )
+
+    return {
+        "user_id": user_data["user_id"],
+        "email": user_data.get("email")
+    }
+
+
+# =============================================================================
+# API Routes
+# =============================================================================
 
 @router.get("/me")
-async def get_current_user(request: Request):
+async def get_current_user_info(request: Request):
     """
-    Get current authenticated user from Clerk
+    Get current authenticated user info from Clerk.
+    Creates user in MongoDB if doesn't exist.
     """
     try:
-        # Get the session token from the Authorization header
+        # Get and verify token
         auth_header = request.headers.get("authorization")
         if not auth_header or not auth_header.startswith("Bearer "):
             raise HTTPException(status_code=401, detail="No authorization token provided")
 
         token = auth_header.split(" ")[1]
-
-        # Verify the token with Clerk
         user_data = await verify_clerk_token(token)
+
         if not user_data:
             raise HTTPException(status_code=401, detail="Invalid token")
 
         # Get user from database
         db = get_database()
-        user = await db.users.find_one({"clerk_id": user_data.get("sub")})
+        user = await db.users.find_one({"clerk_id": user_data.get("user_id")})
 
         if not user:
             # Create user if doesn't exist
             user = {
-                "clerk_id": user_data.get("sub"),
+                "clerk_id": user_data.get("user_id"),
                 "email": user_data.get("email"),
                 "name": user_data.get("name"),
                 "created_at": datetime.utcnow(),
@@ -95,63 +161,70 @@ async def get_current_user(request: Request):
         logger.error(f"Error getting current user: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-async def verify_clerk_token(token: str) -> Dict[str, Any]:
+
+@router.post("/webhook")
+async def clerk_webhook(request: Request):
     """
-    Verify a Clerk session token
-    """
-    try:
-        # Use Clerk's backend API to verify the token
-        if not settings.clerk_backend_api_key:
-            logger.warning("Clerk backend API key not configured")
-            return None
-
-        async with httpx.AsyncClient() as client:
-            response = await client.get(
-                f"https://api.clerk.com/v1/sessions/{token}/verify",
-                headers={
-                    "Authorization": f"Bearer {settings.clerk_backend_api_key}"
-                }
-            )
-
-            if response.status_code == 200:
-                return response.json()
-            else:
-                logger.error(f"Failed to verify token: {response.status_code}")
-                return None
-
-    except Exception as e:
-        logger.error(f"Error verifying Clerk token: {e}")
-        return None
-
-def verify_webhook_signature(payload: bytes, signature: str, secret: str) -> bool:
-    """
-    Verify Clerk webhook signature
+    Webhook endpoint for Clerk events.
+    Syncs user data from Clerk to MongoDB.
+    Uses Svix for signature verification.
     """
     try:
-        # Clerk uses Svix for webhooks
-        # The signature format is: timestamp,signature1,signature2,...
-        if not signature:
-            return False
+        # Import svix here to avoid startup errors if not installed
+        from svix.webhooks import Webhook, WebhookVerificationError
 
-        # For simplicity, we'll just check if the secret matches
-        # In production, implement proper Svix signature verification
-        expected = hmac.new(
-            secret.encode(),
-            payload,
-            hashlib.sha256
-        ).hexdigest()
+        payload = await request.body()
 
-        # This is a simplified check - implement full Svix verification in production
-        return True  # Placeholder for now
+        # Extract Svix headers
+        headers = {
+            "svix-id": request.headers.get("svix-id"),
+            "svix-timestamp": request.headers.get("svix-timestamp"),
+            "svix-signature": request.headers.get("svix-signature"),
+        }
 
+        # Check if webhook secret is configured
+        if not settings.clerk_webhook_secret:
+            logger.error("CLERK_WEBHOOK_SECRET not configured")
+            raise HTTPException(status_code=500, detail="Webhook not configured")
+
+        # Verify signature using Svix
+        wh = Webhook(settings.clerk_webhook_secret)
+        try:
+            event = wh.verify(payload, headers)
+        except WebhookVerificationError as e:
+            logger.error(f"Webhook verification failed: {e}")
+            raise HTTPException(status_code=401, detail="Invalid webhook signature")
+
+        # Process verified event
+        event_type = event.get("type")
+        event_data = event.get("data")
+
+        logger.info(f"Received verified Clerk webhook: {event_type}")
+
+        # Handle different event types
+        if event_type in ("user.created", "user.updated"):
+            await sync_user(event_data)
+        elif event_type == "user.deleted":
+            await delete_user(event_data.get("id"))
+
+        return {"status": "success"}
+
+    except HTTPException:
+        raise
+    except ImportError:
+        logger.error("svix package not installed")
+        raise HTTPException(status_code=500, detail="Webhook verification unavailable")
     except Exception as e:
-        logger.error(f"Error verifying webhook signature: {e}")
-        return False
+        logger.error(f"Error processing webhook: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# =============================================================================
+# Helper Functions
+# =============================================================================
 
 async def sync_user(user_data: Dict[str, Any]):
-    """
-    Sync user data from Clerk to MongoDB
-    """
+    """Sync user data from Clerk to MongoDB"""
     try:
         db = get_database()
 
@@ -175,10 +248,9 @@ async def sync_user(user_data: Dict[str, Any]):
         logger.error(f"Error syncing user: {e}")
         raise
 
+
 async def delete_user(clerk_id: str):
-    """
-    Delete user from MongoDB
-    """
+    """Delete user from MongoDB"""
     try:
         db = get_database()
         await db.users.delete_one({"clerk_id": clerk_id})

@@ -17,7 +17,7 @@ router = APIRouter()
 @router.post("")
 async def create_or_update_annotation(
     annotation: AnnotationCreate,
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Create or update an annotation for a trace
@@ -82,7 +82,7 @@ async def create_or_update_annotation(
 @router.get("/trace/{trace_id}")
 async def get_annotation_for_trace(
     trace_id: str,
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Get annotation for a specific trace by the current user
@@ -108,7 +108,7 @@ async def get_annotation_for_trace(
 
 @router.get("/user/stats")
 async def get_user_annotation_stats(
-    current_user: Optional[Dict] = Depends(lambda: {"user_id": "demo-user"})  # Temporary: skip auth for testing
+    current_user: Dict = Depends(get_current_user)
 ):
     """
     Get annotation statistics for the current user

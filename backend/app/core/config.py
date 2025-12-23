@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     clerk_frontend_api_url: Optional[str] = None
     clerk_backend_api_key: Optional[str] = None
     clerk_webhook_secret: Optional[str] = None
+    clerk_jwks_url: Optional[str] = None  # e.g., "https://your-app.clerk.accounts.dev/.well-known/jwks.json"
 
     # Security
     secret_key: str = "your-secret-key-here-change-in-production"

@@ -340,25 +340,116 @@ This document tracks the development progress across chat sessions. Each session
 
 ---
 
+## Session 6 - 2025-12-23
+
+### Completed Tasks
+
+#### 1. Created Feature Branch for Auth Work
+- **Branch**: `feature/full-auth-completion`
+- Created from `main` for implementing full Clerk authentication
+
+#### 2. Documentation Audit & Archive (COMPLETE)
+- **Problem**: Migration docs still showed "in-progress" but migration was complete
+- **Solution**: Full documentation sync and archive of completed work
+
+**Files Archived to `docs/archive/`:**
+- `docs/archive/vue-migration/` - 7 migration docs (migration-implementation-guide.md, Course-correction-SDS.md, etc.)
+- `docs/archive/css-legacy/` - 2 large CSS files (863KB total)
+- `docs/archive/vue/` - Deprecated Vue tech-spec
+- `docs/archive/misc/` - Claude automation docs
+
+**Documentation Synced:**
+- Updated `docs/bmm-workflow-status.yaml` - All migration phases marked COMPLETE
+- Updated status timestamps and next actions
+
+#### 3. Tech-Spec Created (COMPLETE)
+- **File**: `docs/tech-spec-auth.md`
+- **Purpose**: Comprehensive technical specification for auth implementation
+- **Contents**:
+  - Brownfield codebase analysis
+  - Exact code changes required with line numbers
+  - Implementation examples from security-model.md
+  - Testing strategy and acceptance criteria
+
+#### 4. Story Created (COMPLETE)
+- **File**: `docs/sprint-artifacts/story-auth-completion-1.md`
+- **Status**: Approved, Ready for Dev
+- **Epic**: AUTH - Full Auth Completion
+- **Contains**: 11 tasks with subtasks, 8 acceptance criteria
+
+**Story Tasks:**
+1. Add Dependencies (svix, PyJWT)
+2. Update Configuration (clerk_jwks_url)
+3. Implement JWT Verification (AUTH-001)
+4. Implement Webhook Verification (AUTH-002)
+5. Create Auth Dependency (AUTH-003)
+6. Update annotations.py (3 demo-user replacements)
+7. Update traces.py (5 demo-user replacements)
+8. Local Testing
+9. Deploy to Railway
+10. Set Up Clerk Webhook
+11. Production Testing
+
+#### 5. Status Files Updated (COMPLETE)
+- `docs/bmm-workflow-status.yaml` - Added auth-tech-spec, auth-story references
+- `docs/sprint-status.yaml` - Added story-auth-completion-1 as "ready-for-dev"
+
+### Commits This Session
+- `3fd279a` - docs: Sync all project docs with codebase reality
+- `dd7f5db` - chore: Archive completed migration docs and align with BMAD structure
+- `504fe45` - docs: Add tech-spec and story for full auth implementation
+
+### Current Branch
+`feature/full-auth-completion` (ready for dev agent)
+
+### Auth Blockers to Fix
+
+| ID | Issue | Location | Fix |
+|----|-------|----------|-----|
+| AUTH-001 | JWT verification calls non-existent endpoint | auth.py:98-124 | Use PyJWT + Clerk JWKS |
+| AUTH-002 | Webhook signature always returns True | auth.py:126-149 | Use svix package |
+| AUTH-003 | Hardcoded "demo-user" in 8 places | traces.py, annotations.py | Create get_current_user() dependency |
+
+### Files Modified This Session
+- `docs/tech-spec-auth.md` - NEW: Technical specification
+- `docs/sprint-artifacts/story-auth-completion-1.md` - NEW: Ready-for-dev story
+- `docs/bmm-workflow-status.yaml` - Updated with auth phase
+- `docs/sprint-status.yaml` - Added new story
+- Multiple files moved to `docs/archive/`
+
+---
+
 ## Instructions for Next Session
 
-The application is fully deployed and operational:
+### Primary Task: Execute Story AUTH.1
 
-**Production URLs:**
+The dev agent should execute `story-auth-completion-1`:
+
+1. **Read the story**: `docs/sprint-artifacts/story-auth-completion-1.md`
+2. **Reference the tech-spec**: `docs/tech-spec-auth.md`
+3. **Use the dev-story workflow**: `/bmad:bmm:workflows:dev-story`
+
+### Branch
+Work on: `feature/full-auth-completion`
+
+### Key Implementation References
+- **Security Model**: `docs/architecture/security-model.md` - Contains exact code examples
+- **JWT verification example**: security-model.md:159-177
+- **Svix verification example**: security-model.md:248-274
+
+### Dependencies to Add
+```
+svix>=1.0.0
+PyJWT>=2.8.0
+```
+
+### Production URLs
 - Frontend: https://frontend-production-52ba.up.railway.app
 - Backend API: https://evalsapp-production.up.railway.app
 - API Docs: https://evalsapp-production.up.railway.app/docs
 
-**Optional remaining tasks:**
-
-1. **Clerk webhook** (if user sync needed):
-   - Create webhook in Clerk dashboard: `https://evalsapp-production.up.railway.app/api/auth/webhook`
-   - Add `CLERK_WEBHOOK_SECRET` to backend service variables
-
-2. **Production Clerk keys** (currently using dev keys):
-   - Console shows warning about development keys
-   - Update to production keys when ready for wider use
-
-3. **Continue annotating**:
-   - 82 traces remaining unannotated (100 total - 18 done)
-   - Use the annotation workflow to evaluate remaining traces
+### Post-Auth Setup (after code complete)
+1. Add `CLERK_JWKS_URL` to Railway backend environment
+2. Create Clerk webhook pointing to `/api/auth/webhook`
+3. Add `CLERK_WEBHOOK_SECRET` to Railway backend environment
+4. Test multi-user isolation with 2 Clerk accounts

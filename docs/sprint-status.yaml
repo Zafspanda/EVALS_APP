@@ -1,6 +1,6 @@
 # Sprint Status Report
 # Generated: 2025-11-14
-# Updated: 2025-12-22 (Migration complete, auth blockers active)
+# Updated: 2025-12-23 (Auth implementation complete, manual deployment steps pending)
 # Project: Evals_app
 
 # STATUS DEFINITIONS:
@@ -22,8 +22,8 @@ development_status:
   # Format: story-key: status
   story-coding-platform-1: "done"  # Foundation & Core Evaluation (includes UX enhancement)
   frontend-migration: "done"  # ✅ COMPLETE: Vue → React + SDS migration, deployed to Railway
-  story-coding-platform-2: "blocked"  # BLOCKED: Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
-  story-auth-completion-1: "ready-for-dev"  # 🔐 AUTH STORY: Full Clerk auth implementation (tech-spec + story created)
+  story-coding-platform-2: "blocked"  # BLOCKED: Requires auth deployment + verification
+  story-auth-completion-1: "review"  # 🔐 CODE COMPLETE - Manual deployment steps pending (see auth-completion-checklist.md)
 
 # Epic Tracking
 epics:
@@ -62,66 +62,79 @@ blockers:
     story: "story-coding-platform-2"
     title: "🔐 Clerk token verification bypassed"
     severity: "critical"
-    location: "backend/app/api/auth.py:98"
+    location: "backend/app/api/auth.py:37-74"
     impact: "Unauthorized access possible - multi-user testing blocked"
     fix_effort: "30 minutes"
     fix_instructions: "See docs/architecture/security-model.md Section 6"
     priority: "P0"
-    status: "in-progress"
+    status: "code-complete"
     branch: "feature/full-auth-completion"
+    commit: "839fd68"
+    pending: "Merge to main, add CLERK_JWKS_URL to Railway"
 
   - id: "AUTH-002"
     story: "story-coding-platform-2"
     title: "🔐 Webhook signature verification disabled"
     severity: "critical"
-    location: "backend/app/api/auth.py:145"
+    location: "backend/app/api/auth.py:165-219"
     impact: "Attacker can manipulate user data"
     fix_effort: "30 minutes"
     fix_instructions: "Install svix package, implement proper verification"
     priority: "P0"
-    status: "in-progress"
+    status: "code-complete"
     branch: "feature/full-auth-completion"
+    commit: "839fd68"
+    pending: "Create Clerk webhook, add CLERK_WEBHOOK_SECRET to Railway"
 
   - id: "AUTH-003"
     story: "story-coding-platform-2"
     title: "🔐 Hardcoded demo user in endpoints"
     severity: "critical"
-    location: "8 endpoints (annotations.py, traces.py)"
+    location: "annotations.py (3), traces.py (5)"
     impact: "All users share same user_id - data collision"
     fix_effort: "1 hour"
     fix_instructions: "Replace Depends(lambda: {'user_id': 'demo-user'}) with get_current_user"
     priority: "P0"
-    status: "in-progress"
+    status: "code-complete"
     branch: "feature/full-auth-completion"
+    commit: "839fd68"
+    pending: "Verify after deployment"
 
 # Next Actions (PRIORITIZED)
 next_actions:
   - priority: "P0"
-    action: "🔐 Execute story-auth-completion-1 (Dev Agent)"
-    effort: "2-3 hours"
-    owner: "dev agent"
+    action: "🔐 Complete AUTH deployment (Manual Steps)"
+    effort: "30 minutes"
+    owner: "user (manual)"
     blocks: "Story 2 start"
-    reference: "docs/tech-spec-auth.md"
-    story: "docs/sprint-artifacts/story-auth-completion-1.md"
-    branch: "feature/full-auth-completion"
-    status: "READY FOR DEV"
-    deliverables:
-      - "✅ Tech-spec created: docs/tech-spec-auth.md"
-      - "✅ Story created: docs/sprint-artifacts/story-auth-completion-1.md"
-      - "⏳ Implementation pending"
+    checklist: "docs/sprint-artifacts/auth-completion-checklist.md"
+    status: "MANUAL STEPS REQUIRED"
+    steps:
+      - "1. Merge feature/full-auth-completion to main (or deploy branch directly)"
+      - "2. Add CLERK_JWKS_URL to Railway env vars"
+      - "3. Create Clerk webhook in dashboard"
+      - "4. Add CLERK_WEBHOOK_SECRET to Railway env vars"
+      - "5. Verify production auth works"
 
   - priority: "P0"
     action: "Test multi-user isolation with 2 Clerk users"
-    effort: "1 hour"
-    owner: "dev agent"
+    effort: "30 minutes"
+    owner: "user (manual)"
     blocks: "Story 2 start"
-    depends_on: "AUTH fixes complete"
+    depends_on: "AUTH deployment complete"
 
   - priority: "P1"
     action: "Begin story-coding-platform-2 development"
     effort: "TBD"
     owner: "dev agent"
-    depends_on: "AUTH fixes complete + multi-user verified"
+    depends_on: "AUTH complete + multi-user verified"
+
+  - priority: "DONE"
+    action: "✅ AUTH Implementation (Code Complete)"
+    completion_date: "2025-12-23"
+    commit: "839fd68"
+    branch: "feature/full-auth-completion"
+    notes: "JWT verification, Svix webhooks, get_current_user dependency all implemented"
 
   - priority: "DONE"
     action: "✅ Vue → React + SDS Migration (MIGRATION-001)"
@@ -166,6 +179,15 @@ notes: |
     - Tech-spec: docs/tech-spec-auth.md
     - Story: docs/sprint-artifacts/story-auth-completion-1.md
     - Branch: feature/full-auth-completion
-  - Story 2: BLOCKED ⚠️ - Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
+  - ✅ AUTH CODE COMPLETE (Dec 23):
+    - Commit: 839fd68 on feature/full-auth-completion
+    - JWT verification with PyJWT + JWKS (AUTH-001)
+    - Svix webhook verification (AUTH-002)
+    - get_current_user dependency replacing all demo-user (AUTH-003)
+    - Local testing passed (401 for unauthenticated requests)
+  - ⏳ AUTH DEPLOYMENT PENDING (Dec 23):
+    - Manual steps required - see docs/sprint-artifacts/auth-completion-checklist.md
+    - Merge to main, add env vars, create Clerk webhook
+  - Story 2: BLOCKED ⚠️ - Requires auth deployment + verification
   - Architecture documentation: docs/architecture/ (9 files created)
-  - **NEXT AGENT: Dev agent to execute story-auth-completion-1**
+  - **NEXT: Complete auth deployment checklist, then Story 2 ready for dev**

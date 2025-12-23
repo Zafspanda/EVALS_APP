@@ -45,8 +45,10 @@ workflow_status:
   migration-phase-4: "COMPLETED"  # Deployment to Railway (2025-12-22)
   migration-status: "docs/migration-status.yaml"  # COMPLETE
 
-  # Phase 6: Auth Fixes (In Progress)
-  auth-completion: "in-progress"  # branch: feature/full-auth-completion
+  # Phase 6: Auth Fixes (Ready for Dev)
+  auth-tech-spec: "docs/tech-spec-auth.md"  # COMPLETED (2025-12-22)
+  auth-story: "docs/sprint-artifacts/story-auth-completion-1.md"  # COMPLETED (2025-12-22)
+  auth-implementation: "ready-for-dev"  # branch: feature/full-auth-completion
   auth-blockers:
     - "AUTH-001: Clerk token verification"
     - "AUTH-002: Webhook signature verification"

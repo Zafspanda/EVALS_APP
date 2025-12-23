@@ -23,7 +23,7 @@ development_status:
   story-coding-platform-1: "done"  # Foundation & Core Evaluation (includes UX enhancement)
   frontend-migration: "done"  # ✅ COMPLETE: Vue → React + SDS migration, deployed to Railway
   story-coding-platform-2: "blocked"  # BLOCKED: Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
-  auth-full-completion: "in-progress"  # 🔐 AUTH FIXES: Clerk token verification, webhook signatures, real user IDs
+  story-auth-completion-1: "ready-for-dev"  # 🔐 AUTH STORY: Full Clerk auth implementation (tech-spec + story created)
 
 # Epic Tracking
 epics:
@@ -97,19 +97,18 @@ blockers:
 # Next Actions (PRIORITIZED)
 next_actions:
   - priority: "P0"
-    action: "🔐 Complete AUTH-001, AUTH-002, AUTH-003"
-    effort: "2-3 hours total"
+    action: "🔐 Execute story-auth-completion-1 (Dev Agent)"
+    effort: "2-3 hours"
     owner: "dev agent"
     blocks: "Story 2 start"
-    reference: "docs/architecture/security-model.md"
+    reference: "docs/tech-spec-auth.md"
+    story: "docs/sprint-artifacts/story-auth-completion-1.md"
     branch: "feature/full-auth-completion"
-    status: "IN PROGRESS"
-    tasks:
-      - "AUTH-001: Implement proper Clerk JWT token verification"
-      - "AUTH-002: Install svix, implement webhook signature verification"
-      - "AUTH-003: Replace demo-user with real get_current_user in all endpoints"
-      - "Set up Clerk webhook in dashboard"
-      - "Add CLERK_WEBHOOK_SECRET to Railway env vars"
+    status: "READY FOR DEV"
+    deliverables:
+      - "✅ Tech-spec created: docs/tech-spec-auth.md"
+      - "✅ Story created: docs/sprint-artifacts/story-auth-completion-1.md"
+      - "⏳ Implementation pending"
 
   - priority: "P0"
     action: "Test multi-user isolation with 2 Clerk users"
@@ -163,7 +162,10 @@ notes: |
   - ✅ RAILWAY DEPLOYMENT (Dec 22): Frontend + Backend live
     - Frontend: https://frontend-production-52ba.up.railway.app
     - Backend: https://evalsapp-production.up.railway.app
-  - 🔐 AUTH IN PROGRESS: Branch feature/full-auth-completion created
+  - ✅ AUTH PLANNING COMPLETE (Dec 22):
+    - Tech-spec: docs/tech-spec-auth.md
+    - Story: docs/sprint-artifacts/story-auth-completion-1.md
+    - Branch: feature/full-auth-completion
   - Story 2: BLOCKED ⚠️ - Requires auth fixes (AUTH-001, AUTH-002, AUTH-003)
   - Architecture documentation: docs/architecture/ (9 files created)
-  - **NEXT AGENT: Complete auth fixes, then unblock Story 2**
+  - **NEXT AGENT: Dev agent to execute story-auth-completion-1**
